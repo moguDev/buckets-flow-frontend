@@ -46,7 +46,7 @@ export default function Timer() {
         const currentCount = Math.ceil((endTime - currentTime) / 1000);
         document.title = `${Math.floor(currentCount / 60)}:${String(
           currentCount % 60
-        ).padStart(2, "0")}`;
+        ).padStart(2, "0")} | RAINY`;
         setCount(currentCount);
       }
     }, 1000);
