@@ -42,7 +42,13 @@ export default function Timer() {
         setCount(1500);
         fadeOutAudio();
       }
-      isPlaying && setCount(Math.ceil((endTime - currentTime) / 1000));
+      if (isPlaying) {
+        const currentCount = Math.ceil((endTime - currentTime) / 1000);
+        document.title = `${Math.floor(currentCount / 60)}:${String(
+          currentCount % 60
+        ).padStart(2, "0")}`;
+        setCount(currentCount);
+      }
     }, 1000);
     return () => {
       clearInterval(t);
