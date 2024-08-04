@@ -101,7 +101,7 @@ export default function Timer() {
   };
 
   return (
-    <div className="bg-blue-900 bg-opacity-10 backdrop-blur-sm rounded-xl shadow-3xl p-5">
+    <div className="bg-blue-900 bg-opacity-10 backdrop-blur-sm rounded-xl shadow-3xl py-10 px-5">
       <p className="text-center text-blue-200 font-semibold text-8xl mb-5">
         {Math.floor(count / 60)}:{String(count % 60).padStart(2, "0")}
       </p>
