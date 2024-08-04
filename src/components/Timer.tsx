@@ -102,9 +102,9 @@ export default function Timer() {
 
   return (
     <div className="py-10 px-5">
-      <p className="text-center text-blue-200 font-semibold text-8xl mb-5">
+      <div className="flex items-center justify-center text-center text-blue-200 font-semibold text-9xl mb-5">
         {Math.floor(count / 60)}:{String(count % 60).padStart(2, "0")}
-      </p>
+      </div>
       <div className="flex items-center justify-center">
         {isPlaying ? (
           <button
