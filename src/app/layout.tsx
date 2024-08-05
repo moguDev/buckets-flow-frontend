@@ -41,7 +41,6 @@ export default function RootLayout({
           >
             <Header />
             <div className="flex-1 overflow-auto pt-20 mx-5">{children}</div>
-            <Footer />
           </div>
         </ClientOnly>
       </body>

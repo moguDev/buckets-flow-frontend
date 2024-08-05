@@ -11,7 +11,7 @@ export default function Timer() {
   const sourceRef = useRef<AudioBufferSourceNode | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
 
-  const [count, setCount] = useState(1500);
+  const [time, setTime] = useState(1500);
   const [endTime, setEndTime] = useState(-1);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function Timer() {
       const currentTime = Date.now();
       if (endTime - currentTime < 0) {
         setIsPlaying(false);
-        setCount(1500);
+        setTime(1500);
         fadeOutAudio();
       }
       if (isPlaying) {
@@ -48,7 +48,7 @@ export default function Timer() {
         document.title = `${Math.floor(currentCount / 60)}:${String(
           currentCount % 60
         ).padStart(2, "0")} | RAINY`;
-        setCount(currentCount);
+        setTime(currentCount);
       }
     }, 1000);
     return () => {
@@ -73,7 +73,7 @@ export default function Timer() {
       gainNodeRef.current = gainNode;
 
       setIsPlaying(true);
-      setEndTime(Date.now() + count * 1000);
+      setEndTime(Date.now() + time * 1000);
     }
   };
 
@@ -117,13 +117,13 @@ export default function Timer() {
           isPlaying ? "scale-100" : "scale-90 brightness-90"
         } mb-5`}
       >
-        {String(Math.floor(count / 60)).padStart(2, "0")}:
-        {String(count % 60).padStart(2, "0")}
+        {String(Math.floor(time / 60)).padStart(2, "0")}:
+        {String(time % 60).padStart(2, "0")}
       </p>
       <div className="flex items-center justify-center p-2">
         <Bucket filled={100} />
         <Bucket filled={100} />
-        <Bucket filled={(1 - count / 1500) * 100} active={true} />
+        <Bucket filled={(1 - time / 1500) * 100} active={true} />
         <Bucket filled={0} />
       </div>
       <div className="flex items-center justify-center">

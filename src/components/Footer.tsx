@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="w-full p-1 opacity-70">
+    <footer className="w-full p-1 opacity-0">
       <p className="text-xs font-thin text-center text-blue-200">
         <span className="px-1">
           Developed by{" "}
