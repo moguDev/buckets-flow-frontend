@@ -112,7 +112,11 @@ export default function Timer() {
       <p className="text-center font-thin text-blue-300">
         {isPlaying ? "In the Rain." : "Rain has stopped."}
       </p>
-      <p className="text-center text-blue-300 font-normal text-9xl mb-5">
+      <p
+        className={`text-center text-blue-300 font-normal text-9xl transition-transform duration-300 ${
+          isPlaying ? "scale-100" : "scale-90"
+        } mb-5`}
+      >
         {Math.floor(count / 60)}:{String(count % 60).padStart(2, "0")}
       </p>
       <div className="flex items-center justify-center p-2">
