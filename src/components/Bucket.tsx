@@ -2,13 +2,14 @@ import React from "react";
 
 interface BucketProps {
   filled: number;
+  active?: false;
 }
 
-const Bucket: React.FC<BucketProps> = ({ filled }) => {
+const Bucket: React.FC<BucketProps> = ({ filled, active = false }) => {
   const waterHeight = `${filled}%`;
 
   return (
-    <div className={`flex justify-center items-center opacity-80 px-3`}>
+    <div className={`flex justify-center items-center opacity-60 px-3`}>
       <div
         className={`relative w-6 h-7 border-r-2 border-l-2 border-b-2 ${
           filled === 100 ? "border-blue-300" : "border-gray-100"
