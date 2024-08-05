@@ -113,8 +113,8 @@ export default function Timer() {
         {isPlaying ? "In the Rain." : "Rain has stopped."}
       </p>
       <p
-        className={`text-center text-blue-300 font-normal text-9xl transition-transform duration-300 ${
-          isPlaying ? "scale-100" : "scale-90"
+        className={`text-center text-blue-300 font-normal text-9xl transition-transform duration-700 ${
+          isPlaying ? "scale-100 brightness-110" : "scale-90"
         } mb-5`}
       >
         {Math.floor(count / 60)}:{String(count % 60).padStart(2, "0")}
