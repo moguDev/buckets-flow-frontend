@@ -32,13 +32,15 @@ export default function RootLayout({
         <ClientOnly>
           <RainBackground />
           <div
-            className={`
-          fixed top-0 z-10
-          h-full w-full
-          bg-blue-800 bg-opacity-10`}
+            className="
+            fixed top-0 z-10
+            h-full w-full
+            bg-blue-800 bg-opacity-10
+            flex flex-col
+          "
           >
             <Header />
-            <div className="pt-20 mx-5">{children}</div>
+            <div className="flex-1 overflow-auto pt-20 mx-5">{children}</div>
             <Footer />
           </div>
         </ClientOnly>

@@ -117,7 +117,8 @@ export default function Timer() {
           isPlaying ? "scale-100" : "scale-90 brightness-90"
         } mb-5`}
       >
-        {Math.floor(count / 60)}:{String(count % 60).padStart(2, "0")}
+        {String(Math.floor(count / 60)).padStart(2, "0")}:
+        {String(count % 60).padStart(2, "0")}
       </p>
       <div className="flex items-center justify-center p-2">
         <Bucket filled={100} />
