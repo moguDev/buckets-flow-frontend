@@ -18,7 +18,7 @@ export default function Home() {
       <div className="w-1/3">
         <div className="bg-gray-500 bg-opacity-10 rounded-xl p-5">
           <span className="material-icons">bar_chart</span>
-          <div role="tablist" className="tabs tabs-boxed">
+          <div role="tablist" className="tabs tabs-boxed bg-opacity-80">
             <a role="tab" className="tab">
               日
             </a>
