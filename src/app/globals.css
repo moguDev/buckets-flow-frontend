@@ -32,10 +32,12 @@ body {
   }
 }
 
-.tab {
-  font-size: 14px;
+.chart-tab {
+  color: gray;
+  font-weight: 100;
+  border-radius: 0.375rem;
 }
 
-.tab-active {
-  background-color: white;
+.chart-tab-active {
+  background-color: "FFFFFF";
 }

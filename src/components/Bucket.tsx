@@ -15,7 +15,7 @@ const Bucket: React.FC<BucketProps> = ({ filled, active = false }) => {
       } px-3`}
     >
       <div
-        className={`absolute top-0 w-8 h-0.5 z-10 ${
+        className={`absolute top-0 w-8 h-0.5 ${
           filled === 100 ? "bg-blue-300" : "bg-gray-700"
         }`}
       />
