@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Timer from "@/components/Timer";
 import Charts from "@/components/Charts";
+import Infomation from "@/components/Infomation";
 
 export default function Home() {
   const [filled, setFilled] = useState(50);
@@ -16,6 +17,9 @@ export default function Home() {
         <Timer />
       </div>
       <div className="md:w-1/3 h-full mx-1">
+        <div className="mb-3">
+          <Infomation />
+        </div>
         <Charts />
       </div>
     </div>

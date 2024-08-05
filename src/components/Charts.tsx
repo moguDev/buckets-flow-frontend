@@ -2,11 +2,11 @@ import ChartBar from "./ChartBar";
 
 export default function Charts() {
   return (
-    <div className="bg-gray-700 bg-opacity-20 rounded-xl p-5 backdrop-blur-sm w-full">
+    <div className="bg-gray-700 bg-opacity-20 rounded-xl px-5 py-2 backdrop-blur-sm w-full">
       <div className="flex justify-between items-center w-full pb-2">
         <p className="h-full text-blue-300">チャート</p>
         <button className="btn material-icons text-blue-300 rounded-full bg-opacity-0 border-none">
-          expand_less
+          expand_more
         </button>
       </div>
       <div className="flex items-center bg-blue-900 bg-opacity-10 rounded-lg p-1">
