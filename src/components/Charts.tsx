@@ -9,19 +9,11 @@ export default function Charts() {
           expand_less
         </button>
       </div>
-      <div className="flex items-center bg-blue-300 bg-opacity-5 rounded-lg py-1">
-        <div className="chart-tab w-1/4">
-          <p className="text-center text-sm">日</p>
-        </div>
-        <div className="chart-tab chart-tab-active w-1/4">
-          <p className="text-center text-sm">週</p>
-        </div>
-        <div className="chart-tab w-1/4">
-          <p className="text-center text-sm">月</p>
-        </div>
-        <div className="chart-tab w-1/4">
-          <p className="text-center text-sm">年</p>
-        </div>
+      <div className="flex items-center bg-blue-900 bg-opacity-10 rounded-lg p-1">
+        <p className="chart-tab w-1/4">日</p>
+        <p className="chart-tab chart-tab-active w-1/4">週</p>
+        <p className="chart-tab w-1/4">月</p>
+        <div className="chart-tab w-1/4">年</div>
       </div>
       <div className="flex w-full p-1">
         <ChartBar maxValue={9} value={4} label="月" />

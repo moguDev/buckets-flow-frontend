@@ -33,11 +33,20 @@ body {
 }
 
 .chart-tab {
-  color: gray;
+  color: white;
   font-weight: 100;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
   border-radius: 0.375rem;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  text-align: center;
+}
+
+.chart-tab:hover {
+  background-color: #bfdbfe08;
 }
 
 .chart-tab-active {
-  background-color: "FFFFFF";
+  background-color: #bfdbfe10;
 }
