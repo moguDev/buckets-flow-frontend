@@ -17,7 +17,7 @@ export default function Home() {
         <Timer />
       </div>
       <div className="w-1/3 h-full mx-10">
-        <div className="bg-gray-700 bg-opacity-20 rounded-3xl px-3 backdrop-blur-sm w-full">
+        <div className="bg-gray-700 bg-opacity-20 rounded-xl px-3 backdrop-blur-sm w-full">
           <div className="flex justify-between items-center w-full p-3">
             <p className="h-full text-blue-300">チャート</p>
             <button className="btn material-icons text-blue-300 rounded-full bg-opacity-0 border-none">
