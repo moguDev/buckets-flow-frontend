@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Timer from "@/components/Timer";
 import Bucket from "@/components/Bucket";
+import ChartBar from "@/components/ChartBar";
 
 export default function Home() {
   const [filled, setFilled] = useState(50);
@@ -33,34 +34,13 @@ export default function Home() {
             </a>
           </div>
           <div className="flex w-full h-56">
-            <div className="w-full h-full m-1">
-              <div className="w-full h-full bg-gray-100 bg-opacity-5 rounded-full"></div>
-              <p className="text-center text-xs">月</p>
-            </div>
-            <div className="w-full h-full m-1">
-              <div className="w-full h-full bg-gray-100 bg-opacity-5 rounded-full"></div>
-              <p className="text-center text-xs">火</p>
-            </div>
-            <div className="w-full h-full m-1">
-              <div className="w-full h-full bg-gray-100 bg-opacity-5 rounded-full"></div>
-              <p className="text-center text-xs">水</p>
-            </div>
-            <div className="w-full h-full m-1">
-              <div className="w-full h-full bg-gray-100 bg-opacity-5 rounded-full"></div>
-              <p className="text-center text-xs">木</p>
-            </div>
-            <div className="w-full h-full m-1">
-              <div className="w-full h-full bg-gray-100 bg-opacity-5 rounded-full"></div>
-              <p className="text-center text-xs">金</p>
-            </div>
-            <div className="w-full h-full m-1">
-              <div className="w-full h-full bg-gray-100 bg-opacity-5 rounded-full"></div>
-              <p className="text-center text-xs">土</p>
-            </div>
-            <div className="w-full h-full m-1">
-              <div className="w-full h-full bg-gray-100 bg-opacity-5 rounded-full"></div>
-              <p className="text-center text-xs">日</p>
-            </div>
+            <ChartBar maxValue={9} value={4} label="月" />
+            <ChartBar maxValue={9} value={0} label="火" />
+            <ChartBar maxValue={9} value={0} label="水" />
+            <ChartBar maxValue={9} value={0} label="木" />
+            <ChartBar maxValue={9} value={0} label="金" />
+            <ChartBar maxValue={9} value={0} label="土" />
+            <ChartBar maxValue={9} value={0} label="日" />
           </div>
         </div>
       </div>
