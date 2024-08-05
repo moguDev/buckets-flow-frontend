@@ -14,6 +14,12 @@ export default function Timer() {
   const [count, setCount] = useState(0);
   const [time, setTime] = useState(5);
   const [endTime, setEndTime] = useState(-1);
+  const [bucketPropses, setBucketPropses] = useState([
+    { filled: 0, active: false },
+    { filled: 0, active: false },
+    { filled: 0, active: false },
+    { filled: 0, active: false },
+  ]);
 
   /** 雨音のセットアップ **/
   useEffect(() => {
@@ -50,18 +56,31 @@ export default function Timer() {
         setTime(1500);
         setCount((prev) => prev + 1);
         fadeOutAudio();
+        setBucketPropses(
+          bucketPropses.map((bucket, index) => {
+            return { ...bucket, active: false };
+          })
+        );
       } else {
         const currentCount = Math.ceil(timeRemaining / 1000);
         const minutes = Math.floor(currentCount / 60);
         const seconds = String(currentCount % 60).padStart(2, "0");
         document.title = `${minutes}:${seconds} | RAINY`;
         setTime(currentCount);
+
+        const newBucketPropses = bucketPropses.map((bucket, index) => {
+          if (index === count % 4) {
+            return { ...bucket, filled: (1 - time / 1500) * 100, active: true };
+          }
+          return { ...bucket, active: false };
+        });
+        setBucketPropses(newBucketPropses);
       }
     };
 
     const timerId = setInterval(updateTimer, 1000);
     return () => clearInterval(timerId);
-  }, [isPlaying, endTime]);
+  }, [isPlaying, endTime, count, bucketPropses]);
 
   const playAudio = () => {
     if (audioContextRef.current && audioBufferRef.current) {
@@ -81,6 +100,14 @@ export default function Timer() {
 
       setIsPlaying(true);
       setEndTime(Date.now() + time * 1000);
+      setBucketPropses(
+        bucketPropses.map((bucket, index) => {
+          if (index === count % 4) {
+            return { ...bucket, filled: (1 - time / 1500) * 100, active: true };
+          }
+          return { ...bucket, active: false };
+        })
+      );
     }
   };
 
@@ -128,22 +155,9 @@ export default function Timer() {
         {String(time % 60).padStart(2, "0")}
       </p>
       <div className="flex items-center justify-center p-2">
-        <Bucket
-          filled={count % 4 == 0 ? (1 - time / 1500) * 100 : 100}
-          active={count % 4 == 0}
-        />
-        <Bucket
-          filled={count % 4 == 1 ? (1 - time / 1500) * 100 : 100}
-          active={count % 4 == 1}
-        />
-        <Bucket
-          filled={count % 4 == 2 ? (1 - time / 1500) * 100 : 100}
-          active={count % 4 == 2}
-        />
-        <Bucket
-          filled={count % 4 == 3 ? (1 - time / 1500) * 100 : 100}
-          active={count % 4 == 3}
-        />
+        {bucketPropses.map((bucketProps, index) => (
+          <Bucket key={index} {...bucketProps} />
+        ))}
       </div>
       <div className="flex items-center justify-center py-2">
         {isPlaying ? (

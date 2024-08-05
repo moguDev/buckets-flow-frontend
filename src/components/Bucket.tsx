@@ -10,7 +10,7 @@ const Bucket: React.FC<BucketProps> = ({ filled, active = false }) => {
 
   return (
     <div
-      className={`relative transition-transform duration-300 ${
+      className={`relative transition-transform duration-700 ${
         active ? "opacity-90 scale-150 px-5" : "opacity-60 px-3"
       }`}
     >
