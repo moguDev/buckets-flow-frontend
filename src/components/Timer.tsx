@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { isPlayingState } from "../state/atoms";
+import Bucket from "./Bucket";
 
 export default function Timer() {
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
@@ -111,6 +112,7 @@ export default function Timer() {
       <p className="text-center text-blue-300 font-normal text-9xl mb-5">
         {Math.floor(count / 60)}:{String(count % 60).padStart(2, "0")}
       </p>
+      <Bucket filled={(count / 1500) * 100} />
       <div className="flex items-center justify-center">
         {isPlaying ? (
           <button
