@@ -16,9 +16,14 @@ export default function Home() {
       <div className="w-2/3">
         <Timer />
       </div>
-      <div className="w-1/3">
-        <div className="bg-gray-700 bg-opacity-20 rounded-xl p-5 backdrop-blur-sm w-full">
-          <span className="material-icons">bar_chart</span>
+      <div className="w-1/3 h-full mx-10">
+        <div className="bg-gray-700 bg-opacity-20 rounded-3xl px-3 backdrop-blur-sm w-full">
+          <div className="flex justify-between items-center w-full p-3">
+            <p className="h-full">チャート</p>
+            <button className="btn material-icons text-blue-300 rounded-full bg-opacity-0 border-none">
+              expand_less
+            </button>
+          </div>
           <div role="tablist" className="tabs tabs-boxed bg-opacity-80">
             <a role="tab" className="tab">
               日
@@ -33,7 +38,7 @@ export default function Home() {
               年
             </a>
           </div>
-          <div className="flex w-full h-56 p-1">
+          <div className="flex w-full p-1">
             <ChartBar maxValue={9} value={4} label="月" />
             <ChartBar maxValue={9} value={8} label="火" />
             <ChartBar maxValue={9} value={2} label="水" />
