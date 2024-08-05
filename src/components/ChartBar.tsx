@@ -11,10 +11,10 @@ export default function ChartBar({
 }: ChartBarProps) {
   const height = `${(value / maxValue) * 100}%`;
   return (
-    <div className="w-full h-56 p-1">
-      <div className="relative w-full h-full bg-gray-100 bg-opacity-5 rounded-full">
+    <div className="w-full h-56 px-2">
+      <div className="relative w-full h-full bg-gray-100 bg-opacity-5 rounded-full overflow-hidden">
         <div
-          className="absolute bottom-0 w-full bg-blue-300 bg-opacity-50 rounded-full"
+          className="absolute bottom-0 w-full bg-blue-300 bg-opacity-50"
           style={{ height: height }}
         />
       </div>
