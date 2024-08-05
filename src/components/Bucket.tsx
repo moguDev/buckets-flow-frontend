@@ -1,9 +1,9 @@
 import React from "react";
 
-interface BucketProps {
+type BucketProps = {
   filled: number;
   active?: boolean;
-}
+};
 
 const Bucket: React.FC<BucketProps> = ({ filled, active = false }) => {
   const waterHeight = `${filled}%`;

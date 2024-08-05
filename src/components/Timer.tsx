@@ -12,7 +12,7 @@ export default function Timer() {
   const gainNodeRef = useRef<GainNode | null>(null);
 
   const [count, setCount] = useState(0);
-  const [time, setTime] = useState(1500);
+  const [time, setTime] = useState(5);
   const [endTime, setEndTime] = useState(-1);
 
   /** 雨音のセットアップ **/
@@ -39,25 +39,28 @@ export default function Timer() {
 
   /** タイマーのカウント **/
   useEffect(() => {
-    const t = setInterval(() => {
+    if (!isPlaying) return;
+
+    const updateTimer = () => {
       const currentTime = Date.now();
-      if (endTime - currentTime < 0) {
+      const timeRemaining = endTime - currentTime;
+
+      if (timeRemaining <= 0) {
         setIsPlaying(false);
         setTime(1500);
         setCount((prev) => prev + 1);
         fadeOutAudio();
-      }
-      if (isPlaying) {
-        const currentCount = Math.ceil((endTime - currentTime) / 1000);
-        document.title = `${Math.floor(currentCount / 60)}:${String(
-          currentCount % 60
-        ).padStart(2, "0")} | RAINY`;
+      } else {
+        const currentCount = Math.ceil(timeRemaining / 1000);
+        const minutes = Math.floor(currentCount / 60);
+        const seconds = String(currentCount % 60).padStart(2, "0");
+        document.title = `${minutes}:${seconds} | RAINY`;
         setTime(currentCount);
       }
-    }, 1000);
-    return () => {
-      clearInterval(t);
     };
+
+    const timerId = setInterval(updateTimer, 1000);
+    return () => clearInterval(timerId);
   }, [isPlaying, endTime]);
 
   const playAudio = () => {
@@ -125,10 +128,22 @@ export default function Timer() {
         {String(time % 60).padStart(2, "0")}
       </p>
       <div className="flex items-center justify-center p-2">
-        <Bucket filled={100} />
-        <Bucket filled={100} />
-        <Bucket filled={(1 - time / 1500) * 100} active={true} />
-        <Bucket filled={0} />
+        <Bucket
+          filled={count % 4 == 0 ? (1 - time / 1500) * 100 : 100}
+          active={count % 4 == 0}
+        />
+        <Bucket
+          filled={count % 4 == 1 ? (1 - time / 1500) * 100 : 100}
+          active={count % 4 == 1}
+        />
+        <Bucket
+          filled={count % 4 == 2 ? (1 - time / 1500) * 100 : 100}
+          active={count % 4 == 2}
+        />
+        <Bucket
+          filled={count % 4 == 3 ? (1 - time / 1500) * 100 : 100}
+          active={count % 4 == 3}
+        />
       </div>
       <div className="flex items-center justify-center py-2">
         {isPlaying ? (
