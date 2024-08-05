@@ -35,12 +35,12 @@ export default function Home() {
           </div>
           <div className="flex w-full h-56 p-1">
             <ChartBar maxValue={9} value={4} label="月" />
-            <ChartBar maxValue={9} value={0} label="火" />
-            <ChartBar maxValue={9} value={0} label="水" />
-            <ChartBar maxValue={9} value={0} label="木" />
-            <ChartBar maxValue={9} value={0} label="金" />
-            <ChartBar maxValue={9} value={0} label="土" />
-            <ChartBar maxValue={9} value={0} label="日" />
+            <ChartBar maxValue={9} value={8} label="火" />
+            <ChartBar maxValue={9} value={2} label="水" />
+            <ChartBar maxValue={9} value={3} label="木" />
+            <ChartBar maxValue={9} value={2} label="金" />
+            <ChartBar maxValue={9} value={9} label="土" />
+            <ChartBar maxValue={9} value={1} label="日" />
           </div>
         </div>
       </div>
