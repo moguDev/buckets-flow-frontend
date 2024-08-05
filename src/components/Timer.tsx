@@ -113,7 +113,7 @@ export default function Timer() {
         {isPlaying ? "In the Rain." : "Rain has stopped."}
       </p>
       <p
-        className={`text-center text-blue-300 font-normal text-9xl transition-transform duration-700 ${
+        className={`text-center text-blue-300 font-normal md:text-9xl text-8xl transition-transform duration-700 ${
           isPlaying ? "scale-100" : "scale-90 brightness-90"
         } mb-5`}
       >

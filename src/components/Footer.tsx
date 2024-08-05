@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="fixed bottom-0 w-full p-1 opacity-70">
+    <footer className="fixed bottom-0 w-full p-1 opacity-70 backdrop-blur-sm border-t border-t-blue-200 border-opacity-20">
       <p className="text-xs font-thin text-center text-blue-200">
         <span className="px-1">
           Developed by{" "}
@@ -16,7 +16,7 @@ export default function Footer() {
           .
         </span>
         <span className="px-1">
-          Big-big-special thanks to all members of{" "}
+          Special thanks to all members of{" "}
           <a
             href="https://runteq.jp/"
             target="_blank"
@@ -24,7 +24,7 @@ export default function Footer() {
           >
             RUNTEQ
           </a>
-          !
+          .
         </span>
       </p>
     </footer>

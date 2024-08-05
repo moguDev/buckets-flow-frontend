@@ -11,11 +11,11 @@ export default function Home() {
     setFilled(value);
   };
   return (
-    <div className="flex justify-center w-full">
-      <div className="w-2/3">
+    <div className="md:flex justify-center w-full">
+      <div className="md:w-2/3">
         <Timer />
       </div>
-      <div className="w-1/3 h-full mx-10">
+      <div className="md:w-1/3 h-full mx-1">
         <Charts />
       </div>
     </div>
