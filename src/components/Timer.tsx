@@ -11,6 +11,7 @@ export default function Timer() {
   const sourceRef = useRef<AudioBufferSourceNode | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
 
+  const [count, setCount] = useState(0);
   const [time, setTime] = useState(1500);
   const [endTime, setEndTime] = useState(-1);
 
@@ -41,6 +42,7 @@ export default function Timer() {
       if (endTime - currentTime < 0) {
         setIsPlaying(false);
         setTime(1500);
+        setCount((prev) => prev + 1);
         fadeOutAudio();
       }
       if (isPlaying) {
