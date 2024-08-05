@@ -67,14 +67,17 @@ export default function Timer() {
         const seconds = String(currentCount % 60).padStart(2, "0");
         document.title = `${minutes}:${seconds} | RAINY`;
         setTime(currentCount);
-
-        const newBucketPropses = bucketPropses.map((bucket, index) => {
-          if (index === count % 4) {
-            return { ...bucket, filled: (1 - time / 1500) * 100, active: true };
-          }
-          return { ...bucket, active: false };
-        });
-        setBucketPropses(newBucketPropses);
+        setBucketPropses(
+          bucketPropses.map((bucket, index) => {
+            return index === count % 4
+              ? {
+                  ...bucket,
+                  filled: (1 - time / 1500) * 100,
+                  active: true,
+                }
+              : { ...bucket, active: false };
+          })
+        );
       }
     };
 
@@ -104,6 +107,8 @@ export default function Timer() {
         bucketPropses.map((bucket, index) => {
           if (index === count % 4) {
             return { ...bucket, filled: (1 - time / 1500) * 100, active: true };
+          } else if (index < count % 4) {
+            return { ...bucket, filled: 100, active: false };
           }
           return { ...bucket, active: false };
         })
