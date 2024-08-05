@@ -33,7 +33,7 @@ export default function Home() {
               年
             </a>
           </div>
-          <div className="flex w-full h-56">
+          <div className="flex w-full h-56 p-1">
             <ChartBar maxValue={9} value={4} label="月" />
             <ChartBar maxValue={9} value={0} label="火" />
             <ChartBar maxValue={9} value={0} label="水" />
