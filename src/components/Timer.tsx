@@ -112,7 +112,12 @@ export default function Timer() {
       <p className="text-center text-blue-300 font-normal text-9xl mb-5">
         {Math.floor(count / 60)}:{String(count % 60).padStart(2, "0")}
       </p>
-      <Bucket filled={(1 - count / 1500) * 100} />
+      <div className="flex items-center justify-center p-2">
+        <Bucket filled={100} />
+        <Bucket filled={100} />
+        <Bucket filled={(1 - count / 1500) * 100} />
+        <Bucket filled={0} />
+      </div>
       <div className="flex items-center justify-center">
         {isPlaying ? (
           <button

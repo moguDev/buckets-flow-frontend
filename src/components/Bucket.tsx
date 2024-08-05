@@ -8,19 +8,19 @@ const Bucket: React.FC<BucketProps> = ({ filled }) => {
   const waterHeight = `${filled}%`;
 
   return (
-    <div className={`flex justify-center items-center opacity-90`}>
+    <div className={`flex justify-center items-center opacity-80 px-3`}>
       <div
-        className={`relative w-12 h-14 border-r-4 border-l-4 border-b-4 ${
-          filled === 100 ? "border-blue-400" : "border-gray-300"
-        } rounded-b-lg`}
+        className={`relative w-6 h-7 border-r-2 border-l-2 border-b-2 ${
+          filled === 100 ? "border-blue-300" : "border-gray-100"
+        } rounded-b`}
       >
         <div
-          className={`absolute top-0 right-0 h-1 w-14 z-10 ${
-            filled === 100 ? "bg-blue-400" : "bg-gray-300"
+          className={`absolute top-0 right-0 h-0.5 w-7 z-10 ${
+            filled === 100 ? "bg-blue-300" : "bg-gray-100"
           }`}
         />
         <div
-          className="absolute bottom-0 w-full bg-blue-400"
+          className="absolute bottom-0 w-full bg-blue-300 z-[-1]"
           style={{ height: waterHeight }}
         ></div>
       </div>
