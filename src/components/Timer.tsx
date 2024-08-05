@@ -15,6 +15,7 @@ export default function Timer() {
   const [time, setTime] = useState(1500);
   const [endTime, setEndTime] = useState(-1);
 
+  /** 雨音のセットアップ **/
   useEffect(() => {
     const fetchAudio = async () => {
       const context = new (window.AudioContext ||
@@ -36,6 +37,7 @@ export default function Timer() {
     };
   }, []);
 
+  /** タイマーのカウント **/
   useEffect(() => {
     const t = setInterval(() => {
       const currentTime = Date.now();
@@ -128,7 +130,7 @@ export default function Timer() {
         <Bucket filled={(1 - time / 1500) * 100} active={true} />
         <Bucket filled={0} />
       </div>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center py-2">
         {isPlaying ? (
           <button
             onClick={pauseAudio}
@@ -154,6 +156,12 @@ export default function Timer() {
             <span className="material-icons">play_arrow</span>
           </button>
         )}
+      </div>
+      <div className="flex items-center justify-center">
+        <span className="scale-75">
+          <Bucket filled={100} />
+        </span>
+        <p className="text-blue-300">{count}</p>
       </div>
     </div>
   );
