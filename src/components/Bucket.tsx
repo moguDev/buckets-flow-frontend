@@ -11,7 +11,7 @@ const Bucket: React.FC<BucketProps> = ({ filled, active = false }) => {
   return (
     <div
       className={`flex justify-center items-center transition-transform duration-300 ${
-        active ? "opacity-90 scale-125" : "opacity-60"
+        active ? "opacity-90 scale-150" : "opacity-60"
       } px-3`}
     >
       <div

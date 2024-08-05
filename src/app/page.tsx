@@ -16,7 +16,7 @@ export default function Home() {
         <Timer />
       </div>
       <div className="w-1/3">
-        <div className="bg-gray-500 bg-opacity-10 rounded-xl p-5">
+        <div className="bg-gray-700 bg-opacity-20 rounded-xl p-5 backdrop-blur-sm w-full">
           <span className="material-icons">bar_chart</span>
           <div role="tablist" className="tabs tabs-boxed bg-opacity-80">
             <a role="tab" className="tab">
@@ -32,8 +32,35 @@ export default function Home() {
               年
             </a>
           </div>
-          <div className="flex">
-            <div className="w-1/7 h-16 bg-blue-300 rounded-full"></div>
+          <div className="flex w-full h-56">
+            <div className="w-full h-full m-1">
+              <div className="w-full h-full bg-gray-100 bg-opacity-5 rounded-full"></div>
+              <p className="text-center text-xs">月</p>
+            </div>
+            <div className="w-full h-full m-1">
+              <div className="w-full h-full bg-gray-100 bg-opacity-5 rounded-full"></div>
+              <p className="text-center text-xs">火</p>
+            </div>
+            <div className="w-full h-full m-1">
+              <div className="w-full h-full bg-gray-100 bg-opacity-5 rounded-full"></div>
+              <p className="text-center text-xs">水</p>
+            </div>
+            <div className="w-full h-full m-1">
+              <div className="w-full h-full bg-gray-100 bg-opacity-5 rounded-full"></div>
+              <p className="text-center text-xs">木</p>
+            </div>
+            <div className="w-full h-full m-1">
+              <div className="w-full h-full bg-gray-100 bg-opacity-5 rounded-full"></div>
+              <p className="text-center text-xs">金</p>
+            </div>
+            <div className="w-full h-full m-1">
+              <div className="w-full h-full bg-gray-100 bg-opacity-5 rounded-full"></div>
+              <p className="text-center text-xs">土</p>
+            </div>
+            <div className="w-full h-full m-1">
+              <div className="w-full h-full bg-gray-100 bg-opacity-5 rounded-full"></div>
+              <p className="text-center text-xs">日</p>
+            </div>
           </div>
         </div>
       </div>
