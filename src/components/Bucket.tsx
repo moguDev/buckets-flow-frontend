@@ -8,7 +8,7 @@ const Bucket: React.FC<BucketProps> = ({ filled }) => {
   const waterHeight = `${filled}%`;
 
   return (
-    <div className={`flex justify-center items-end h-80 opacity-90`}>
+    <div className={`flex justify-center items-center opacity-90`}>
       <div
         className={`relative w-12 h-14 border-r-4 border-l-4 border-b-4 ${
           filled === 100 ? "border-blue-400" : "border-gray-300"
