@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import ClientOnly from "@/components/ClientOnly";
 import { getFirebaseApp } from "@/lib/firebase/firebase";
 import RainBackground from "@/components/RainBackground";
+import Footer from "@/components/Footer";
 
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"] });
 
@@ -38,6 +39,7 @@ export default function RootLayout({
           >
             <Header />
             <div className="pt-20 mx-5">{children}</div>
+            <Footer />
           </div>
         </ClientOnly>
       </body>
