@@ -32,6 +32,9 @@ export default function Home() {
               年
             </a>
           </div>
+          <div className="flex">
+            <div className="w-1/7 h-16 bg-blue-300 rounded-full"></div>
+          </div>
         </div>
       </div>
     </div>
