@@ -108,14 +108,17 @@ export default function Timer() {
   };
 
   return (
-    <div className="py-10 px-5">
+    <div className="p-5">
+      <p className="text-center font-thin text-blue-300">
+        {isPlaying ? "In the Rain." : "Rain has stopped."}
+      </p>
       <p className="text-center text-blue-300 font-normal text-9xl mb-5">
         {Math.floor(count / 60)}:{String(count % 60).padStart(2, "0")}
       </p>
       <div className="flex items-center justify-center p-2">
         <Bucket filled={100} />
         <Bucket filled={100} />
-        <Bucket filled={(1 - count / 1500) * 100} />
+        <Bucket filled={(1 - count / 1500) * 100} active={true} />
         <Bucket filled={0} />
       </div>
       <div className="flex items-center justify-center">

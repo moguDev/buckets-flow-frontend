@@ -2,24 +2,28 @@ import React from "react";
 
 interface BucketProps {
   filled: number;
-  active?: false;
+  active?: boolean;
 }
 
 const Bucket: React.FC<BucketProps> = ({ filled, active = false }) => {
   const waterHeight = `${filled}%`;
 
   return (
-    <div className={`flex justify-center items-center opacity-60 px-3`}>
+    <div
+      className={`flex justify-center items-center ${
+        active ? "opacity-90" : "opacity-60"
+      } px-3`}
+    >
       <div
         className={`relative ${
-          active ? "w-7 h-8" : "w-6 h-7"
+          active ? "w-8 h-9 rounded-b-md" : "w-6 h-7 rounded-b"
         } border-r-2 border-l-2 border-b-2 ${
           filled === 100 ? "border-blue-300" : "border-gray-100"
-        } rounded-b`}
+        }`}
       >
         <div
           className={`absolute top-0 right-0 h-0.5 ${
-            active ? "w-8" : "w-7"
+            active ? "w-9" : "w-7"
           } z-10 ${filled === 100 ? "bg-blue-300" : "bg-gray-100"}`}
         />
         <div
