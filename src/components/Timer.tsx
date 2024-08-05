@@ -11,7 +11,7 @@ export default function Timer() {
   const sourceRef = useRef<AudioBufferSourceNode | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
 
-  const [count, setCount] = useState(5);
+  const [count, setCount] = useState(1500);
   const [endTime, setEndTime] = useState(-1);
 
   useEffect(() => {
