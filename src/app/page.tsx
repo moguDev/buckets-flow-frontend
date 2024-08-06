@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Timer from "@/components/Timer";
 import Charts from "@/components/Charts";
-import Infomation from "@/components/Infomation";
+import Infomation from "@/components/Activity";
 import LeaderBoard from "@/components/LeaderBoard";
 import AllRecoards from "@/components/AllRecords";
 

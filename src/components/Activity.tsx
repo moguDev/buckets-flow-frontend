@@ -10,7 +10,7 @@ export default function Infomation() {
       <div className="flex justify-between items-center w-full pb-2">
         <div className="flex items-center text-blue-300">
           <span className="material-icons text-sm pr-1">person</span>
-          <p className="">あなたの記録</p>
+          <p className="">アクティビティ</p>
         </div>
         <button className="btn material-icons text-blue-300 rounded-full bg-opacity-0 border-none">
           expand_more

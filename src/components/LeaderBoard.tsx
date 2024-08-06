@@ -11,8 +11,8 @@ export default function LeaderBoard() {
         </button>
       </div>
       <div className="flex items-center bg-blue-900 bg-opacity-10 rounded-lg p-1">
-        <button className="chart-tab w-1/3">今日</button>
-        <button className="chart-tab w-1/3">昨日</button>
+        <button className="chart-tab w-1/3">今週</button>
+        <button className="chart-tab w-1/3">今月</button>
         <button className="chart-tab chart-tab-selected w-1/3">
           すべての期間
         </button>
