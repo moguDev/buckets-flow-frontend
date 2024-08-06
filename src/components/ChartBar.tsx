@@ -18,7 +18,9 @@ export default function ChartBar({
           style={{ height: height }}
         />
       </div>
-      <p className="text-center text-blue-100 text-xs p-1">{label}</p>
+      <p className="text-center text-blue-200 font-light text-xs p-1">
+        {label}
+      </p>
     </div>
   );
 }

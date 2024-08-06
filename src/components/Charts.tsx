@@ -18,6 +18,11 @@ export default function Charts() {
         <button className="chart-tab w-1/4">月</button>
         <button className="chart-tab w-1/4">年</button>
       </div>
+      <div className="flex items-center justify-between px-1 py-3 text-blue-300">
+        <span className="material-icons text-xl">keyboard_arrow_left</span>
+        <p className="text-sm font-light">2024年8月5日〜2024年8月11日</p>
+        <span className="material-icons text-xl">keyboard_arrow_right</span>
+      </div>
       <div className="flex w-full p-1">
         <ChartBar maxValue={9} value={4} label="月" />
         <ChartBar maxValue={9} value={8} label="火" />

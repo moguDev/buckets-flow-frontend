@@ -48,7 +48,7 @@ export default function Infomation() {
           <div className="flex items-center w-1/2">
             <span className="material-icons text-blue-300 px-3">timer</span>
             <button className="font-semibold text-xl">
-              {`${Math.round((bucketCount * 25) / 60)} `}
+              {`${Math.floor((bucketCount * 25) / 60)} `}
               <span className="text-sm font-thin">{"h"}</span>
               {` ${(bucketCount * 25) % 60} `}
               <span className="text-sm font-thin">{"min"}</span>

@@ -158,8 +158,8 @@ export default function Timer() {
     <div className="p-5">
       <p className="text-center font-light text-blue-300 text-sm">
         {isPlaying
-          ? "💪😄☂️" + rainingWords[count % rainingWords.length]
-          : "😟🌂..."}
+          ? "💪😄☂️ " + rainingWords[count % rainingWords.length]
+          : "😟🌂 ..."}
       </p>
       <p
         className={`text-center text-blue-300 font-normal md:text-9xl text-8xl transition-transform duration-700 ${
