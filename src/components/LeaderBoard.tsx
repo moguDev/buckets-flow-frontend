@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 export default function LeaderBoard() {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState("auto");
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (contentRef.current) {
