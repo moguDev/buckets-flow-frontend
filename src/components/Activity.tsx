@@ -19,7 +19,10 @@ export default function Infomation() {
       <ul>
         {/* 今日 */}
         <div className="flex items-center justify-between text-gray-400 border-b border-opacity-20 border-gray-500 py-1">
-          <p className="text-sm">今日</p>
+          <div className="flex items-center">
+            <span className="material-icons text-sm pr-1">today</span>
+            <p className="text-sm">今日</p>
+          </div>
           <p className="text-xs font-thin">2024年8月6日</p>
         </div>
         <li className="flex items-center py-3 text-blue-300">
