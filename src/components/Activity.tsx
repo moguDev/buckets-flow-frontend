@@ -25,19 +25,19 @@ export default function Activity() {
   };
 
   return (
-    <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 py-2 backdrop-blur-sm w-full">
-      <div className="flex justify-between items-center w-full py-2">
+    <div className="bg-gray-700 bg-opacity-10 rounded-xl px-6 backdrop-blur-sm w-full">
+      <button
+        className="flex justify-between items-center w-full py-6"
+        onClick={handleOpen}
+      >
         <div className="flex items-center text-blue-300">
           <span className="material-icons text-sm pr-1">person</span>
-          <p className="">アクティビティ</p>
+          <p>アクティビティ</p>
         </div>
-        <button
-          className="btn material-icons text-blue-300 rounded-full bg-opacity-0 border-none"
-          onClick={handleOpen}
-        >
+        <div className="material-icons text-blue-300 rounded-full bg-opacity-0 border-none">
           {isOpen ? "expand_more" : "expand_less"}
-        </button>
-      </div>
+        </div>
+      </button>
       <div ref={contentRef} className="transition-height" style={{ height }}>
         <ul>
           {/* 今日 */}
@@ -153,7 +153,7 @@ export default function Activity() {
           <span className="material-icons text-xl">keyboard_arrow_right</span>
         </div>
 
-        <div className="flex w-full p-1">
+        <div className="flex w-full p-1 pb-3">
           <ChartBar maxValue={9} value={4} label="月" />
           <ChartBar maxValue={9} value={8} label="火" />
           <ChartBar maxValue={9} value={2} label="水" />

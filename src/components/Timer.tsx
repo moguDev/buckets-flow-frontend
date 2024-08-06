@@ -73,7 +73,7 @@ export default function Timer() {
         const currentCount = Math.ceil(timeRemaining / 1000);
         const minutes = Math.floor(currentCount / 60);
         const seconds = String(currentCount % 60).padStart(2, "0");
-        document.title = `${minutes}:${seconds} | RAINY`;
+        document.title = `${minutes}:${seconds} - buckets Flow`;
         setTime(currentCount);
         setBucketPropses(
           bucketPropses.map((bucket, index) => {
@@ -155,7 +155,7 @@ export default function Timer() {
   };
 
   return (
-    <div className={`p-5 rounded-xl`}>
+    <div className={`p-2 rounded-xl`}>
       <p className="text-center font-light text-blue-300 text-sm">
         {isPlaying ? "💪😄☂️ 雨が降っています！" : "😟🌂 ..."}
       </p>

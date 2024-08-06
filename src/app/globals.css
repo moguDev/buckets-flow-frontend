@@ -33,7 +33,7 @@ body {
 }
 
 .transition-height {
-  transition: height 0.5s ease;
+  transition: height 0.75s ease;
   overflow: hidden;
 }
 

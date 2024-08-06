@@ -14,20 +14,15 @@ export default function Home() {
     setFilled(value);
   };
   return (
-    <div className="md:flex justify-center w-full">
-      <div className="md:w-2/3 pr-2">
-        <div className="mb-3">
-          <Timer />
-        </div>
-        {/* <div className="mb-3">
-          <AllRecoards />
-        </div> */}
+    <div className="lg:flex w-full">
+      <div className="lg:w-2/3 lg:pt-10 pb-20">
+        <Timer />
       </div>
-      <div className="md:w-1/3 h-full mx-1">
-        <div className="mb-3">
+      <div className="lg:w-1/3">
+        <div className="pb-3">
           <Infomation />
         </div>
-        <div className="mb-3">
+        <div className="pb-3">
           <LeaderBoard />
         </div>
       </div>
