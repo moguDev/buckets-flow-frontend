@@ -41,7 +41,7 @@ const RainAnimation: React.FC = () => {
 
     const drawRain = () => {
       context.clearRect(0, 0, width, height);
-      context.fillStyle = "black";
+      context.fillStyle = "#040612";
       context.fillRect(0, 0, width, height);
       context.strokeStyle = "#FAFAFF15";
       context.lineWidth = 1;
@@ -79,7 +79,10 @@ const RainAnimation: React.FC = () => {
   }, [isPlaying]);
 
   return (
-    <canvas ref={canvasRef} style={{ display: "block", background: "black" }} />
+    <canvas
+      ref={canvasRef}
+      style={{ display: "block", background: "#040612" }}
+    />
   );
 };
 

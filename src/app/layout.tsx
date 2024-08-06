@@ -26,22 +26,8 @@ export default function RootLayout({
         />
       </head>
       <body className={notoSansJP.className}>
-        <ClientOnly>
-          <RainBackground />
-          <div
-            className="
-            fixed top-0 z-10
-            h-full w-full
-            bg-blue-800 bg-opacity-10
-            flex flex-col
-          "
-          >
-            <Header />
-            <div className="flex-1 overflow-auto pt-20 pb-10 lg:mx-5 mx-3">
-              {children}
-            </div>
-          </div>
-        </ClientOnly>
+        <Header />
+        <div>{children}</div>
       </body>
     </html>
   );
