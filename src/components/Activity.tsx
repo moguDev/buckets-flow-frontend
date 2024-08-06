@@ -148,7 +148,9 @@ export default function Activity() {
           <button className="chart-tab w-1/4">年</button>
         </div>
         <div className="flex items-center justify-between px-1 py-3 text-blue-300">
-          <span className="material-icons text-xl">keyboard_arrow_left</span>
+          <button className="material-icons text-xl">
+            keyboard_arrow_left
+          </button>
           <p className="text-sm font-thin">
             2024年8月5日〜2024年8月11日 -{" "}
             <button className="font-semibold">
@@ -156,7 +158,9 @@ export default function Activity() {
             </button>
           </p>
 
-          <span className="material-icons text-xl">keyboard_arrow_right</span>
+          <button className="material-icons text-xl">
+            keyboard_arrow_right
+          </button>
         </div>
 
         <div className="flex w-full p-1 pb-3">
