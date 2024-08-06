@@ -32,6 +32,10 @@ body {
   }
 }
 
+.bg-timer {
+  transition: background-color 0.7s ease, transform 0.7s ease; /* transformのアニメーションを追加 */
+}
+
 .chart-tab {
   color: gainsboro;
   font-weight: 100;

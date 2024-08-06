@@ -155,7 +155,11 @@ export default function Timer() {
   };
 
   return (
-    <div className="p-5">
+    <div
+      className={`bg-timer p-5 bg-gray-700 rounded-xl p-5 ${
+        isPlaying ? "bg-opacity-0 back" : "bg-opacity-10"
+      }`}
+    >
       <p className="text-center font-light text-blue-300 text-sm">
         {isPlaying
           ? "💪😄☂️ " + rainingWords[count % rainingWords.length]
@@ -174,7 +178,7 @@ export default function Timer() {
           <Bucket key={index} {...bucketProps} />
         ))}
       </div>
-      <div className="flex items-center justify-center py-2">
+      <div className="flex items-center justify-center">
         {isPlaying ? (
           <button
             onClick={pauseAudio}

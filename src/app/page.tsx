@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <div className="md:flex justify-center w-full">
       <div className="md:w-2/3 pr-2">
-        <div className="mb-10">
+        <div className="mb-3">
           <Timer />
         </div>
         <div className="mb-3">
