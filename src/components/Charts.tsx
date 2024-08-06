@@ -4,7 +4,10 @@ export default function Charts() {
   return (
     <div className="bg-gray-700 bg-opacity-20 rounded-xl px-5 py-2 backdrop-blur-sm w-full">
       <div className="flex justify-between items-center w-full pb-2">
-        <p className="h-full text-blue-300">チャート</p>
+        <div className="flex items-center text-blue-300">
+          <span className="material-icons text-sm pr-1">bar_chart</span>
+          <p className="">チャート</p>
+        </div>
         <button className="btn material-icons text-blue-300 rounded-full bg-opacity-0 border-none">
           expand_more
         </button>

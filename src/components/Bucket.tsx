@@ -12,7 +12,8 @@ const Bucket: React.FC<BucketProps> = ({ filled, active = false }) => {
     <div
       className={`relative transition-transform duration-700 ${
         active ? "opacity-90 scale-150 px-3" : "opacity-60 px-3"
-      }`}
+      } hover:opacity-100 tooltip`}
+      data-tip={`${Math.round(filled)}%`}
     >
       <div
         className={`absolute top-0 w-8 h-0.5 ${

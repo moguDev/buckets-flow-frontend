@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
-import { isPlayingState } from "../state/atoms";
+import { isPlayingState, bucketCountState } from "../state/atoms";
 import Bucket from "./Bucket";
 
 export default function Timer() {
@@ -11,7 +11,7 @@ export default function Timer() {
   const sourceRef = useRef<AudioBufferSourceNode | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
 
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useRecoilState(bucketCountState);
   const [time, setTime] = useState(5);
   const [endTime, setEndTime] = useState(-1);
   const [bucketPropses, setBucketPropses] = useState([
