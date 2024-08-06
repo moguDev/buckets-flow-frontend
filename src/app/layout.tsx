@@ -3,9 +3,7 @@ import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import ClientOnly from "@/components/ClientOnly";
-import { getFirebaseApp } from "@/lib/firebase/firebase";
 import RainBackground from "@/components/RainBackground";
-import Footer from "@/components/Footer";
 
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"] });
 
@@ -19,7 +17,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  getFirebaseApp();
   return (
     <html lang="ja">
       <head>
