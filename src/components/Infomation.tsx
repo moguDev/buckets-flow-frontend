@@ -1,6 +1,10 @@
 import Bucket from "./Bucket";
+import { useRecoilState } from "recoil";
+import { bucketCountState } from "@/state/atoms";
 
 export default function Infomation() {
+  const [bucketCount, setBucketCount] = useRecoilState(bucketCountState);
+
   return (
     <div className="bg-gray-700 bg-opacity-20 rounded-xl px-5 py-2 backdrop-blur-sm w-full">
       <div className="flex justify-between items-center w-full pb-2">
@@ -23,21 +27,32 @@ export default function Infomation() {
             <span className="scale-50">
               <Bucket filled={100} active={true} />
             </span>
-            <p className="font-semibold text-xl">{3}</p>
+            <p className="font-semibold text-xl">
+              {`${bucketCount} `}
+              <span className="text-sm font-thin">
+                {bucketCount === 1 ? "bucket" : "buckets"}
+              </span>
+            </p>
           </div>
           <div className="flex items-center w-1/2">
             <span className="material-icons text-blue-300 mr-3">
               water_drop
             </span>
             <p className="font-semibold text-lg">
-              9,000 <span className="font-thin text-sm">mL</span>
+              {`${(bucketCount * 3000).toLocaleString()} `}{" "}
+              <span className="font-thin text-sm">mL</span>
             </p>
           </div>
         </li>
         <li className="flex items-center py-3 text-blue-300">
           <div className="flex items-center w-1/2">
             <span className="material-icons text-blue-300 px-3">timer</span>
-            <button className="font-semibold text-xl">1:15</button>
+            <button className="font-semibold text-xl">
+              {`${Math.round((bucketCount * 25) / 60)} `}
+              <span className="text-sm font-thin">{"h"}</span>
+              {` ${(bucketCount * 25) % 60} `}
+              <span className="text-sm font-thin">{"min"}</span>
+            </button>
           </div>
         </li>
         {/* いままで */}
@@ -64,7 +79,7 @@ export default function Infomation() {
         <li className="flex items-center py-3 text-blue-300">
           <div className="flex items-center w-1/2">
             <span className="material-icons text-blue-300 px-3">timer</span>
-            <button className="font-semibold text-xl">1:15</button>
+            <button className="font-semibold text-xl">1 : 15</button>
           </div>
           <div className="flex items-center w-1/2">
             <span className="material-icons text-blue-300 pr-3">whatshot</span>

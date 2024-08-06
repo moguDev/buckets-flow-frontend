@@ -21,6 +21,14 @@ export default function Timer() {
     { filled: 0, active: false },
   ]);
 
+  const rainingWords = [
+    "まるで天からの贈り物だな！",
+    "降り注ぐ雨が心まで洗い流してくれる！",
+    "雨音が心を癒してくれる、最高のメロディー！",
+    "雨に包まれて、世界が一層美しく見える！",
+    "雨だけが、俺たちの心を満たしてくれる！",
+  ];
+
   /** 雨音のセットアップ **/
   useEffect(() => {
     const fetchAudio = async () => {
@@ -148,8 +156,10 @@ export default function Timer() {
 
   return (
     <div className="p-5">
-      <p className="text-center font-thin text-blue-300">
-        {isPlaying ? "In the Rain." : "Rain has stopped."}
+      <p className="text-center font-light text-blue-300 text-sm">
+        {isPlaying
+          ? "💪😄☂️" + rainingWords[count % rainingWords.length]
+          : "😟🌂..."}
       </p>
       <p
         className={`text-center text-blue-300 font-normal md:text-9xl text-8xl transition-transform duration-700 ${
@@ -173,7 +183,8 @@ export default function Timer() {
               bg-blue-700 bg-opacity-10 backdrop-blur-sm
               text-gray-500
               flex items-center justify-center
-              h-16 w-16 rounded-full`}
+              h-16 w-16 rounded-full tooltip`}
+            data-tip="Stop the rain"
           >
             <span className="material-icons">pause</span>
           </button>
@@ -185,17 +196,12 @@ export default function Timer() {
               bg-blue-700 bg-opacity-10 backdrop-blur-sm
               text-gray-500 
               flex items-center justify-center
-              h-16 w-16 rounded-full`}
+              h-16 w-16 rounded-full tooltip`}
+            data-tip="Cause rain"
           >
             <span className="material-icons">play_arrow</span>
           </button>
         )}
-      </div>
-      <div className="flex items-center justify-center">
-        <span className="scale-75">
-          <Bucket filled={100} />
-        </span>
-        <p className="text-blue-300">{count}</p>
       </div>
     </div>
   );
