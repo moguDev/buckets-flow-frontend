@@ -7,7 +7,7 @@ import { useState, useRef, useEffect } from "react";
 export default function Activity() {
   const [bucketCount, setBucketCount] = useRecoilState(bucketCountState);
   const [isOpen, setIsOpen] = useState(true);
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState("auto");
 
   useEffect(() => {
