@@ -149,7 +149,13 @@ export default function Activity() {
         </div>
         <div className="flex items-center justify-between px-1 py-3 text-blue-300">
           <span className="material-icons text-xl">keyboard_arrow_left</span>
-          <p className="text-sm font-light">2024年8月5日〜2024年8月11日</p>
+          <p className="text-sm font-thin">
+            2024年8月5日〜2024年8月11日 -{" "}
+            <button className="font-semibold">
+              {bucketCount} <span className="font-thin">bucket</span>
+            </button>
+          </p>
+
           <span className="material-icons text-xl">keyboard_arrow_right</span>
         </div>
 

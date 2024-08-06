@@ -9,7 +9,7 @@ const Bucket: React.FC<BucketProps> = ({ filled, active = false }) => {
   const waterHeight = `${filled}%`;
 
   return (
-    <div
+    <button
       className={`relative transition-transform duration-700 ${
         active ? "opacity-90 scale-150 px-3" : "opacity-60 px-3"
       } hover:opacity-100 tooltip`}
@@ -30,7 +30,7 @@ const Bucket: React.FC<BucketProps> = ({ filled, active = false }) => {
           style={{ height: waterHeight }}
         ></div>
       </div>
-    </div>
+    </button>
   );
 };
 
