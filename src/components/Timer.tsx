@@ -21,14 +21,6 @@ export default function Timer() {
     { filled: 0, active: false },
   ]);
 
-  const rainingWords = [
-    "まるで天からの贈り物だな！",
-    "降り注ぐ雨が心まで洗い流してくれる！",
-    "雨音が心を癒してくれる！",
-    "雨に包まれて、世界が一層美しく見える！",
-    "雨だけが、俺たちの心を満たしてくれる！",
-  ];
-
   /** 雨音のセットアップ **/
   useEffect(() => {
     const fetchAudio = async () => {
@@ -157,10 +149,10 @@ export default function Timer() {
   return (
     <div className={`p-2 rounded-xl`}>
       <p className="text-center font-light text-blue-300 text-sm">
-        {isPlaying ? "💪😄☂️ 雨が降っています！" : "😟🌂 ..."}
+        {isPlaying ? "😄雨が降っています！" : "😟..."}
       </p>
       <p
-        className={`text-center text-blue-300 font-normal md:text-9xl text-8xl transition-transform duration-700 ${
+        className={`text-center text-blue-300 font-semibold md:text-9xl text-8xl transition-transform duration-700 ${
           isPlaying ? "scale-100" : "scale-90 brightness-90"
         } mb-5`}
       >

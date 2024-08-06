@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
-import ClientOnly from "@/components/ClientOnly";
-import RainBackground from "@/components/RainBackground";
 
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"] });
 
