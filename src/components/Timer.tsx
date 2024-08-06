@@ -155,15 +155,9 @@ export default function Timer() {
   };
 
   return (
-    <div
-      className={`bg-timer p-5 bg-gray-700 rounded-xl p-5 ${
-        isPlaying ? "bg-opacity-0 back" : "bg-opacity-10"
-      }`}
-    >
+    <div className={`p-5 rounded-xl`}>
       <p className="text-center font-light text-blue-300 text-sm">
-        {isPlaying
-          ? "💪😄☂️ " + rainingWords[count % rainingWords.length]
-          : "😟🌂 ..."}
+        {isPlaying ? "💪😄☂️ 雨が降っています！" : "😟🌂 ..."}
       </p>
       <p
         className={`text-center text-blue-300 font-normal md:text-9xl text-8xl transition-transform duration-700 ${

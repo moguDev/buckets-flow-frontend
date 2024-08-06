@@ -32,8 +32,9 @@ body {
   }
 }
 
-.bg-timer {
-  transition: background-color 0.7s ease, transform 0.7s ease; /* transformのアニメーションを追加 */
+.transition-height {
+  transition: height 0.5s ease;
+  overflow: hidden;
 }
 
 .chart-tab {

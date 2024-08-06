@@ -4,7 +4,7 @@ export default function Header() {
       <div className="flex items-center h-full">
         <span className="material-icons text-blue-300 mr-1">water_drop</span>
         <p className="text-blue-300 text-2xl font-bold brightness-120">
-          <span className="text-base font-thin ">in the </span>R
+          <span className="text-xl font-thin ">buckets </span>Flow
         </p>
       </div>
     </header>
