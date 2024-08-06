@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import { isPlayingState, bucketCountState } from "../state/atoms";
 import Bucket from "./Bucket";
 
-export default function Timer() {
+export default function Timer({ init = 1500 }) {
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
   const audioContextRef = useRef<AudioContext | null>(null);
   const audioBufferRef = useRef<AudioBuffer | null>(null);
@@ -12,7 +12,7 @@ export default function Timer() {
   const gainNodeRef = useRef<GainNode | null>(null);
 
   const [count, setCount] = useRecoilState(bucketCountState);
-  const [time, setTime] = useState(5);
+  const [time, setTime] = useState(init);
   const [endTime, setEndTime] = useState(-1);
   const [bucketPropses, setBucketPropses] = useState([
     { filled: 0, active: false },
@@ -53,7 +53,7 @@ export default function Timer() {
 
       if (timeRemaining <= 0) {
         setIsPlaying(false);
-        setTime(1500);
+        setTime(init);
         setCount((prev) => prev + 1);
         fadeOutAudio();
         setBucketPropses(
@@ -63,7 +63,7 @@ export default function Timer() {
         );
       } else {
         const currentCount = Math.ceil(timeRemaining / 1000);
-        const minutes = Math.floor(currentCount / 60);
+        const minutes = String(Math.floor(currentCount / 60)).padStart(2, "0");
         const seconds = String(currentCount % 60).padStart(2, "0");
         document.title = `${minutes}:${seconds} - buckets Flow`;
         setTime(currentCount);
@@ -84,6 +84,12 @@ export default function Timer() {
     const timerId = setInterval(updateTimer, 1000);
     return () => clearInterval(timerId);
   }, [isPlaying, endTime, count, bucketPropses]);
+
+  const handleReset = () => {
+    pauseAudio();
+    setTime(init);
+    setEndTime(Date.now() + init * 1000);
+  };
 
   const playAudio = () => {
     if (audioContextRef.current && audioBufferRef.current) {
@@ -106,7 +112,7 @@ export default function Timer() {
       setBucketPropses(
         bucketPropses.map((bucket, index) => {
           if (index === count % 4) {
-            return { ...bucket, filled: (1 - time / 1500) * 100, active: true };
+            return { ...bucket, filled: (1 - time / init) * 100, active: true };
           } else if (index < count % 4) {
             return { ...bucket, filled: 100, active: false };
           }
@@ -174,7 +180,7 @@ export default function Timer() {
               text-gray-500
               flex items-center justify-center
               h-16 w-16 rounded-full tooltip`}
-            data-tip="Stop the rain"
+            data-tip="雨を止める"
           >
             <span className="material-icons">pause</span>
           </button>
@@ -187,11 +193,23 @@ export default function Timer() {
               text-gray-500 
               flex items-center justify-center
               h-16 w-16 rounded-full tooltip`}
-            data-tip="Cause rain"
+            data-tip="雨を降らせる"
           >
             <span className="material-icons">play_arrow</span>
           </button>
         )}
+        <button
+          onClick={handleReset}
+          className={`
+              btn m-2 p-2 border-none
+              bg-gray-700 bg-opacity-10 backdrop-blur-sm
+              text-gray-500
+              flex items-center justify-center
+              h-16 w-16 rounded-full tooltip`}
+          data-tip="リセット"
+        >
+          <span className="material-icons">replay</span>
+        </button>
       </div>
     </div>
   );

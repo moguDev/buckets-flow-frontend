@@ -76,7 +76,7 @@ export default function Activity() {
               <button className="font-semibold text-xl">
                 {`${Math.floor((bucketCount * 25) / 60)} `}
                 <span className="text-sm font-thin">{"h"}</span>
-                {` ${(bucketCount * 25) % 60} `}
+                {` ${((bucketCount * 25) % 60).toString().padStart(2, "0")} `}
                 <span className="text-sm font-thin">{"min"}</span>
               </button>
             </div>

@@ -10,7 +10,7 @@ export default function Header() {
         </div>
         <button className="flex items-center text-blue-300 bg-opacity-0 border-none btn">
           <span className="material-icons text-xs">login</span>
-          <p className="font-normal">ログインして記録する</p>
+          <p className="font-normal">サインイン</p>
         </button>
       </div>
     </header>

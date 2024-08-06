@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { isPlayingState } from "@/state/atoms";
 
@@ -22,24 +22,26 @@ const RainAnimation: React.FC = () => {
     const context = canvas.getContext("2d");
     if (!context) return;
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
 
-    const numberOfDrops = 120;
-    const drops: Drop[] = [];
+    const initializeDrops = (width: number, height: number) => {
+      const numberOfDrops = 120;
+      const drops: Drop[] = [];
+      for (let i = 0; i < numberOfDrops; i++) {
+        drops.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          length: Math.random() * 50 + 150,
+          velocity: Math.random() * 2 + 20,
+        });
+      }
+      return drops;
+    };
 
-    for (let i = 0; i < numberOfDrops; i++) {
-      drops.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        length: Math.random() * 50 + 150,
-        velocity: Math.random() * 2 + 20,
-      });
-    }
-
-    const drawRain = () => {
+    const drawRain = (drops: Drop[], width: number, height: number) => {
       context.clearRect(0, 0, width, height);
       context.fillStyle = "#040612";
       context.fillRect(0, 0, width, height);
@@ -59,22 +61,35 @@ const RainAnimation: React.FC = () => {
         }
       });
 
-      animationFrameIdRef.current = requestAnimationFrame(drawRain);
+      animationFrameIdRef.current = requestAnimationFrame(() =>
+        drawRain(drops, width, height)
+      );
     };
 
-    if (isPlaying) {
-      drawRain();
-    } else {
+    const handleResize = () => {
       if (animationFrameIdRef.current) {
         cancelAnimationFrame(animationFrameIdRef.current);
         animationFrameIdRef.current = null;
       }
-    }
+      resizeCanvas();
+      const width = canvas.width;
+      const height = canvas.height;
+      const drops = initializeDrops(width, height);
+      if (isPlaying) {
+        drawRain(drops, width, height);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Initial setup
+    handleResize();
 
     return () => {
       if (animationFrameIdRef.current) {
         cancelAnimationFrame(animationFrameIdRef.current);
       }
+      window.removeEventListener("resize", handleResize);
     };
   }, [isPlaying]);
 
@@ -88,7 +103,7 @@ const RainAnimation: React.FC = () => {
 
 export default function RainBackground() {
   return (
-    <div className="fixed inset-0 z-[-1] overflow-hidden h-full w-full">
+    <div className="fixed inset-0 overflow-hidden h-full w-full">
       <RainAnimation />
     </div>
   );
