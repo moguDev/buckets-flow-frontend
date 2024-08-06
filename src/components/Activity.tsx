@@ -19,7 +19,7 @@ export default function Infomation() {
       </div>
       <ul>
         {/* 今日 */}
-        <div className="flex items-center justify-between text-gray-400 border-b border-opacity-20 border-gray-500 py-1">
+        <div className="flex items-center justify-between text-gray-500 border-b border-opacity-20 border-gray-500 py-1">
           <div className="flex items-center">
             <span className="material-icons text-xs pr-1">today</span>
             <p className="text-sm">今日</p>
@@ -60,7 +60,7 @@ export default function Infomation() {
           </div>
         </li>
         {/* すべての期間 */}
-        <div className="flex items-center justify-between text-gray-400 border-b border-opacity-20 border-gray-500 mt-3 py-1">
+        <div className="flex items-center justify-between text-gray-500 border-b border-opacity-20 border-gray-500 mt-3 py-1">
           <div className="flex items-center">
             <span className="material-icons text-xs pr-1">calendar_month</span>
             <p className="text-sm">すべての期間</p>
@@ -97,7 +97,7 @@ export default function Infomation() {
         </li>
       </ul>
       {/* チャート */}
-      <div className="flex items-center justify-between text-gray-400 border-b border-opacity-20 border-gray-500 mt-3 py-1">
+      <div className="flex items-center justify-between text-gray-500 border-b border-opacity-20 border-gray-500 mt-3 py-1">
         <div className="flex items-center">
           <span className="material-icons text-xs pr-1">equalizer</span>
           <p className="text-sm">降水量チャート</p>
