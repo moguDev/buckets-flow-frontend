@@ -15,7 +15,7 @@ export default function Home() {
   };
   return (
     <div className="lg:flex w-full">
-      <div className="lg:w-2/3 lg:pt-10 pb-20">
+      <div className="lg:w-2/3 lg:pt-10">
         <Timer />
       </div>
       <div className="lg:w-1/3">

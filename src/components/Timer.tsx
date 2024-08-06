@@ -167,12 +167,12 @@ export default function Timer() {
         {String(Math.floor(time / 60)).padStart(2, "0")}:
         {String(time % 60).padStart(2, "0")}
       </p>
-      <div className="flex items-center justify-center p-2">
+      <div className="flex items-center justify-center py-2">
         {bucketPropses.map((bucketProps, index) => (
           <Bucket key={index} {...bucketProps} />
         ))}
       </div>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center py-2">
         {isPlaying ? (
           <button
             onClick={pauseAudio}

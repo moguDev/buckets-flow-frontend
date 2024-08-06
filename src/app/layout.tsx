@@ -40,7 +40,7 @@ export default function RootLayout({
           "
           >
             <Header />
-            <div className="flex-1 overflow-auto pt-20 pb-10 mx-5">
+            <div className="flex-1 overflow-auto pt-20 pb-10 lg:mx-5 mx-3">
               {children}
             </div>
           </div>
