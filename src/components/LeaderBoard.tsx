@@ -1,6 +1,6 @@
 export default function LeaderBoard() {
   return (
-    <div className="bg-gray-700 bg-opacity-20 rounded-xl px-5 py-2 backdrop-blur-sm w-full">
+    <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 py-2 backdrop-blur-sm w-full">
       <div className="flex justify-between items-center w-full pb-2">
         <div className="flex items-center text-blue-300">
           <span className="material-icons text-sm pr-1">leaderboard</span>
