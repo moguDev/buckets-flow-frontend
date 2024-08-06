@@ -19,16 +19,13 @@ export default function Home() {
         <div className="mb-3">
           <Timer />
         </div>
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <AllRecoards />
-        </div>
+        </div> */}
       </div>
       <div className="md:w-1/3 h-full mx-1">
         <div className="mb-3">
           <Infomation />
-        </div>
-        <div className="mb-3">
-          <Charts />
         </div>
         <div className="mb-3">
           <LeaderBoard />

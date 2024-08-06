@@ -1,6 +1,7 @@
 import Bucket from "./Bucket";
 import { useRecoilState } from "recoil";
 import { bucketCountState } from "@/state/atoms";
+import ChartBar from "./ChartBar";
 
 export default function Infomation() {
   const [bucketCount, setBucketCount] = useRecoilState(bucketCountState);
@@ -20,7 +21,7 @@ export default function Infomation() {
         {/* 今日 */}
         <div className="flex items-center justify-between text-gray-400 border-b border-opacity-20 border-gray-500 py-1">
           <div className="flex items-center">
-            <span className="material-icons text-sm pr-1">today</span>
+            <span className="material-icons text-xs pr-1">today</span>
             <p className="text-sm">今日</p>
           </div>
           <p className="text-xs font-thin">2024年8月6日</p>
@@ -58,9 +59,12 @@ export default function Infomation() {
             </button>
           </div>
         </li>
-        {/* いままで */}
-        <div className="flex items-center justify-between text-gray-400 border-b border-opacity-20 border-gray-500 py-1">
-          <p className="text-sm">いままで</p>
+        {/* すべての期間 */}
+        <div className="flex items-center justify-between text-gray-400 border-b border-opacity-20 border-gray-500 mt-3 py-1">
+          <div className="flex items-center">
+            <span className="material-icons text-xs pr-1">calendar_month</span>
+            <p className="text-sm">すべての期間</p>
+          </div>
           <p className="text-sm"></p>
         </div>
         <li className="flex items-center py-3 text-blue-300">
@@ -92,6 +96,35 @@ export default function Infomation() {
           </div>
         </li>
       </ul>
+      {/* チャート */}
+      <div className="flex items-center justify-between text-gray-400 border-b border-opacity-20 border-gray-500 mt-3 py-1">
+        <div className="flex items-center">
+          <span className="material-icons text-xs pr-1">equalizer</span>
+          <p className="text-sm">降水量チャート</p>
+        </div>
+        <p className="text-sm"></p>
+      </div>
+      <div className="flex items-center bg-blue-900 bg-opacity-10 rounded-lg mt-2 p-1">
+        <button className="chart-tab w-1/4">日</button>
+        <button className="chart-tab chart-tab-selected w-1/4">週</button>
+        <button className="chart-tab w-1/4">月</button>
+        <button className="chart-tab w-1/4">年</button>
+      </div>
+      <div className="flex items-center justify-between px-1 py-3 text-blue-300">
+        <span className="material-icons text-xl">keyboard_arrow_left</span>
+        <p className="text-sm font-light">2024年8月5日〜2024年8月11日</p>
+        <span className="material-icons text-xl">keyboard_arrow_right</span>
+      </div>
+
+      <div className="flex w-full p-1">
+        <ChartBar maxValue={9} value={4} label="月" />
+        <ChartBar maxValue={9} value={8} label="火" />
+        <ChartBar maxValue={9} value={2} label="水" />
+        <ChartBar maxValue={9} value={3} label="木" />
+        <ChartBar maxValue={9} value={2} label="金" />
+        <ChartBar maxValue={9} value={9} label="土" />
+        <ChartBar maxValue={9} value={1} label="日" />
+      </div>
     </div>
   );
 }
