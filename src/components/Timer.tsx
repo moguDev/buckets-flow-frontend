@@ -86,7 +86,8 @@ export default function Timer({ init = 1500 }) {
   }, [isPlaying, endTime, count, bucketPropses]);
 
   const openModal = () => {
-    document.getElementById("my_modal_5").showModal();
+    const modal = document.getElementById("my_modal_5") as HTMLDialogElement;
+    modal !== null && modal.showModal();
   };
 
   const handleReset = () => {
