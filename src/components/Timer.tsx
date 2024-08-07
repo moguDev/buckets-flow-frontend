@@ -85,6 +85,10 @@ export default function Timer({ init = 1500 }) {
     return () => clearInterval(timerId);
   }, [isPlaying, endTime, count, bucketPropses]);
 
+  const openModal = () => {
+    document.getElementById("my_modal_5").showModal();
+  };
+
   const handleReset = () => {
     pauseAudio();
     setTime(init);
@@ -199,7 +203,7 @@ export default function Timer({ init = 1500 }) {
           </button>
         )}
         <button
-          onClick={handleReset}
+          onClick={openModal}
           className={`
               btn m-2 p-2 border-none
               bg-gray-700 bg-opacity-10 backdrop-blur-sm
@@ -211,6 +215,24 @@ export default function Timer({ init = 1500 }) {
           <span className="material-icons">replay</span>
         </button>
       </div>
+      <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box bg-gray-900 bg-opacity-90 backdrop-blur-sm text-white">
+          <h3 className="font-bold text-lg">バケツをリセットしますか？</h3>
+          <div className="modal-action">
+            <form method="dialog w-full">
+              <button className="btn mr-2 bg-opacity-0 border-none text-white">
+                キャンセル
+              </button>
+              <button
+                className="btn bg-blue-800 bg-opacity-40 border-none text-white"
+                onClick={handleReset}
+              >
+                リセット
+              </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 }

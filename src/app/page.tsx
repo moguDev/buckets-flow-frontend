@@ -1,9 +1,8 @@
 "use client";
 import { useState } from "react";
 import Timer from "@/components/Timer";
-import Infomation from "@/components/Activity";
+import Activity from "@/components/Activity";
 import LeaderBoard from "@/components/LeaderBoard";
-import AllRecoards from "@/components/AllRecords";
 import { RecoilRoot } from "recoil";
 import RainBackground from "@/components/RainBackground";
 
@@ -23,7 +22,7 @@ export default function Home() {
         </div>
         <div className="lg:w-1/3">
           <div className="pb-3">
-            <Infomation />
+            <Activity />
           </div>
           <div className="pb-3">
             <LeaderBoard />

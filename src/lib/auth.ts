@@ -1,27 +1,56 @@
-import { GetServerSideProps } from "next";
+// lib/auth.ts
+import axiosInstance from "./axiosInstance";
+import Cookies from "js-cookie";
 
-export const withAuthServerSideProps = (url: string): GetServerSideProps => {
-  return async (context) => {
-    const { req, res } = context;
-
-    const response = await fetch(`${process.env.API_ORIGIN}/${url}`, {
-      headers: {
-        "Content-Type": "application/json",
-        uid: req.cookies["uid"],
-        client: req.cookies["client"],
-        "access-token": req.cookies["access-token"],
-      },
-    });
-    if (!response.ok && response.status === 401) {
-      return {
-        redirect: {
-          destination: "/login",
-          permanent: false,
-        },
-      };
-    }
-    // TODO: 他にも500エラーを考慮した分岐も必要
-    const props = await response.json();
-    return { props };
+interface LoginResponse {
+  data: {
+    email: string;
+    // 他の必要なユーザーデータ
   };
+}
+
+export const login = async (
+  email: string,
+  password: string
+): Promise<LoginResponse> => {
+  try {
+    const response = await axiosInstance.post("auth/sign_in", {
+      email,
+      password,
+    });
+
+    // レスポンスヘッダーからトークンを取得してクッキーに保存
+    const { "access-token": accessToken, client, uid } = response.headers;
+
+    if (accessToken && client && uid) {
+      Cookies.set("access-token", accessToken, {
+        secure: true,
+        sameSite: "strict",
+      });
+      Cookies.set("client", client, { secure: true, sameSite: "strict" });
+      Cookies.set("uid", uid, { secure: true, sameSite: "strict" });
+    }
+
+    return response.data;
+  } catch (error) {
+    // エラーメッセージの処理
+    console.error("ログインに失敗しました:", error);
+    throw new Error("ログインに失敗しました。");
+  }
+};
+
+export const logout = async (): Promise<void> => {
+  try {
+    // サーバーサイドでログアウトリクエストを送信
+    await axiosInstance.delete("auth/sign_out");
+
+    // クッキーを削除
+    Cookies.remove("access-token");
+    Cookies.remove("client");
+    Cookies.remove("uid");
+  } catch (error) {
+    // エラーメッセージの処理
+    console.error("ログアウトに失敗しました:", error);
+    throw new Error("ログアウトに失敗しました。");
+  }
 };

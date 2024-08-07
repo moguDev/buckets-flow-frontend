@@ -3,12 +3,16 @@ import { useRecoilState } from "recoil";
 import { bucketCountState } from "@/state/atoms";
 import ChartBar from "./ChartBar";
 import { useState, useRef, useEffect } from "react";
+import { getMaxStreak, getTodayBuckets, useBuckets } from "@/hooks/useBuckets";
 
 export default function Activity() {
   const [bucketCount, setBucketCount] = useRecoilState(bucketCountState);
   const [isOpen, setIsOpen] = useState(true);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState("auto");
+
+  const { buckets, loading, error } = useBuckets();
+  console.log(buckets);
 
   useEffect(() => {
     if (contentRef.current) {
@@ -54,7 +58,7 @@ export default function Activity() {
                 <Bucket filled={100} active={true} />
               </span>
               <p className="font-semibold text-xl">
-                {`${bucketCount} `}
+                {`${getTodayBuckets(buckets).length} `}
                 <span className="text-sm font-thin">
                   {bucketCount === 1 ? "bucket" : "buckets"}
                 </span>
@@ -65,7 +69,12 @@ export default function Activity() {
                 water_drop
               </span>
               <p className="font-semibold text-lg">
-                {`${(bucketCount * 3000).toLocaleString()} `}{" "}
+                {`${(
+                  getTodayBuckets(buckets).reduce(
+                    (sum, bucket) => sum + bucket.storage,
+                    0
+                  ) * 2
+                ).toLocaleString()} `}{" "}
                 <span className="font-thin text-sm">mL</span>
               </p>
             </div>
@@ -74,9 +83,19 @@ export default function Activity() {
             <div className="flex items-center w-1/2">
               <span className="material-icons text-blue-300 px-3">timer</span>
               <button className="font-semibold text-xl">
-                {`${Math.floor((bucketCount * 25) / 60)} `}
+                {`${Math.floor(
+                  getTodayBuckets(buckets).reduce(
+                    (sum, bucket) => sum + bucket.duration / 60,
+                    0
+                  ) / 60
+                )} `}
                 <span className="text-sm font-thin">{"h"}</span>
-                {` ${((bucketCount * 25) % 60).toString().padStart(2, "0")} `}
+                {` ${Math.floor(
+                  getTodayBuckets(buckets).reduce(
+                    (sum, bucket) => sum + bucket.duration / 60,
+                    0
+                  ) % 60
+                )} `}
                 <span className="text-sm font-thin">{"min"}</span>
               </button>
             </div>
@@ -97,7 +116,7 @@ export default function Activity() {
                 <Bucket filled={100} active={true} />
               </span>
               <p className="font-semibold text-xl">
-                {`${bucketCount} `}
+                {`${buckets.length} `}
                 <span className="text-sm font-thin">
                   {bucketCount === 1 ? "bucket" : "buckets"}
                 </span>
@@ -108,7 +127,9 @@ export default function Activity() {
                 water_drop
               </span>
               <p className="font-semibold text-lg">
-                {`${(bucketCount * 3000).toLocaleString()} `}{" "}
+                {`${(
+                  buckets.reduce((sum, bucket) => sum + bucket.storage, 0) * 2
+                ).toLocaleString()} `}{" "}
                 <span className="font-thin text-sm">mL</span>
               </p>
             </div>
@@ -117,9 +138,19 @@ export default function Activity() {
             <div className="flex items-center w-1/2">
               <span className="material-icons text-blue-300 px-3">timer</span>
               <button className="font-semibold text-xl">
-                {`${Math.floor((bucketCount * 25) / 60)} `}
+                {`${Math.floor(
+                  buckets.reduce(
+                    (sum, bucket) => sum + bucket.duration / 60,
+                    0
+                  ) / 60
+                )} `}
                 <span className="text-sm font-thin">{"h"}</span>
-                {` ${(bucketCount * 25) % 60} `}
+                {` ${Math.floor(
+                  buckets.reduce(
+                    (sum, bucket) => sum + bucket.duration / 60,
+                    0
+                  ) % 60
+                )} `}
                 <span className="text-sm font-thin">{"min"}</span>
               </button>
             </div>
@@ -128,7 +159,8 @@ export default function Activity() {
                 whatshot
               </span>
               <button className="font-semibold text-xl">
-                1 <span className="font-thin text-sm">day streak.</span>
+                {getMaxStreak(buckets)}{" "}
+                <span className="font-thin text-sm">day streak.</span>
               </button>
             </div>
           </li>
