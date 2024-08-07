@@ -27,7 +27,12 @@ export default function Header() {
         </div>
         {isAuthenticated ? (
           <button
-            onClick={() => document.getElementById("my_modal_1").showModal()}
+            onClick={() => {
+              const modal = document.getElementById(
+                "my_modal_1"
+              ) as HTMLDialogElement;
+              modal !== null && modal.showModal();
+            }}
             className="flex items-center text-blue-300 bg-opacity-0 border-none btn"
           >
             <span className="material-icons text-xs">logout</span>
