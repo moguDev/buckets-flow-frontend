@@ -7,7 +7,6 @@ import { RecoilRoot } from "recoil";
 import RainBackground from "@/components/RainBackground";
 import useNotificationPermission from "@/hooks/useNotificationPermission";
 import Preferences from "@/components/Preferences";
-import WaterContainer from "@/components/WaterContainer";
 
 export default function Home() {
   const permission = useNotificationPermission();
