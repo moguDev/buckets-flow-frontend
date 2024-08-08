@@ -4,12 +4,6 @@ export default function Preferences() {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState("auto");
   const [isOpen, setIsOpen] = useState(false);
-
-  const [value, setValue] = useState(25);
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
-
   useEffect(() => {
     if (contentRef.current) {
       if (isOpen) {
@@ -39,36 +33,6 @@ export default function Preferences() {
         </div>
       </button>
       <div ref={contentRef} className="transition-height" style={{ height }}>
-        <div className="p-1">
-          <div className="flex justify-between text-blue-300">
-            <p className="text-gray-400">バケツの容量</p>
-            <p>
-              {`${(value * 60 * 2).toLocaleString()}mL`}
-              <span className="text-sm font-semibold">
-                （{value} 分のタイマー）
-              </span>
-            </p>
-          </div>
-          <div className="w-full">
-            <input
-              type="range"
-              min={25}
-              max={50}
-              value={value}
-              className="range my-3"
-              step={5}
-              onChange={handleChange}
-            />
-            <div className="flex w-full justify-between px-2 text-xs">
-              <span>25min</span>
-              <span>|</span>
-              <span>|</span>
-              <span>|</span>
-              <span>|</span>
-              <span>50min</span>
-            </div>
-          </div>
-        </div>
         <div className="flex w-full p-1 pb-3"></div>
       </div>
     </div>

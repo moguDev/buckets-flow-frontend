@@ -23,7 +23,6 @@ export default function Home() {
       <div className="lg:flex w-full h-full pt-20 pb-10 px-5 bg-opacity-0 z-10">
         <div className="lg:w-2/3 lg:pt-10">
           <Timer />
-          <WaterContainer level={50} />
         </div>
         <div className="lg:w-1/3">
           <div className="pb-3">
