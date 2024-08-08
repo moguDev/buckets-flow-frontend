@@ -56,10 +56,6 @@ export default function Timer({ init = 1500 }) {
         setTime(init);
         setCount((prev) => prev + 1);
         fadeOutAudio();
-        Notification.permission === "granted" &&
-          new Notification("バケツが満タンになりました！", {
-            body: "お疲れ様でした！少し休憩しましょう！",
-          });
         setBucketPropses(
           bucketPropses.map((bucket, index) => {
             return { ...bucket, active: false };

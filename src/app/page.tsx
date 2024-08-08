@@ -5,11 +5,9 @@ import Activity from "@/components/Activity";
 import LeaderBoard from "@/components/LeaderBoard";
 import { RecoilRoot } from "recoil";
 import RainBackground from "@/components/RainBackground";
-import useNotificationPermission from "@/hooks/useNotificationPermission";
 import Preferences from "@/components/Preferences";
 
 export default function Home() {
-  const permission = useNotificationPermission();
   const [filled, setFilled] = useState(50);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
