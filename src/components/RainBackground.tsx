@@ -34,7 +34,7 @@ const RainAnimation: React.FC = () => {
         drops.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          length: Math.random() * 50 + 150,
+          length: Math.random() * 50 + 100,
           velocity: Math.random() * 2 + 20,
         });
       }

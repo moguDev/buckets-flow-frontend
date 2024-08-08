@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/api/v1/", // バックエンドのベースURL
+  baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/`,
   // baseURL: "https://buckets-flow-backend.onrender.com/api/v1/",
 });
 
