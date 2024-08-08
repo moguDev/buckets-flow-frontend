@@ -3,8 +3,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/`,
-  // baseURL: "https://buckets-flow-backend.onrender.com/api/v1/",
+  // baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/`,
+  baseURL: "https://buckets-flow-backend.onrender.com/api/v1/",
 });
 
 // リクエストインターセプターを追加して、クッキーからトークンを取得

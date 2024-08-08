@@ -28,7 +28,7 @@ export default function Timer({ init = 1500 }) {
         (window as any).webkitAudioContext)();
       audioContextRef.current = context;
 
-      const response = await fetch("/sounds/rain_sound.mp3");
+      const response = await fetch("/sounds/rain_sound_02.mp3");
       const arrayBuffer = await response.arrayBuffer();
       const audioBuffer = await context.decodeAudioData(arrayBuffer);
       audioBufferRef.current = audioBuffer;
