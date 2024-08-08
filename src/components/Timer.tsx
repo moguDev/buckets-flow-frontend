@@ -28,7 +28,7 @@ export default function Timer({ init = 1500 }) {
         (window as any).webkitAudioContext)();
       audioContextRef.current = context;
 
-      const response = await fetch("/sounds/rain_sound_02.mp3");
+      const response = await fetch("/sounds/rain_sound.mp3");
       const arrayBuffer = await response.arrayBuffer();
       const audioBuffer = await context.decodeAudioData(arrayBuffer);
       audioBufferRef.current = audioBuffer;
@@ -56,6 +56,10 @@ export default function Timer({ init = 1500 }) {
         setTime(init);
         setCount((prev) => prev + 1);
         fadeOutAudio();
+        Notification.permission === "granted" &&
+          new Notification("バケツが満タンになりました！", {
+            body: "お疲れ様でした！少し休憩しましょう！",
+          });
         setBucketPropses(
           bucketPropses.map((bucket, index) => {
             return { ...bucket, active: false };
@@ -163,14 +167,14 @@ export default function Timer({ init = 1500 }) {
         {isPlaying ? "😄雨が降っています！" : "😟..."}
       </p>
       <p
-        className={`text-center text-blue-300 font-semibold md:text-9xl text-8xl transition-transform duration-700 ${
-          isPlaying ? "scale-100" : "scale-90 brightness-90"
+        className={`text-center text-blue-300 font-semibold md:text-9xl text-8xl transition-transform duration-700 transition-brightness ${
+          isPlaying ? "scale-105 brightness-110" : "scale-90 brightness-90"
         } mb-5`}
       >
         {String(Math.floor(time / 60)).padStart(2, "0")}:
         {String(time % 60).padStart(2, "0")}
       </p>
-      <div className="flex items-center justify-center py-2">
+      <div className="flex items-center justify-center py-4">
         {bucketPropses.map((bucketProps, index) => (
           <Bucket key={index} {...bucketProps} />
         ))}

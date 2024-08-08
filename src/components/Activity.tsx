@@ -4,6 +4,7 @@ import { bucketCountState } from "@/state/atoms";
 import ChartBar from "./ChartBar";
 import { useState, useRef, useEffect } from "react";
 import { getMaxStreak, getTodayBuckets, useBuckets } from "@/hooks/useBuckets";
+import { BucketIcon } from "./BucketIcon";
 
 export default function Activity() {
   const [bucketCount, setBucketCount] = useRecoilState(bucketCountState);
@@ -54,10 +55,10 @@ export default function Activity() {
           </div>
           <li className="flex items-center py-3 text-blue-300">
             <div className="flex items-center w-1/2">
-              <span className="scale-50">
-                <Bucket filled={100} active={true} />
+              <span className="px-3">
+                <BucketIcon />
               </span>
-              <p className="font-semibold text-xl">
+              <p className="font-semibold text-xl pl-1">
                 {`${getTodayBuckets(buckets).length} `}
                 <span className="text-sm font-thin">
                   {bucketCount === 1 ? "bucket" : "buckets"}
@@ -112,8 +113,8 @@ export default function Activity() {
           </div>
           <li className="flex items-center py-3 text-blue-300">
             <div className="flex items-center w-1/2">
-              <span className="scale-50">
-                <Bucket filled={100} active={true} />
+              <span className="pl-4 pr-3">
+                <BucketIcon />
               </span>
               <p className="font-semibold text-xl">
                 {`${buckets.length} `}

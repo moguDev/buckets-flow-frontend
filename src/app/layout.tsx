@@ -4,7 +4,7 @@ import { Noto_Sans_JP } from "next/font/google";
 import { ReactNode } from "react";
 import "./globals.css";
 import Header from "@/components/Header";
-import { AuthProvider } from "@/contexts/AuthContext";
+import { AuthProvider } from "../contexts/AuthContext";
 
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"] });
 

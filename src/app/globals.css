@@ -60,3 +60,48 @@ body {
   color: white;
   background-color: #bfdbfe10;
 }
+
+.transition-brightness {
+  transition-property: transform, filter; /* transformとfilterを指定 */
+  transition-duration: 0.7s; /* 0.7秒のアニメーション */
+}
+
+/* WatarContainer.tsx */
+.water-container {
+  width: 200px;
+  height: 400px;
+  border: 2px solid #000;
+  position: relative;
+  overflow: hidden;
+}
+
+.water {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  transition: height 0.5s ease;
+  overflow: hidden;
+}
+
+.water-surface {
+  position: absolute;
+  top: -25px; /* 水面の高さを調整 */
+  left: 0;
+  width: 200%;
+  height: 20px; /* 水面の厚さ */
+  background: rgba(255, 255, 255); /* 境界線を強調 */
+  border-radius: 50%;
+  animation: wave 4s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(-10) translateY(0);
+  }
+  25% {
+    transform: translateX(-30%) translateY(0);
+  }
+  50% {
+    transform: translateX(-60%) translateY(0);
+  }
+}
