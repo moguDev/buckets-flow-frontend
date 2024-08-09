@@ -6,12 +6,12 @@ import Bucket from "./Bucket";
 import { useBuckets } from "@/recoil/bucketsState";
 
 export default function Timer({ init = 1500 }) {
-  const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
   const audioContextRef = useRef<AudioContext | null>(null);
   const audioBufferRef = useRef<AudioBuffer | null>(null);
   const sourceRef = useRef<AudioBufferSourceNode | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
 
+  const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
   const [count, setCount] = useRecoilState(bucketCountState);
   const [startTime, setStartTime] = useState(-1);
   const [endTime, setEndTime] = useState(-1);

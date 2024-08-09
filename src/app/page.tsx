@@ -7,6 +7,7 @@ import { RecoilRoot } from "recoil";
 import RainBackground from "@/components/RainBackground";
 import Preferences from "@/components/Preferences";
 import Header from "@/components/Header";
+import RainfallCharts from "@/components/RainfallCharts";
 
 export default function Home() {
   const [filled, setFilled] = useState(50);
@@ -26,6 +27,9 @@ export default function Home() {
         <div className="lg:w-1/3">
           <div className="pb-3">
             <Activity />
+          </div>
+          <div className="pb-3">
+            <RainfallCharts />
           </div>
           <div className="pb-3">
             <LeaderBoard />
