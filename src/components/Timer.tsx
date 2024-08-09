@@ -5,7 +5,7 @@ import { isPlayingState, bucketCountState } from "@/recoil/timerState";
 import Bucket from "./Bucket";
 import { useBuckets } from "@/recoil/bucketsState";
 
-export default function Timer({ init = 5 }) {
+export default function Timer({ init = 1500 }) {
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
   const audioContextRef = useRef<AudioContext | null>(null);
   const audioBufferRef = useRef<AudioBuffer | null>(null);
