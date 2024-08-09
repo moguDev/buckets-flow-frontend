@@ -49,7 +49,6 @@ export const useBuckets = () => {
       setError("データの取得に失敗しました");
       console.error(error);
     } finally {
-      await wait(2000);
       setLoading(false);
     }
   };
