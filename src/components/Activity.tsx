@@ -1,10 +1,11 @@
 import Bucket from "./Bucket";
 import { useRecoilState } from "recoil";
-import { bucketCountState } from "@/state/atoms";
+import { bucketCountState } from "@/recoil/timerState";
 import ChartBar from "./ChartBar";
 import { useState, useRef, useEffect } from "react";
-import { getMaxStreak, getTodayBuckets, useBuckets } from "@/hooks/useBuckets";
 import { BucketIcon } from "./BucketIcon";
+import { getMaxStreak, getTodayBuckets } from "@/recoil/bucketsState";
+import { useBuckets } from "@/recoil/bucketsState";
 
 export default function Activity() {
   const [bucketCount, setBucketCount] = useRecoilState(bucketCountState);

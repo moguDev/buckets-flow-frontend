@@ -4,7 +4,6 @@ import { Noto_Sans_JP } from "next/font/google";
 import { ReactNode } from "react";
 import "./globals.css";
 import Header from "@/components/Header";
-import { AuthProvider } from "../contexts/AuthContext";
 
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"] });
 
@@ -22,12 +21,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
       </head>
-      <AuthProvider>
-        <body className={notoSansJP.className}>
-          <Header />
-          <div>{children}</div>
-        </body>
-      </AuthProvider>
+      <body className={notoSansJP.className}>
+        <div>{children}</div>
+      </body>
     </html>
   );
 }

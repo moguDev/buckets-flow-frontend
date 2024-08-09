@@ -1,7 +1,13 @@
-// hooks/useBuckets.ts
-import { useState, useEffect } from "react";
+import {
+  atom,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
 import axiosInstance from "@/lib/axiosInstance";
+import { useEffect } from "react";
 
+// Bucket インターフェース
 interface Bucket {
   id: number;
   user_id: number;
@@ -10,33 +16,67 @@ interface Bucket {
   storage: number;
   starttime: number;
   endtime: number;
-  // その他のプロパティ
 }
 
+// バケット状態
+export const bucketsState = atom<Bucket[]>({
+  key: "bucketsState",
+  default: [],
+});
+
+export const loadingState = atom<boolean>({
+  key: "loadingState",
+  default: true,
+});
+
+export const errorState = atom<string | null>({
+  key: "errorState",
+  default: null,
+});
+
+// バケット取得のカスタムフック
 export const useBuckets = () => {
-  const [buckets, setBuckets] = useState<Bucket[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [buckets, setBuckets] = useRecoilState(bucketsState);
+  const setLoading = useSetRecoilState(loadingState);
+  const setError = useSetRecoilState(errorState);
+
+  const fetchBuckets = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get("buckets");
+      setBuckets(response.data);
+    } catch (error) {
+      setError("データの取得に失敗しました");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const createBucket = async (newBucket: Omit<Bucket, "id" | "user_id">) => {
+    try {
+      const response = await axiosInstance.post("buckets", newBucket);
+      setBuckets((prevBuckets) => [...prevBuckets, response.data]);
+    } catch (error) {
+      setError("新しいバケットの作成に失敗しました");
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    const fetchBuckets = async () => {
-      try {
-        const response = await axiosInstance.get("buckets");
-        setBuckets(response.data);
-      } catch (error) {
-        setError("データの取得に失敗しました");
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchBuckets();
   }, []);
 
-  return { buckets, loading, error };
+  return {
+    buckets,
+    loading: useRecoilValue(loadingState),
+    error: useRecoilValue(errorState),
+    refetchBuckets: fetchBuckets,
+    createBucket,
+  };
 };
 
+// functions
 export const isSameDay = (date1: Date, date2: Date): boolean => {
   return (
     date1.getFullYear() === date2.getFullYear() &&

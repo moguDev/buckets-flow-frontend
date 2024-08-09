@@ -6,6 +6,7 @@ import LeaderBoard from "@/components/LeaderBoard";
 import { RecoilRoot } from "recoil";
 import RainBackground from "@/components/RainBackground";
 import Preferences from "@/components/Preferences";
+import Header from "@/components/Header";
 
 export default function Home() {
   const [filled, setFilled] = useState(50);
@@ -16,6 +17,7 @@ export default function Home() {
   };
   return (
     <RecoilRoot>
+      <Header />
       <RainBackground />
       <div className="lg:flex w-full h-full pt-20 pb-10 px-5 bg-opacity-0 z-10">
         <div className="lg:w-2/3 lg:pt-10">

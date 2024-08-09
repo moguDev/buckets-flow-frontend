@@ -1,10 +1,11 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
-import { isPlayingState, bucketCountState } from "../state/atoms";
+import { isPlayingState, bucketCountState } from "@/recoil/timerState";
 import Bucket from "./Bucket";
+import { useBuckets } from "@/recoil/bucketsState";
 
-export default function Timer({ init = 1500 }) {
+export default function Timer({ init = 5 }) {
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
   const audioContextRef = useRef<AudioContext | null>(null);
   const audioBufferRef = useRef<AudioBuffer | null>(null);
@@ -12,14 +13,17 @@ export default function Timer({ init = 1500 }) {
   const gainNodeRef = useRef<GainNode | null>(null);
 
   const [count, setCount] = useRecoilState(bucketCountState);
-  const [time, setTime] = useState(init);
+  const [startTime, setStartTime] = useState(-1);
   const [endTime, setEndTime] = useState(-1);
+  const [remainingTime, setRemainingTime] = useState(init);
   const [bucketPropses, setBucketPropses] = useState([
     { filled: 0, active: false },
     { filled: 0, active: false },
     { filled: 0, active: false },
     { filled: 0, active: false },
   ]);
+
+  const { createBucket } = useBuckets();
 
   /** 雨音のセットアップ **/
   useEffect(() => {
@@ -49,30 +53,24 @@ export default function Timer({ init = 1500 }) {
 
     const updateTimer = () => {
       const currentTime = Date.now();
-      const timeRemaining = endTime - currentTime;
+      const newRemainingTime = Math.ceil((endTime - currentTime) / 1000);
 
-      if (timeRemaining <= 0) {
-        setIsPlaying(false);
-        setTime(init);
-        setCount((prev) => prev + 1);
-        fadeOutAudio();
-        setBucketPropses(
-          bucketPropses.map((bucket, index) => {
-            return { ...bucket, active: false };
-          })
-        );
+      if (newRemainingTime <= 0) {
+        finishFlow();
       } else {
-        const currentCount = Math.ceil(timeRemaining / 1000);
-        const minutes = String(Math.floor(currentCount / 60)).padStart(2, "0");
-        const seconds = String(currentCount % 60).padStart(2, "0");
+        const minutes = String(Math.floor(newRemainingTime / 60)).padStart(
+          2,
+          "0"
+        );
+        const seconds = String(newRemainingTime % 60).padStart(2, "0");
         document.title = `${minutes}:${seconds} - buckets Flow`;
-        setTime(currentCount);
+        setRemainingTime(newRemainingTime);
         setBucketPropses(
           bucketPropses.map((bucket, index) => {
             return index === count % 4
               ? {
                   ...bucket,
-                  filled: (1 - time / 1500) * 100,
+                  filled: (1 - newRemainingTime / init) * 100,
                   active: true,
                 }
               : { ...bucket, active: false };
@@ -85,18 +83,7 @@ export default function Timer({ init = 1500 }) {
     return () => clearInterval(timerId);
   }, [isPlaying, endTime, count, bucketPropses]);
 
-  const openModal = () => {
-    const modal = document.getElementById("my_modal_5") as HTMLDialogElement;
-    modal !== null && modal.showModal();
-  };
-
-  const handleReset = () => {
-    pauseAudio();
-    setTime(init);
-    setEndTime(Date.now() + init * 1000);
-  };
-
-  const playAudio = () => {
+  const startFlow = () => {
     if (audioContextRef.current && audioBufferRef.current) {
       const context = audioContextRef.current;
       const source = context.createBufferSource();
@@ -112,12 +99,17 @@ export default function Timer({ init = 1500 }) {
       sourceRef.current = source;
       gainNodeRef.current = gainNode;
 
+      startTime < 0 && setStartTime(Date.now());
       setIsPlaying(true);
-      setEndTime(Date.now() + time * 1000);
+      setEndTime(Date.now() + remainingTime * 1000);
       setBucketPropses(
         bucketPropses.map((bucket, index) => {
           if (index === count % 4) {
-            return { ...bucket, filled: (1 - time / init) * 100, active: true };
+            return {
+              ...bucket,
+              filled: (1 - remainingTime / init) * 100,
+              active: true,
+            };
           } else if (index < count % 4) {
             return { ...bucket, filled: 100, active: false };
           }
@@ -127,7 +119,31 @@ export default function Timer({ init = 1500 }) {
     }
   };
 
-  const fadeOutAudio = () => {
+  const stopFlow = () => {
+    if (sourceRef.current) {
+      sourceRef.current.stop();
+      sourceRef.current = null;
+      setIsPlaying(false);
+    }
+  };
+
+  const finishFlow = () => {
+    createBucket({
+      filled: true,
+      duration: 1500,
+      storage: 1500,
+      starttime: Math.ceil(startTime / 1000),
+      endtime: Math.ceil(endTime / 1000),
+    });
+    setIsPlaying(false);
+    setRemainingTime(init);
+    setCount((prev) => prev + 1);
+    setBucketPropses(
+      bucketPropses.map((bucket, index) => {
+        return { ...bucket, active: false };
+      })
+    );
+    setStartTime(-1);
     if (gainNodeRef.current) {
       const gainNode = gainNodeRef.current;
       const fadeOutDuration = 1; // フェードアウトにかける秒数
@@ -141,7 +157,7 @@ export default function Timer({ init = 1500 }) {
         if (currentVolume <= 0) {
           clearInterval(fadeOut);
           gainNode.gain.value = 0;
-          pauseAudio(); // フェードアウト完了後に停止
+          stopFlow(); // フェードアウト完了後に停止
         } else {
           gainNode.gain.value = currentVolume;
         }
@@ -149,26 +165,21 @@ export default function Timer({ init = 1500 }) {
     }
   };
 
-  const pauseAudio = () => {
-    if (sourceRef.current) {
-      sourceRef.current.stop();
-      sourceRef.current = null;
-      setIsPlaying(false);
-    }
+  const resetFlow = () => {
+    stopFlow();
+    setRemainingTime(init);
+    setEndTime(Date.now() + init * 1000);
   };
 
   return (
     <div className={`p-2 rounded-xl`}>
-      <p className="text-center font-light text-blue-300 text-sm">
-        {isPlaying ? "😄雨が降っています！" : "😟..."}
-      </p>
       <p
         className={`text-center text-blue-300 font-semibold md:text-9xl text-8xl transition-transform duration-700 transition-brightness ${
           isPlaying ? "scale-105 brightness-110" : "scale-90 brightness-90"
         } mb-5`}
       >
-        {String(Math.floor(time / 60)).padStart(2, "0")}:
-        {String(time % 60).padStart(2, "0")}
+        {String(Math.floor(remainingTime / 60)).padStart(2, "0")}:
+        {String(remainingTime % 60).padStart(2, "0")}
       </p>
       <div className="flex items-center justify-center py-4">
         {bucketPropses.map((bucketProps, index) => (
@@ -178,7 +189,7 @@ export default function Timer({ init = 1500 }) {
       <div className="flex items-center justify-center py-2">
         {isPlaying ? (
           <button
-            onClick={pauseAudio}
+            onClick={stopFlow}
             className={`
               btn m-2 p-2 border-none
               bg-blue-700 bg-opacity-10 backdrop-blur-sm
@@ -191,7 +202,7 @@ export default function Timer({ init = 1500 }) {
           </button>
         ) : (
           <button
-            onClick={playAudio}
+            onClick={startFlow}
             className={`
               btn m-2 p-2 border-none
               bg-blue-700 bg-opacity-10 backdrop-blur-sm
@@ -204,7 +215,7 @@ export default function Timer({ init = 1500 }) {
           </button>
         )}
         <button
-          onClick={openModal}
+          onClick={resetFlow}
           className={`
               btn m-2 p-2 border-none
               bg-gray-700 bg-opacity-10 backdrop-blur-sm
@@ -216,24 +227,6 @@ export default function Timer({ init = 1500 }) {
           <span className="material-icons">replay</span>
         </button>
       </div>
-      <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box bg-gray-900 bg-opacity-90 backdrop-blur-sm text-white">
-          <h3 className="font-bold text-lg">バケツをリセットしますか？</h3>
-          <div className="modal-action">
-            <form method="dialog w-full">
-              <button className="btn mr-2 bg-opacity-0 border-none text-white">
-                キャンセル
-              </button>
-              <button
-                className="btn bg-blue-800 bg-opacity-40 border-none text-white"
-                onClick={handleReset}
-              >
-                リセット
-              </button>
-            </form>
-          </div>
-        </div>
-      </dialog>
     </div>
   );
 }

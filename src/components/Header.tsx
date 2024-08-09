@@ -1,8 +1,6 @@
 // components/Header.tsx
 "use client";
-
-import Link from "next/link";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/recoil/authState";
 import LoginModal from "./LoginModal";
 
 export default function Header() {

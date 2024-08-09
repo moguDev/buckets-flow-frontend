@@ -1,8 +1,8 @@
 // components/LoginModal.tsx
 "use client";
 
+import { useAuth } from "@/recoil/authState";
 import { useState } from "react";
-import { useAuth } from "@/contexts/AuthContext";
 
 const LoginModal = () => {
   const { login } = useAuth();
