@@ -31,8 +31,8 @@ body {
 }
 
 .transition-height {
-  transition: height 0.75s ease;
-  overflow: hidden;
+  transition: height 0.3s ease-in-out;
+  overflow: hidden; /* 子要素がはみ出さないようにする */
 }
 
 .chart-tab {

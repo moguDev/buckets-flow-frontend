@@ -1,4 +1,3 @@
-import ChartBar from "./ChartBar";
 import { useState, useRef, useEffect } from "react";
 import { BucketIcon } from "./BucketIcon";
 import { getMaxStreak, getTodayBuckets } from "@/recoil/bucketsState";
@@ -8,20 +7,16 @@ import Loading from "./Loading";
 export default function Activity() {
   const [isOpen, setIsOpen] = useState(true);
   const contentRef = useRef<HTMLDivElement | null>(null);
-  const [height, setHeight] = useState("auto");
+  const [height, setHeight] = useState("0px"); // 初期値を0pxに設定
 
   const { buckets, loading, error } = useBuckets();
-  console.log(buckets);
 
   useEffect(() => {
     if (contentRef.current) {
-      if (isOpen) {
-        setHeight(`${contentRef.current.scrollHeight}px`);
-      } else {
-        setHeight("0px");
-      }
+      // loadingが終わった後に高さを計算
+      setHeight(isOpen ? `${contentRef.current.scrollHeight}px` : "0px");
     }
-  }, [isOpen]);
+  }, [loading, isOpen]);
 
   const handleOpen = () => {
     setIsOpen((prev) => !prev);
@@ -41,6 +36,7 @@ export default function Activity() {
           {isOpen ? "expand_more" : "expand_less"}
         </div>
       </button>
+
       <div ref={contentRef} className="transition-height" style={{ height }}>
         <ul>
           {/* 今日 */}
