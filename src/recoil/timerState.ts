@@ -188,8 +188,8 @@ export const useTimer = () => {
     if (timer === TimerState.WORKING) {
       createBucket({
         filled: true,
-        duration: TimerState.WORKING,
-        storage: TimerState.WORKING,
+        duration: settings[TimerState.WORKING],
+        storage: settings[TimerState.WORKING],
         starttime: Math.ceil(startTime / 1000),
         endtime: Math.ceil(endTime / 1000),
       });
