@@ -23,20 +23,19 @@ export default function Activity() {
   };
 
   return (
-    <div className="bg-gray-700 bg-opacity-10 rounded-xl px-6 backdrop-blur-sm w-full">
+    <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full">
       <button
         className="flex justify-between items-center w-full py-6"
         onClick={handleOpen}
       >
         <div className="flex items-center text-blue-300">
-          <span className="material-icons text-sm pr-1">person</span>
+          <span className="material-icons text-sm pr-3">trending_up</span>
           <p>アクティビティ</p>
         </div>
         <div className="material-icons text-blue-300 rounded-full bg-opacity-0 border-none">
           {isOpen ? "expand_more" : "expand_less"}
         </div>
       </button>
-
       <div ref={contentRef} className="transition-height" style={{ height }}>
         <ul>
           {/* 今日 */}
@@ -71,12 +70,14 @@ export default function Activity() {
                   </span>
                   <p className="font-semibold text-lg">
                     {`${(
-                      getTodayBuckets(buckets).reduce(
+                      (getTodayBuckets(buckets).reduce(
                         (sum, bucket) => sum + bucket.storage,
                         0
-                      ) * 2
+                      ) /
+                        1500) *
+                      8
                     ).toLocaleString()} `}{" "}
-                    <span className="font-thin text-sm">mL</span>
+                    <span className="font-thin text-sm">L</span>
                   </p>
                 </div>
               </li>
@@ -139,10 +140,14 @@ export default function Activity() {
                   </span>
                   <p className="font-semibold text-lg">
                     {`${(
-                      buckets.reduce((sum, bucket) => sum + bucket.storage, 0) *
-                      2
+                      (buckets.reduce(
+                        (sum, bucket) => sum + bucket.storage,
+                        0
+                      ) /
+                        1500) *
+                      8
                     ).toLocaleString()} `}{" "}
-                    <span className="font-thin text-sm">mL</span>
+                    <span className="font-thin text-sm">L</span>
                   </p>
                 </div>
               </li>
@@ -164,7 +169,9 @@ export default function Activity() {
                         (sum, bucket) => sum + bucket.duration / 60,
                         0
                       ) % 60
-                    )} `}
+                    )
+                      .toString()
+                      .padStart(2, "0")} `}
                     <span className="text-sm font-thin">{"min"}</span>
                   </button>
                 </div>

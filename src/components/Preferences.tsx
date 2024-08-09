@@ -25,7 +25,7 @@ export default function Preferences() {
         onClick={handleOpen}
       >
         <div className="flex items-center text-blue-300">
-          <span className="material-icons text-sm pr-1">settings</span>
+          <span className="material-icons text-sm pr-3">settings</span>
           <p className="">設定</p>
         </div>
         <div className="material-icons text-blue-300 rounded-full bg-opacity-0 border-none">

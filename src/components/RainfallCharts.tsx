@@ -29,7 +29,7 @@ export default function RainfallCharts() {
         onClick={handleOpen}
       >
         <div className="flex items-center text-blue-300">
-          <span className="material-icons text-sm pr-1">equalizer</span>
+          <span className="material-icons text-sm pr-3">equalizer</span>
           <p className="">降水量チャート</p>
         </div>
         <div className="material-icons text-blue-300 rounded-full bg-opacity-0 border-none">

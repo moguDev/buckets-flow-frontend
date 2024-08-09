@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 interface LoginResponse {
   data: {
     email: string;
-    // 他の必要なユーザーデータ
+    name: string;
   };
 }
 

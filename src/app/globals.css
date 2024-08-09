@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  background-color: #040612;
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -16,18 +17,10 @@
   }
 }
 
-body {
-  background-color: #040612;
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-}
-
-.bg-app {
-  background-color: #040612;
 }
 
 .transition-height {

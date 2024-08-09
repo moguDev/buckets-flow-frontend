@@ -7,7 +7,6 @@ import {
 import axiosInstance from "@/lib/axiosInstance";
 import { useEffect } from "react";
 
-// Bucket インターフェース
 interface Bucket {
   id: number;
   user_id: number;
@@ -18,7 +17,6 @@ interface Bucket {
   endtime: number;
 }
 
-// バケット状態
 export const bucketsState = atom<Bucket[]>({
   key: "bucketsState",
   default: [],
@@ -34,7 +32,7 @@ export const errorState = atom<string | null>({
   default: null,
 });
 
-// バケット取得のカスタムフック
+// バケツ取得のカスタムフック
 export const useBuckets = () => {
   const [buckets, setBuckets] = useRecoilState(bucketsState);
   const setLoading = useSetRecoilState(loadingState);
@@ -76,7 +74,10 @@ export const useBuckets = () => {
   };
 };
 
-// functions
+/**
+ * Functions.
+ * */
+
 export const isSameDay = (date1: Date, date2: Date): boolean => {
   return (
     date1.getFullYear() === date2.getFullYear() &&

@@ -26,7 +26,7 @@ export default function LeaderBoard() {
         onClick={handleOpen}
       >
         <div className="flex items-center text-blue-300">
-          <span className="material-icons text-sm pr-1">leaderboard</span>
+          <span className="material-icons text-sm pr-3">leaderboard</span>
           <p className="">リーダーボード</p>
         </div>
         <div className="material-icons text-blue-300 rounded-full bg-opacity-0 border-none">

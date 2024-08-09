@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { isPlayingState } from "@/recoil/timerState";
+import { isPlayingState, TimerState, timerState } from "@/recoil/timerState";
 
 interface Drop {
   x: number;
@@ -13,6 +13,7 @@ interface Drop {
 const RainAnimation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isPlaying = useRecoilValue(isPlayingState);
+  const timer = useRecoilValue(timerState);
   const animationFrameIdRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const RainAnimation: React.FC = () => {
       context.clearRect(0, 0, width, height);
       context.fillStyle = "#040612";
       context.fillRect(0, 0, width, height);
-      context.strokeStyle = "#FAFAFF15";
+      context.strokeStyle = "#A0A0FF20";
       context.lineWidth = 1;
 
       drops.forEach((drop) => {
@@ -75,9 +76,9 @@ const RainAnimation: React.FC = () => {
       const width = canvas.width;
       const height = canvas.height;
       const drops = initializeDrops(width, height);
-      if (isPlaying) {
+      isPlaying &&
+        timer === TimerState.WORKING &&
         drawRain(drops, width, height);
-      }
     };
 
     window.addEventListener("resize", handleResize);
@@ -94,10 +95,12 @@ const RainAnimation: React.FC = () => {
   }, [isPlaying]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      style={{ display: "block", background: "#040612" }}
-    />
+    <div className="z-[-1]">
+      <canvas
+        ref={canvasRef}
+        style={{ display: "block", background: "#040612" }}
+      />
+    </div>
   );
 };
 

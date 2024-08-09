@@ -1,11 +1,14 @@
 import React from "react";
 
-type BucketProps = {
+export type BucketMeterProps = {
   filled: number;
   active?: boolean;
 };
 
-const Bucket: React.FC<BucketProps> = ({ filled, active = false }) => {
+const BucketMeter: React.FC<BucketMeterProps> = ({
+  filled,
+  active = false,
+}) => {
   const waterHeight = `${filled}%`;
 
   return (
@@ -34,4 +37,4 @@ const Bucket: React.FC<BucketProps> = ({ filled, active = false }) => {
   );
 };
 
-export default Bucket;
+export default BucketMeter;

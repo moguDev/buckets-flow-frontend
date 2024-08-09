@@ -1,4 +1,4 @@
-import { atom, selector, useRecoilState } from "recoil";
+import { atom, selector, useRecoilState, useSetRecoilState } from "recoil";
 import Cookies from "js-cookie";
 import { login as loginUser, logout as logoutUser } from "@/lib/auth";
 import { useBuckets } from "./bucketsState"; // Buckets関連のカスタムフックのインポート
@@ -10,6 +10,11 @@ export const authState = atom({
   default: {
     isAuthenticated: false,
   },
+});
+
+export const userNameState = atom({
+  key: "userNameState",
+  default: "user-name",
 });
 
 // Recoilのセレクターでの状態の取得
@@ -24,6 +29,7 @@ export const isAuthenticatedSelector = selector({
 // カスタムフックでログイン・ログアウトのロジックを提供
 export const useAuth = () => {
   const [auth, setAuth] = useRecoilState(authState);
+  const setUserName = useSetRecoilState(userNameState);
   const { refetchBuckets } = useBuckets(); // Buckets関連のカスタムフックの利用
 
   const checkAuth = () => {
@@ -42,8 +48,10 @@ export const useAuth = () => {
   }, []);
 
   const login = async (email: string, password: string) => {
-    await loginUser(email, password);
+    const data = await loginUser(email, password);
+    console.log(data.data.name);
     setAuth({ isAuthenticated: true });
+    setUserName(data.data.name);
     refetchBuckets();
   };
 
