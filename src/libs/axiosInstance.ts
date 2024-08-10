@@ -1,4 +1,3 @@
-// lib/axiosInstance.ts
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -6,7 +5,6 @@ const axiosInstance = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/`,
 });
 
-// リクエストインターセプターを追加して、クッキーからトークンを取得
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = Cookies.get("access-token");
@@ -22,7 +20,6 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => {
-    // リクエストエラーの処理
     return Promise.reject(error);
   }
 );

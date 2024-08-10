@@ -1,22 +1,12 @@
 "use client";
-import { useState } from "react";
 import Timer from "@/components/Timer";
-import Activity from "@/components/Activity";
-import LeaderBoard from "@/components/LeaderBoard";
 import { RecoilRoot } from "recoil";
 import RainBackground from "@/components/RainBackground";
-import Preferences from "@/components/Preferences";
 import Header from "@/components/Header";
-import RainfallCharts from "@/components/RainfallCharts";
-import UserInfo from "@/components/UserInfo";
+import MenuBar from "@/components/MenuBar";
+import LoginModal from "@/components/modals/LoginModal";
 
 export default function Home() {
-  const [filled, setFilled] = useState(50);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.max(0, Math.min(100, Number(e.target.value))); // 0〜100の範囲に制限
-    setFilled(value);
-  };
   return (
     <RecoilRoot>
       <Header />
@@ -26,23 +16,10 @@ export default function Home() {
           <Timer />
         </div>
         <div className="lg:w-1/3 lg:pt-5">
-          <div className="pb-3">
-            <UserInfo />
-          </div>
-          <div className="pb-3">
-            <Activity />
-          </div>
-          <div className="pb-3">
-            <RainfallCharts />
-          </div>
-          <div className="pb-3">
-            <LeaderBoard />
-          </div>
-          <div className="pb-3">
-            <Preferences />
-          </div>
+          <MenuBar />
         </div>
       </div>
+      <LoginModal />
     </RecoilRoot>
   );
 }

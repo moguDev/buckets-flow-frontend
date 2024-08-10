@@ -1,4 +1,3 @@
-// components/Header.tsx
 "use client";
 import { useAuth } from "@/recoil/authState";
 import LoginModal from "./modals/LoginModal";
@@ -34,7 +33,6 @@ export default function Header() {
             className="flex items-center text-blue-300 bg-opacity-0 border-none btn"
           >
             <span className="material-icons text-xs">logout</span>
-            <p className="font-normal">ログアウト</p>
           </button>
         ) : (
           <label

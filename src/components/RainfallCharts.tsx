@@ -1,11 +1,15 @@
 import { getTodayBuckets, useBuckets } from "@/recoil/bucketsState";
 import { useEffect, useRef, useState } from "react";
 import ChartBar from "./ChartBar";
+import { useAuth } from "@/recoil/authState";
+import LoginModal from "./modals/LoginModal";
 
 export default function RainfallCharts() {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState("auto");
   const [isOpen, setIsOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
+
   useEffect(() => {
     if (contentRef.current) {
       if (isOpen) {
@@ -16,15 +20,20 @@ export default function RainfallCharts() {
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    isAuthenticated === false && setIsOpen(false);
+  }, [isAuthenticated]);
+
   const handleOpen = () => {
-    setIsOpen((prev) => !prev);
+    isAuthenticated && setIsOpen((prev) => !prev);
   };
 
   const { buckets } = useBuckets();
 
   return (
     <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full">
-      <button
+      <label
+        htmlFor={isAuthenticated ? "" : "my-modal-4"}
         className="flex justify-between items-center w-full py-6"
         onClick={handleOpen}
       >
@@ -33,9 +42,19 @@ export default function RainfallCharts() {
           <p className="">降水量チャート</p>
         </div>
         <div className="material-icons text-blue-300 rounded-full bg-opacity-0 border-none">
-          {isOpen ? "expand_more" : "expand_less"}
+          {isAuthenticated ? (
+            isOpen ? (
+              "expand_more"
+            ) : (
+              "expand_less"
+            )
+          ) : (
+            <div className="flex items-center text-xs rounded-full text-gray-400 text-opacity-80">
+              ログインしてください
+            </div>
+          )}
         </div>
-      </button>
+      </label>
       <div ref={contentRef} className="transition-height" style={{ height }}>
         <div className="flex items-center bg-blue-900 bg-opacity-10 rounded-lg mt-2 p-1">
           <button className="chart-tab w-1/4">日</button>
@@ -71,6 +90,7 @@ export default function RainfallCharts() {
         </div>
         <div className="flex w-full p-1 pb-3"></div>
       </div>
+      <LoginModal />
     </div>
   );
 }

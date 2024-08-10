@@ -3,13 +3,19 @@ import { BucketIcon } from "./BucketIcon";
 import { getMaxStreak, getTodayBuckets } from "@/recoil/bucketsState";
 import { useBuckets } from "@/recoil/bucketsState";
 import Loading from "./Loading";
+import { useAuth } from "@/recoil/authState";
+import LoginModal from "./modals/LoginModal";
 
-export default function Activity() {
-  const [isOpen, setIsOpen] = useState(true);
+type ActivityProps = {
+  open: boolean;
+};
+
+export default function Activity({ open = false }: ActivityProps) {
+  const [isOpen, setIsOpen] = useState(open);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState("0px"); // 初期値を0pxに設定
-
   const { buckets, loading, error } = useBuckets();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     if (contentRef.current) {
@@ -18,13 +24,18 @@ export default function Activity() {
     }
   }, [loading, isOpen]);
 
+  useEffect(() => {
+    setIsOpen(isAuthenticated);
+  }, [isAuthenticated]);
+
   const handleOpen = () => {
-    setIsOpen((prev) => !prev);
+    isAuthenticated && setIsOpen((prev) => !prev);
   };
 
   return (
     <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full">
-      <button
+      <label
+        htmlFor={isAuthenticated ? "" : "my-modal-4"}
         className="flex justify-between items-center w-full py-6"
         onClick={handleOpen}
       >
@@ -33,10 +44,24 @@ export default function Activity() {
           <p>アクティビティ</p>
         </div>
         <div className="material-icons text-blue-300 rounded-full bg-opacity-0 border-none">
-          {isOpen ? "expand_more" : "expand_less"}
+          {isAuthenticated ? (
+            isOpen ? (
+              "expand_more"
+            ) : (
+              "expand_less"
+            )
+          ) : (
+            <label className="flex items-center text-xs rounded-full text-gray-400 text-opacity-80">
+              ログインしてください
+            </label>
+          )}
         </div>
-      </button>
-      <div ref={contentRef} className="transition-height" style={{ height }}>
+      </label>
+      <div
+        ref={contentRef}
+        className="relative transition-height"
+        style={{ height }}
+      >
         <ul>
           {/* 今日 */}
           <div className="flex items-center justify-between text-gray-500 border-b border-opacity-20 border-gray-500 py-1">
@@ -52,10 +77,10 @@ export default function Activity() {
             <>
               <li className="flex items-center py-3 text-blue-300">
                 <div className="flex items-center w-1/2">
-                  <span className="px-3">
+                  <span className="pl-3 pr-3">
                     <BucketIcon />
                   </span>
-                  <p className="font-semibold text-xl pl-1">
+                  <p className="font-semibold text-xl">
                     {`${getTodayBuckets(buckets).length} `}
                     <span className="text-sm font-thin">
                       {getTodayBuckets(buckets).length === 1
@@ -65,7 +90,7 @@ export default function Activity() {
                   </p>
                 </div>
                 <div className="flex items-center w-1/2">
-                  <span className="material-icons text-blue-300 mr-3">
+                  <span className="material-icons text-blue-300 mr-2">
                     water_drop
                   </span>
                   <p className="font-semibold text-lg">
@@ -83,7 +108,7 @@ export default function Activity() {
               </li>
               <li className="flex items-center py-3 text-blue-300">
                 <div className="flex items-center w-1/2">
-                  <span className="material-icons text-blue-300 px-3">
+                  <span className="material-icons text-blue-300 pl-3 pr-2">
                     timer
                   </span>
                   <button className="font-semibold text-xl">
@@ -122,7 +147,7 @@ export default function Activity() {
             <>
               <li className="flex items-center py-3 text-blue-300">
                 <div className="flex items-center w-1/2">
-                  <span className="pl-4 pr-3">
+                  <span className="pl-3 pr-3">
                     <BucketIcon />
                   </span>
                   <p className="font-semibold text-xl">
@@ -135,7 +160,7 @@ export default function Activity() {
                   </p>
                 </div>
                 <div className="flex items-center w-1/2">
-                  <span className="material-icons text-blue-300 mr-3">
+                  <span className="material-icons text-blue-300 mr-2">
                     water_drop
                   </span>
                   <p className="font-semibold text-lg">
@@ -153,7 +178,7 @@ export default function Activity() {
               </li>
               <li className="flex items-center py-3 text-blue-300">
                 <div className="flex items-center w-1/2">
-                  <span className="material-icons text-blue-300 px-3">
+                  <span className="material-icons text-blue-300 pl-3 pr-2">
                     timer
                   </span>
                   <button className="font-semibold text-xl">
@@ -176,7 +201,7 @@ export default function Activity() {
                   </button>
                 </div>
                 <div className="flex items-center w-1/2">
-                  <span className="material-icons text-blue-300 pr-3">
+                  <span className="material-icons text-blue-300 pr-2">
                     whatshot
                   </span>
                   <button className="font-semibold text-xl">
@@ -188,6 +213,7 @@ export default function Activity() {
             </>
           )}
         </ul>
+        <div className="flex w-full p-1 pb-3"></div>
       </div>
     </div>
   );
