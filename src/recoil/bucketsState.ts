@@ -137,3 +137,25 @@ export const getMaxStreak = (buckets: Bucket[]): number => {
 
 export const wait = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
+
+export const getOldestBucketDate = (buckets: Bucket[]): string | null => {
+  if (buckets.length === 0) {
+    return null;
+  }
+
+  // 一番古いstarttimeを持つバケツを探す
+  const oldestBucket = buckets.reduce(
+    (oldest, bucket) => (bucket.starttime < oldest.starttime ? bucket : oldest),
+    buckets[0]
+  );
+
+  // starttimeをDateオブジェクトに変換
+  const date = new Date(oldestBucket.starttime * 1000); // 秒単位なのでミリ秒に変換
+
+  // 年月日を取得
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}年${month}月${day}日`;
+};

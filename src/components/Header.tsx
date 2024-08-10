@@ -14,7 +14,7 @@ export default function Header() {
   };
 
   return (
-    <header className="fixed top-0 h-16 w-full px-5 z-50">
+    <header className="fixed top-0 h-16 w-full md:px-5 px-3 z-50">
       <div className="flex items-center justify-between h-full">
         <div className="flex items-center">
           <span className="material-icons text-blue-300 mr-1">water_drop</span>

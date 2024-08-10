@@ -1,6 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { BucketIcon } from "./BucketIcon";
-import { getMaxStreak, getTodayBuckets } from "@/recoil/bucketsState";
+import {
+  getMaxStreak,
+  getOldestBucketDate,
+  getTodayBuckets,
+} from "@/recoil/bucketsState";
 import { useBuckets } from "@/recoil/bucketsState";
 import Loading from "./Loading";
 import { useAuth } from "@/recoil/authState";
@@ -10,6 +14,15 @@ type ActivityProps = {
   open: boolean;
 };
 
+function getCurrentDate(): string {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0"); // 月は0から始まるため+1
+  const day = String(today.getDate()).padStart(2, "0");
+
+  return `${year}年${month}月${day}日`;
+}
+
 export default function Activity({ open = false }: ActivityProps) {
   const [isOpen, setIsOpen] = useState(open);
   const contentRef = useRef<HTMLDivElement | null>(null);
@@ -18,10 +31,8 @@ export default function Activity({ open = false }: ActivityProps) {
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    if (contentRef.current) {
-      // loadingが終わった後に高さを計算
+    contentRef.current &&
       setHeight(isOpen ? `${contentRef.current.scrollHeight}px` : "0px");
-    }
   }, [loading, isOpen]);
 
   useEffect(() => {
@@ -52,7 +63,7 @@ export default function Activity({ open = false }: ActivityProps) {
             )
           ) : (
             <label className="flex items-center text-xs rounded-full text-gray-400 text-opacity-80">
-              ログインしてください
+              ログインして利用
             </label>
           )}
         </div>
@@ -69,7 +80,9 @@ export default function Activity({ open = false }: ActivityProps) {
               <span className="material-icons text-xs pr-1">today</span>
               <p className="text-sm">今日</p>
             </div>
-            <p className="text-xs font-thin">2024年8月6日</p>
+            <p className="text-xs text-blue-300 font-light">
+              {getCurrentDate()}
+            </p>
           </div>
           {loading ? (
             <Loading />
@@ -124,7 +137,9 @@ export default function Activity({ open = false }: ActivityProps) {
                         (sum, bucket) => sum + bucket.duration / 60,
                         0
                       ) % 60
-                    )} `}
+                    )
+                      .toString()
+                      .padStart(2, "0")} `}
                     <span className="text-sm font-thin">{"min"}</span>
                   </button>
                 </div>
@@ -139,7 +154,9 @@ export default function Activity({ open = false }: ActivityProps) {
               </span>
               <p className="text-sm">すべての期間</p>
             </div>
-            <p className="text-sm"></p>
+            <p className="text-xs text-blue-300 font-light">
+              {`${getOldestBucketDate(buckets)} - ${getCurrentDate()}`}
+            </p>
           </div>
           {loading ? (
             <Loading />

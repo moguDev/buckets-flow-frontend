@@ -50,7 +50,7 @@ export default function RainfallCharts() {
             )
           ) : (
             <div className="flex items-center text-xs rounded-full text-gray-400 text-opacity-80">
-              ログインしてください
+              ログインして利用
             </div>
           )}
         </div>
