@@ -4,6 +4,7 @@ import { Noto_Sans_JP } from "next/font/google";
 import { ReactNode } from "react";
 import "./globals.css";
 import Header from "@/components/Header";
+import GoogleAnalytics from "@/components/googleAnalytics/GoogleAnalytics";
 
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"] });
 
@@ -16,6 +17,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ja">
       <head>
+        <GoogleAnalytics />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/icon?family=Material+Icons"

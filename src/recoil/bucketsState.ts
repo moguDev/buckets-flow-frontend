@@ -4,7 +4,7 @@ import {
   useRecoilValue,
   useSetRecoilState,
 } from "recoil";
-import axiosInstance from "@/lib/axiosInstance";
+import axiosInstance from "@/libs/axiosInstance";
 import { useEffect } from "react";
 
 interface Bucket {

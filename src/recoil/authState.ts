@@ -1,6 +1,6 @@
 import { atom, selector, useRecoilState, useSetRecoilState } from "recoil";
 import Cookies from "js-cookie";
-import { login as loginUser, logout as logoutUser } from "@/lib/auth";
+import { login as loginUser, logout as logoutUser } from "@/libs/auth";
 import { useBuckets } from "./bucketsState"; // Buckets関連のカスタムフックのインポート
 import { useEffect } from "react";
 
