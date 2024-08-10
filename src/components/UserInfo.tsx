@@ -9,7 +9,9 @@ const determineLevel = (value: number) => {
     { limit: 60, lv: 1, label: "バケツ", storage: "8L" },
     { limit: 200, lv: 2, label: "洗濯機", storage: "60L" },
     { limit: 500, lv: 3, label: "浴槽", storage: "200L" },
-    { limit: 1000, lv: 4, label: "", storage: "500L" },
+    { limit: 1000, lv: 4, label: "小型貯水タンク", storage: "500L" },
+    { limit: 2000, lv: 5, label: "", storage: "1000L" },
+    { limit: 5000, lv: 6, label: "タンクローリー", storage: "2000L" },
     { limit: Infinity, lv: 100, label: "", storage: "" },
   ];
 
@@ -83,7 +85,7 @@ export default function UserInfo() {
         >
           <div className="flex items-center text-blue-300">
             <span className="material-icons text-sm pr-3">login</span>
-            <p>ログイン</p>
+            <p className="text-sm">ログイン</p>
           </div>
         </label>
         <label
@@ -91,8 +93,8 @@ export default function UserInfo() {
           className="flex justify-between items-center w-full py-6 px-5 ml-1 bg-blue-900 bg-opacity-20 rounded-xl "
         >
           <div className="flex items-center text-blue-300">
-            <span className="material-icons text-sm pr-3">person_add</span>
-            <p>アカウント作成</p>
+            <span className="material-icons text-sm pr-2">person_add</span>
+            <p className="text-sm">アカウント作成</p>
           </div>
         </label>
       </div>

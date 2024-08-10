@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { BucketIcon } from "./BucketIcon";
 import {
+  Bucket,
   getMaxStreak,
   getOldestBucketDate,
   getTodayBuckets,
@@ -8,10 +9,10 @@ import {
 import { useBuckets } from "@/recoil/bucketsState";
 import Loading from "./Loading";
 import { useAuth } from "@/recoil/authState";
-import LoginModal from "./modals/LoginModal";
 
 type ActivityProps = {
   open: boolean;
+  buckets: [Bucket];
 };
 
 function getCurrentDate(): string {

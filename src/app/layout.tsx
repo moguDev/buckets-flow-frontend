@@ -3,6 +3,7 @@ import { Noto_Sans_JP } from "next/font/google";
 import { ReactNode } from "react";
 import "./globals.css";
 import GoogleAnalytics from "@/components/googleAnalytics/GoogleAnalytics";
+import Footer from "@/components/Footer";
 
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"] });
 

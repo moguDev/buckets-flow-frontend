@@ -7,7 +7,7 @@ import {
 import axiosInstance from "@/libs/axiosInstance";
 import { useEffect } from "react";
 
-interface Bucket {
+export interface Bucket {
   id: number;
   user_id: number;
   filled: boolean;

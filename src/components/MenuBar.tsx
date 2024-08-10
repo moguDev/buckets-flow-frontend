@@ -5,9 +5,11 @@ import LeaderBoard from "./LeaderBoard";
 import Preferences from "./Preferences";
 import RainfallCharts from "./RainfallCharts";
 import UserInfo from "./UserInfo";
+import { useBuckets } from "@/recoil/bucketsState";
 
 export default function MunuBar() {
   const { isAuthenticated } = useAuth();
+  const { buckets, loading, error } = useBuckets();
   return (
     <>
       <div className="relative mb-3">

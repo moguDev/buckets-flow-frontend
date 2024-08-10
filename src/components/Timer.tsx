@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useTimer } from "@/recoil/timerState";
+import { TimerState, useTimer } from "@/recoil/timerState";
 import BucketMeter from "./BucketMeter";
 
 export default function Timer() {
@@ -15,7 +15,12 @@ export default function Timer() {
   } = useTimer();
 
   return (
-    <div className={`p-2 rounded-xl`}>
+    <div>
+      <div className="relative w-full text-center text-blue-300 font-bold text-opacity-80">
+        {timer === TimerState.WORKING && <p>タイマー</p>}
+        {timer === TimerState.SHORT_BREAK && <p>短い休憩</p>}
+        {timer === TimerState.LONG_BREAK && <p>長い休憩</p>}
+      </div>
       <p
         className={`text-center text-blue-300 font-semibold md:text-9xl text-8xl transition-transform duration-700 transition-brightness ${
           isPlaying ? "scale-105 brightness-110" : "scale-90 brightness-90"
