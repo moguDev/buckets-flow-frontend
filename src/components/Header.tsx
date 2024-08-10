@@ -1,7 +1,7 @@
 // components/Header.tsx
 "use client";
 import { useAuth } from "@/recoil/authState";
-import LoginModal from "./LoginModal";
+import LoginModal from "./modals/LoginModal";
 
 export default function Header() {
   const { isAuthenticated, logout } = useAuth();

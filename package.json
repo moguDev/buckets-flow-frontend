@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@humanwhocodes/config-array": "^0.13.0",
+    "@eslint/config-array": "^0.17.1",
     "axios": "^1.7.3",
     "axios-case-converter": "^1.1.1",
     "daisyui": "^4.12.10",
@@ -20,7 +20,6 @@
     "recoil": "^0.7.7"
   },
   "devDependencies": {
-    "@types/axios": "^0.14.0",
     "@types/gtag.js": "^0.0.20",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20.14.14",
