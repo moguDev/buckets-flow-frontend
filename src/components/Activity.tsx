@@ -12,7 +12,6 @@ import { useAuth } from "@/recoil/authState";
 
 type ActivityProps = {
   open: boolean;
-  buckets: [Bucket];
 };
 
 function getCurrentDate(): string {
