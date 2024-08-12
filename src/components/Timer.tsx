@@ -3,8 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { TimerState, useTimer } from "@/recoil/timerState";
 import BucketMeter from "./BucketMeter";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import { atom, useRecoilState } from "recoil";
+import { TouchBackend } from "react-dnd-touch-backend";
 
 export const ItemType = "TAG";
 
@@ -110,7 +110,7 @@ export default function Timer() {
   };
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
       <div className="flex flex-col items-center justify-center w-full">
         <div className="relative text-center text-blue-300 font-semibold text-opacity-80">
           {timer === TimerState.WORKING && <LabelArea onDrop={handleDrop} />}
