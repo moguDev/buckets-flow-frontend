@@ -2,8 +2,8 @@
 import React from "react";
 import { TimerState, useTimer } from "@/recoil/timerState";
 import BucketMeter from "./BucketMeter";
-import { atom, useRecoilState } from "recoil";
-import { LabelItem, selectedTagState } from "./LabelList";
+import { useRecoilState } from "recoil";
+import { selectedTagState } from "./LabelList";
 
 const LabelArea = () => {
   const [selectedTag, setSelectedTag] = useRecoilState(selectedTagState);
@@ -13,18 +13,10 @@ const LabelArea = () => {
     : "bg-opacity-0 text-gray-300 opacity-50 font-light";
 
   return (
-    <div className={`flex items-center rounded-lg pl-4 pr-2 ${styleUtils}`}>
-      <p className="">{selectedTag ? `${selectedTag}` : "ラベルなし"}</p>
-      {selectedTag && (
-        <button
-          onClick={() => {
-            setSelectedTag(null);
-          }}
-          className="material-icons text-xs p-1 opacity-20 scale-75 hover:opacity-50"
-        >
-          cancel
-        </button>
-      )}
+    <div className={`flex items-center rounded-lg px-4 py-2 ${styleUtils}`}>
+      <button onClick={() => setSelectedTag(null)} className="">
+        {selectedTag ? `${selectedTag}` : "ラベルなし"}
+      </button>
     </div>
   );
 };
@@ -40,7 +32,6 @@ export default function Timer() {
     timer,
   } = useTimer();
 
-  const tags = ["React", "Next.js", "TypeScript", "JavaScript"];
   const [selectedTag, setSelectedTag] = useRecoilState(selectedTagState);
 
   return (
@@ -105,13 +96,6 @@ export default function Timer() {
         >
           <span className="material-icons">refresh</span>
         </button>
-      </div>
-      <div className="relative items-center w-4/5 p-3 rounded-xl">
-        <div className="grid grid-cols-6 bg-opacity-0">
-          {tags.map(
-            (tag) => tag !== selectedTag && <LabelItem key={tag} title={tag} />
-          )}
-        </div>
       </div>
     </div>
   );
