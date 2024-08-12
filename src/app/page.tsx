@@ -20,7 +20,6 @@ export default function Home() {
           <MenuBar />
         </div>
       </div>
-      <Footer />
       <LoginModal />
     </RecoilRoot>
   );

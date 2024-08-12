@@ -28,6 +28,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className={notoSansJP.className}>
         <div>{children}</div>
+        <Footer />
       </body>
     </html>
   );
