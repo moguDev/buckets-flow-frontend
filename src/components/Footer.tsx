@@ -22,7 +22,7 @@ export default function Footer() {
             </Link>
           </li>
           <li className="mx-3 my-3 font-light">
-            <p>© 2024 buckets-Flow.com</p>
+            <p>© 2024 buckets-flow.com</p>
           </li>
         </ul>
       </div>

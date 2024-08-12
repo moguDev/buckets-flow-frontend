@@ -17,6 +17,10 @@
   overflow: hidden; /* 子要素がはみ出さないようにする */
 }
 
+.text-theme {
+  color: #040612;
+}
+
 .chart-tab {
   color: gainsboro;
   font-weight: 100;
