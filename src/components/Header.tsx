@@ -16,7 +16,7 @@ export default function Header() {
   return (
     <header className="fixed top-0 h-16 w-full md:px-5 px-3 z-50">
       <div className="flex items-center justify-between h-full">
-        <div className="flex items-center">
+        <div className="flex items-center select-none">
           <span className="material-icons text-blue-300 mr-1">water_drop</span>
           <p className="text-blue-300 text-2xl font-bold brightness-120">
             <span className="text-xl font-thin ">buckets </span>Flow

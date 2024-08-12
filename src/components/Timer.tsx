@@ -135,7 +135,7 @@ export default function Timer() {
         <p
           className={`text-center text-blue-300 font-semibold md:text-9xl text-8xl transition-transform duration-700 transition-brightness ${
             isPlaying ? "scale-105 brightness-110" : "scale-90 brightness-90"
-          } mb-5`}
+          } mb-5 select-none`}
         >
           {Math.floor(remainingTime / 60)
             .toString()
