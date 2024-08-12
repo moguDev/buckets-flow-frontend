@@ -5,8 +5,6 @@ import RainBackground from "@/components/RainBackground";
 import Header from "@/components/Header";
 import MenuBar from "@/components/MenuBar";
 import LoginModal from "@/components/modals/LoginModal";
-import Footer from "@/components/Footer";
-import TagDragAndDrop from "@/components/LabelItem";
 
 export default function Home() {
   return (
