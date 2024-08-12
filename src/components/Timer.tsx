@@ -9,10 +9,6 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 
 export const ItemType = "TAG";
 
-const isMobile = (): boolean => {
-  return "ontouchstart" in window || navigator.maxTouchPoints > 0;
-};
-
 interface LabelItemProps {
   title: string;
 }
@@ -107,6 +103,17 @@ export default function Timer() {
     timer,
   } = useTimer();
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // クライアントサイドでのみ実行
+    const isMobile = (): boolean => {
+      return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    };
+
+    setIsMobile(isMobile());
+  }, []);
+
   const tags = ["React", "Next.js", "TypeScript", "JavaScript"];
   const [droppedTag, setDroppedTag] = useRecoilState(droppedTagState);
 
@@ -116,7 +123,7 @@ export default function Timer() {
 
   return (
     <DndProvider
-      backend={isMobile() ? TouchBackend : HTML5Backend}
+      backend={isMobile ? TouchBackend : HTML5Backend}
       options={{ enableMouseEvents: true }}
     >
       <div className="flex flex-col items-center justify-center w-full">
