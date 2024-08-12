@@ -1,10 +1,16 @@
 "use client";
+import React, { useEffect, useRef, useState } from "react";
 import { TimerState, useTimer } from "@/recoil/timerState";
 import BucketMeter from "./BucketMeter";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { atom, useRecoilState } from "recoil";
-import LabelItem, { ItemType } from "./LabelItem";
+
+export const ItemType = "TAG";
+
+interface LabelItemProps {
+  title: string;
+}
 
 interface LabelAreaProps {
   onDrop: (tag: string) => void;
@@ -14,6 +20,30 @@ const droppedTagState = atom<string | null>({
   key: "droppedTagState",
   default: null,
 });
+
+const LabelItem: React.FC<LabelItemProps> = ({ title: tag }) => {
+  const [, drag] = useDrag({
+    type: ItemType,
+    item: { tag },
+  });
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      drag(ref.current);
+    }
+  }, [drag]);
+
+  return (
+    <div
+      ref={ref}
+      className="text-blue-300 bg-blue-500 bg-opacity-20 text-sm rounded-xl p-2 m-1 cursor-pointer"
+    >
+      {tag}
+    </div>
+  );
+};
 
 const LabelArea = ({ onDrop }: LabelAreaProps) => {
   const [droppedTag, setDroppedTag] = useRecoilState(droppedTagState);
@@ -25,13 +55,21 @@ const LabelArea = ({ onDrop }: LabelAreaProps) => {
     }),
   });
 
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      drop(ref.current);
+    }
+  }, [drop]);
+
   const styleUtils = droppedTag
     ? "text-blue-300 bg-blue-500 bg-opacity-20 h-10"
     : "bg-opacity-0 border border-dashed border-gray-300 text-gray-300 opacity-50 h-12";
 
   return (
     <div
-      ref={drop}
+      ref={ref}
       className={`flex items-center rounded-xl pl-4 pr-2 py-2 ${styleUtils}`}
     >
       <p className="">
