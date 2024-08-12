@@ -5,8 +5,13 @@ import BucketMeter from "./BucketMeter";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { atom, useRecoilState } from "recoil";
 import { TouchBackend } from "react-dnd-touch-backend";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 export const ItemType = "TAG";
+
+const isMobile = (): boolean => {
+  return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+};
 
 interface LabelItemProps {
   title: string;
@@ -38,7 +43,7 @@ const LabelItem: React.FC<LabelItemProps> = ({ title: tag }) => {
   return (
     <div
       ref={ref}
-      className="text-blue-300 bg-blue-500 bg-opacity-20 text-sm rounded-xl p-2 m-1 cursor-pointer"
+      className="text-blue-300 bg-blue-500 bg-opacity-20 text-sm rounded-xl p-2 m-1 cursor-pointer select-none"
     >
       {tag}
     </div>
@@ -110,7 +115,10 @@ export default function Timer() {
   };
 
   return (
-    <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
+    <DndProvider
+      backend={isMobile() ? TouchBackend : HTML5Backend}
+      options={{ enableMouseEvents: true }}
+    >
       <div className="flex flex-col items-center justify-center w-full">
         <div className="relative text-center text-blue-300 font-semibold text-opacity-80">
           {timer === TimerState.WORKING && <LabelArea onDrop={handleDrop} />}
