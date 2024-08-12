@@ -1,16 +1,10 @@
 "use client";
-import React, { useState } from "react";
 import { TimerState, useTimer } from "@/recoil/timerState";
 import BucketMeter from "./BucketMeter";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { atom, useRecoilState } from "recoil";
-
-export const ItemType = "TAG";
-
-interface LabelItemProps {
-  title: string;
-}
+import LabelItem, { ItemType } from "./LabelItem";
 
 interface LabelAreaProps {
   onDrop: (tag: string) => void;
@@ -20,23 +14,6 @@ const droppedTagState = atom<string | null>({
   key: "droppedTagState",
   default: null,
 });
-
-const LabelItem: React.FC<LabelItemProps> = ({ title: tag }) => {
-  const [, drag] = useDrag({
-    type: ItemType,
-    item: { tag },
-  });
-
-  return (
-    <div
-      ref={drag}
-      className="text-blue-300 bg-blue-500 bg-opacity-20 text-sm rounded-xl p-2 m-1"
-      style={{ cursor: "pointer" }}
-    >
-      {tag}
-    </div>
-  );
-};
 
 const LabelArea = ({ onDrop }: LabelAreaProps) => {
   const [droppedTag, setDroppedTag] = useRecoilState(droppedTagState);
