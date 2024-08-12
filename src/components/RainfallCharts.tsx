@@ -1,14 +1,19 @@
-import { getTodayBuckets, useBuckets } from "@/recoil/bucketsState";
+import { Bucket, getTodayBuckets } from "@/recoil/bucketsState";
 import { useEffect, useRef, useState } from "react";
 import ChartBar from "./ChartBar";
-import { useAuth } from "@/recoil/authState";
 import LoginModal from "./modals/LoginModal";
 
-export default function RainfallCharts() {
+type RainfallChartsProps = {
+  isAuthenticated: boolean;
+  buckets: Bucket[];
+};
+
+export default function RainfallCharts(props: RainfallChartsProps) {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState("auto");
   const [isOpen, setIsOpen] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = props;
+  const { buckets } = props;
 
   useEffect(() => {
     if (contentRef.current) {
@@ -27,8 +32,6 @@ export default function RainfallCharts() {
   const handleOpen = () => {
     isAuthenticated && setIsOpen((prev) => !prev);
   };
-
-  const { buckets } = useBuckets();
 
   return (
     <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full">

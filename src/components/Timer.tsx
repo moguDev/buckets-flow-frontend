@@ -3,19 +3,19 @@ import React from "react";
 import { TimerState, useTimer } from "@/recoil/timerState";
 import BucketMeter from "./BucketMeter";
 import { useRecoilState } from "recoil";
-import { selectedTagState } from "./LabelList";
+import { selectedLabelState } from "./LabelList";
 
 const LabelArea = () => {
-  const [selectedTag, setSelectedTag] = useRecoilState(selectedTagState);
+  const [selectedLabel, setSelectedLabel] = useRecoilState(selectedLabelState);
 
-  const styleUtils = selectedTag
+  const styleUtils = selectedLabel
     ? "text-blue-300 bg-blue-500 bg-opacity-10"
     : "bg-opacity-0 text-gray-300 opacity-50 font-light";
 
   return (
     <div className={`flex items-center rounded-lg px-4 py-2 ${styleUtils}`}>
-      <button onClick={() => setSelectedTag(null)} className="">
-        {selectedTag ? `${selectedTag}` : "ラベルなし"}
+      <button onClick={() => setSelectedLabel(null)} className="">
+        {selectedLabel ? `${selectedLabel}` : "ラベルなし"}
       </button>
     </div>
   );
@@ -32,7 +32,7 @@ export default function Timer() {
     timer,
   } = useTimer();
 
-  const [selectedTag, setSelectedTag] = useRecoilState(selectedTagState);
+  const [selectedTag, setSelectedTag] = useRecoilState(selectedLabelState);
 
   return (
     <div className="flex flex-col items-center justify-center w-full">

@@ -6,12 +6,12 @@ import {
   getOldestBucketDate,
   getTodayBuckets,
 } from "@/recoil/bucketsState";
-import { useBuckets } from "@/recoil/bucketsState";
 import Loading from "./Loading";
-import { useAuth } from "@/recoil/authState";
 
 type ActivityProps = {
-  open: boolean;
+  isAuthenticated: boolean;
+  buckets: Bucket[];
+  loading: boolean;
 };
 
 function getCurrentDate(): string {
@@ -23,12 +23,12 @@ function getCurrentDate(): string {
   return `${year}年${month}月${day}日`;
 }
 
-export default function Activity({ open = false }: ActivityProps) {
-  const [isOpen, setIsOpen] = useState(open);
+export default function Activity(props: ActivityProps) {
+  const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState("0px"); // 初期値を0pxに設定
-  const { buckets, loading, error } = useBuckets();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = props;
+  const { buckets, loading } = props;
 
   useEffect(() => {
     contentRef.current &&

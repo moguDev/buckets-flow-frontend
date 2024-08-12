@@ -5,7 +5,6 @@ import RainBackground from "@/components/RainBackground";
 import Header from "@/components/Header";
 import MenuBar from "@/components/MenuBar";
 import LoginModal from "@/components/modals/LoginModal";
-import { LabelList } from "@/components/LabelList";
 
 export default function Home() {
   return (

@@ -1,18 +1,18 @@
-import { useAuth, userNameState } from "@/recoil/authState";
-import { useBuckets } from "@/recoil/bucketsState";
+import { userNameState } from "@/recoil/authState";
+import { Bucket } from "@/recoil/bucketsState";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 
 const determineLevel = (value: number) => {
   const thresholds = [
-    { limit: 8, lv: 0, label: "---", storage: "---" },
-    { limit: 60, lv: 1, label: "バケツ", storage: "8L" },
-    { limit: 200, lv: 2, label: "洗濯機", storage: "60L" },
-    { limit: 500, lv: 3, label: "浴槽", storage: "200L" },
-    { limit: 1000, lv: 4, label: "小型貯水タンク", storage: "500L" },
+    { limit: 8, lv: 0, label: "---", storage: 0 },
+    { limit: 60, lv: 1, label: "バケツ", storage: 8 },
+    { limit: 200, lv: 2, label: "洗濯機", storage: 60 },
+    { limit: 500, lv: 3, label: "浴槽", storage: 200 },
+    { limit: 1000, lv: 4, label: "小型貯水タンク", storage: 500 },
     { limit: 2000, lv: 5, label: "", storage: "1000L" },
-    { limit: 5000, lv: 6, label: "タンクローリー", storage: "2000L" },
-    { limit: Infinity, lv: 100, label: "", storage: "" },
+    { limit: 5000, lv: 6, label: "タンクローリー", storage: 2000 },
+    { limit: Infinity, lv: 7, label: "学校のプール", storage: 422000 },
   ];
 
   for (const threshold of thresholds) {
@@ -21,11 +21,17 @@ const determineLevel = (value: number) => {
   return { limit: Infinity, lv: 3, label: "", storage: "500L" };
 };
 
-export default function UserInfo() {
+type UserInfoProps = {
+  isAuthenticated: boolean;
+  buckets: Bucket[];
+  loading: boolean;
+};
+
+export default function UserInfo(props: UserInfoProps) {
   const userName = useRecoilValue(userNameState);
-  const { buckets, loading } = useBuckets();
   const [currentValue, setCurrenValue] = useState(0);
-  const { isAuthenticated } = useAuth();
+  const { buckets, loading } = props;
+  const { isAuthenticated } = props;
 
   useEffect(() => {
     setCurrenValue(

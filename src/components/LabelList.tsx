@@ -1,13 +1,12 @@
-import { useEffect, useRef } from "react";
 import { atom, useRecoilState } from "recoil";
 
-export const selectedTagState = atom<string | null>({
-  key: "selectedTagState",
+export const selectedLabelState = atom<string | null>({
+  key: "selectedLabelState",
   default: null,
 });
 
 export const LabelList = () => {
-  const [selectedTag, setSelectedTag] = useRecoilState(selectedTagState);
+  const [selectedTag, setSelectedTag] = useRecoilState(selectedLabelState);
   const tags = ["React", "Next.js", "TypeScript", "JavaScript"];
   return (
     <div className="relative items-center w-full bg-gray-700 bg-opacity-10 p-1 mb-3 rounded-xl">
