@@ -5,10 +5,23 @@ import LeaderBoard from "./LeaderBoard";
 import Preferences from "./Preferences";
 import RainfallCharts from "./RainfallCharts";
 import UserInfo from "./UserInfo";
+import { useRecoilValue } from "recoil";
+import {
+  allBucketsState,
+  errorState,
+  bucketsByDateState,
+  loadingState,
+} from "@/recoil/bucketsState";
 
 export default function MunuBar() {
-  const { isAuthenticated, buckets, loading, error } = useAuth();
-  const props = { isAuthenticated, buckets, loading, error };
+  const { isAuthenticated } = useAuth();
+  const props = {
+    isAuthenticated,
+    allBuckets: useRecoilValue(allBucketsState),
+    filteredBuckets: useRecoilValue(bucketsByDateState),
+    loading: useRecoilValue(loadingState),
+    error: useRecoilValue(errorState),
+  };
   return (
     <>
       <div className="relative mb-3">

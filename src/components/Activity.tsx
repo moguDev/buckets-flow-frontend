@@ -10,7 +10,7 @@ import Loading from "./Loading";
 
 type ActivityProps = {
   isAuthenticated: boolean;
-  buckets: Bucket[];
+  allBuckets: Bucket[];
   loading: boolean;
 };
 
@@ -28,7 +28,7 @@ export default function Activity(props: ActivityProps) {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState("0px"); // 初期値を0pxに設定
   const { isAuthenticated } = props;
-  const { buckets, loading } = props;
+  const { allBuckets: buckets, loading } = props;
 
   useEffect(() => {
     contentRef.current &&

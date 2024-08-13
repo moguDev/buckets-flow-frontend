@@ -1,21 +1,25 @@
-import React from "react";
+import { periodState } from "@/recoil/bucketsState";
+import React, { useState } from "react";
+import { useRecoilState } from "recoil";
 
 type ChartBarProps = {
   maxValue: number;
   value: number;
-  label?: string;
+  date: Date;
 };
 
-export default function ChartBar({
-  maxValue,
-  value,
-  label = "",
-}: ChartBarProps) {
+export default function ChartBar({ maxValue, value, date }: ChartBarProps) {
   const height = `${(value / maxValue) * 100}%`;
-
+  const [period] = useRecoilState(periodState);
+  let label = "";
+  if (period === "week") {
+    label = date.toLocaleDateString("ja-JP", { weekday: "short" });
+  } else if (period === "month" && date.getDate() % 5 === 0) {
+    label = date.getDate().toString();
+  }
   return (
     <div
-      className="w-full p-1 opacity-60 tooltip tooltip-info"
+      className="relative w-full p-0.5 opacity-60 tooltip tooltip-info"
       data-tip={`${value} buckets`}
     >
       <div className="relative w-full h-56 bg-gray-100 bg-opacity-5 rounded-lg overflow-hidden">
@@ -24,7 +28,7 @@ export default function ChartBar({
           style={{ height }}
         />
       </div>
-      <p className="text-center text-blue-200 font-light text-xs p-1">
+      <p className="absolute inset-x-0 flex items-center justify-center text-center text-blue-200 text-xs py-1">
         {label}
       </p>
     </div>

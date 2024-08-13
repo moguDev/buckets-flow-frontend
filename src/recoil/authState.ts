@@ -30,7 +30,7 @@ export const isAuthenticatedSelector = selector({
 export const useAuth = () => {
   const [auth, setAuth] = useRecoilState(authState);
   const setUserName = useSetRecoilState(userNameState);
-  const { buckets, loading, error, refetchBuckets } = useBuckets(); // Buckets関連のカスタムフックの利用
+  const { fetchAllBuckets } = useBuckets(); // Buckets関連のカスタムフックの利用
 
   const checkAuth = () => {
     const token = Cookies.get("access-token");
@@ -39,7 +39,7 @@ export const useAuth = () => {
 
     if (token && client && uid) {
       setAuth({ isAuthenticated: true });
-      refetchBuckets();
+      fetchAllBuckets();
     }
   };
 
@@ -52,14 +52,14 @@ export const useAuth = () => {
     console.log(data.data.name);
     setAuth({ isAuthenticated: true });
     setUserName(data.data.name);
-    refetchBuckets();
+    fetchAllBuckets();
   };
 
   const logout = async () => {
     try {
       await logoutUser();
       setAuth({ isAuthenticated: false });
-      refetchBuckets();
+      fetchAllBuckets();
     } catch (error) {
       console.error("ログアウトに失敗しました:", error);
       throw new Error("ログアウトに失敗しました。");
@@ -70,8 +70,5 @@ export const useAuth = () => {
     isAuthenticated: auth.isAuthenticated,
     login,
     logout,
-    buckets,
-    loading,
-    error,
   };
 };

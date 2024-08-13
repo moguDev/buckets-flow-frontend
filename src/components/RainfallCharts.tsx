@@ -1,19 +1,27 @@
-import { Bucket, getTodayBuckets } from "@/recoil/bucketsState";
+"use client";
 import { useEffect, useRef, useState } from "react";
 import ChartBar from "./ChartBar";
 import LoginModal from "./modals/LoginModal";
+import {
+  BucketsByDate,
+  bucketsByDateState,
+  periodState,
+} from "@/recoil/bucketsState";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 type RainfallChartsProps = {
   isAuthenticated: boolean;
-  buckets: Bucket[];
 };
 
 export default function RainfallCharts(props: RainfallChartsProps) {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState("auto");
   const [isOpen, setIsOpen] = useState(false);
+  const [period, setPeriod] = useRecoilState(periodState);
+  const bucketsByDate = useRecoilValue(bucketsByDateState);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const { isAuthenticated } = props;
-  const { buckets } = props;
 
   useEffect(() => {
     if (contentRef.current) {
@@ -28,6 +36,26 @@ export default function RainfallCharts(props: RainfallChartsProps) {
   useEffect(() => {
     isAuthenticated === false && setIsOpen(false);
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (bucketsByDate) {
+      const dates = Object.keys(bucketsByDate);
+      setStartDate(
+        new Date(dates[0]).toLocaleDateString("ja-JP", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      );
+      setEndDate(
+        new Date(dates[dates.length - 1]).toLocaleDateString("ja-JP", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      );
+    }
+  }, [bucketsByDate]);
 
   const handleOpen = () => {
     isAuthenticated && setIsOpen((prev) => !prev);
@@ -60,19 +88,39 @@ export default function RainfallCharts(props: RainfallChartsProps) {
       </label>
       <div ref={contentRef} className="transition-height" style={{ height }}>
         <div className="flex items-center bg-blue-900 bg-opacity-10 rounded-lg mt-2 p-1">
-          <button className="chart-tab w-1/4">日</button>
-          <button className="chart-tab chart-tab-selected w-1/4">週</button>
-          <button className="chart-tab w-1/4">月</button>
-          <button className="chart-tab w-1/4">年</button>
+          <button
+            onClick={() => setPeriod("week")}
+            className={`w-1/3 chart-tab ${
+              period === "week" && "chart-tab-selected"
+            }`}
+          >
+            週間
+          </button>
+          <button
+            onClick={() => setPeriod("month")}
+            className={`w-1/3 chart-tab ${
+              period === "month" && "chart-tab-selected"
+            }`}
+          >
+            月間
+          </button>
+          <button
+            onClick={() => setPeriod("year")}
+            className={`w-1/3 chart-tab ${
+              period === "year" && "chart-tab-selected"
+            }`}
+          >
+            年間
+          </button>
         </div>
         <div className="flex items-center justify-between px-1 py-3 text-blue-300">
           <button className="material-icons text-xl">
             keyboard_arrow_left
           </button>
           <p className="text-sm font-thin">
-            2024年8月5日〜2024年8月11日 -{" "}
+            {startDate}〜{endDate} -{" "}
             <button className="font-semibold">
-              {getTodayBuckets(buckets).length}{" "}
+              {bucketsByDate && Object.values(bucketsByDate).flat().length}{" "}
               <span className="font-thin">bucket</span>
             </button>
           </p>
@@ -83,13 +131,14 @@ export default function RainfallCharts(props: RainfallChartsProps) {
         </div>
 
         <div className="flex w-full p-1 pb-3">
-          <ChartBar maxValue={9} value={4} label="月" />
-          <ChartBar maxValue={9} value={8} label="火" />
-          <ChartBar maxValue={9} value={2} label="水" />
-          <ChartBar maxValue={9} value={3} label="木" />
-          <ChartBar maxValue={9} value={2} label="金" />
-          <ChartBar maxValue={9} value={9} label="土" />
-          <ChartBar maxValue={9} value={1} label="日" />
+          {bucketsByDate &&
+            Object.entries(bucketsByDate).map(([date, buckets]) => (
+              <ChartBar
+                maxValue={10}
+                value={buckets.length}
+                date={new Date(date)}
+              />
+            ))}
         </div>
         <div className="flex w-full p-1 pb-3"></div>
       </div>

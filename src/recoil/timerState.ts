@@ -37,7 +37,7 @@ export const timerState = atom<TimerState>({
 const setTimerCountToTitle = (remainingTime: number) => {
   const minutes = String(Math.floor(remainingTime / 60)).padStart(2, "0");
   const seconds = String(remainingTime % 60).padStart(2, "0");
-  document.title = `${minutes}:${seconds}  buckets Flow`;
+  document.title = `${minutes}:${seconds} | buckets Flow`;
 };
 
 export const useTimer = () => {

@@ -17,9 +17,23 @@ export interface Bucket {
   endtime: number;
 }
 
-export const bucketsState = atom<Bucket[]>({
-  key: "bucketsState",
+export interface BucketsByDate {
+  [date: string]: Bucket[];
+}
+
+export const allBucketsState = atom<Bucket[]>({
+  key: "allBucketsState",
   default: [],
+});
+
+export const periodState = atom<String>({
+  key: "periodState",
+  default: "week",
+});
+
+export const bucketsByDateState = atom<BucketsByDate | null>({
+  key: "bucketsByDateState",
+  default: {},
 });
 
 export const loadingState = atom<boolean>({
@@ -34,15 +48,38 @@ export const errorState = atom<string | null>({
 
 // バケツ取得のカスタムフック
 export const useBuckets = () => {
-  const [buckets, setBuckets] = useRecoilState(bucketsState);
+  const [allBuckets, setAllBuckets] = useRecoilState(allBucketsState);
+  const period = useRecoilValue(periodState);
+  const [filteredBuckets, setFilteredBuckets] =
+    useRecoilState(bucketsByDateState);
   const setLoading = useSetRecoilState(loadingState);
   const setError = useSetRecoilState(errorState);
 
-  const fetchBuckets = async () => {
+  // 既存のすべてのバケツを取得する関数
+  const fetchAllBuckets = async () => {
     setLoading(true);
     try {
       const response = await axiosInstance.get("buckets");
-      setBuckets(response.data);
+      setAllBuckets(response.data);
+    } catch (error) {
+      setError("データの取得に失敗しました");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 集計期間に基づいてバケツを取得する関数
+  const fetchBucketsByPeriod = async (date: Date) => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get("buckets/show_buckets", {
+        params: {
+          date: date.toISOString().split("T")[0], // 例: "2024-08-12"
+          period,
+        },
+      });
+      setFilteredBuckets(response.data);
     } catch (error) {
       setError("データの取得に失敗しました");
       console.error(error);
@@ -54,7 +91,7 @@ export const useBuckets = () => {
   const createBucket = async (newBucket: Omit<Bucket, "id" | "user_id">) => {
     try {
       const response = await axiosInstance.post("buckets", newBucket);
-      setBuckets((prevBuckets) => [...prevBuckets, response.data]);
+      setAllBuckets((prevBuckets) => [...prevBuckets, response.data]);
     } catch (error) {
       setError("新しいバケットの作成に失敗しました");
       console.error(error);
@@ -62,14 +99,24 @@ export const useBuckets = () => {
   };
 
   useEffect(() => {
-    fetchBuckets();
+    fetchAllBuckets(); // 初期ロード時にすべてのバケツを取得
   }, []);
 
+  useEffect(() => {
+    // 現在の日付から一週間前の日付を計算
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+    // `fetchBucketsByPeriod` 関数に一週間前の日付を渡す
+    fetchBucketsByPeriod(oneWeekAgo);
+  }, [period]);
+
   return {
-    buckets,
+    allBuckets,
+    filteredBuckets,
     loading: useRecoilValue(loadingState),
     error: useRecoilValue(errorState),
-    refetchBuckets: fetchBuckets,
+    fetchAllBuckets, // すべてのバケツを取得する関数をエクスポート
     createBucket,
   };
 };
