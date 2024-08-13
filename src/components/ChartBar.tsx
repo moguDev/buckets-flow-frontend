@@ -16,6 +16,8 @@ export default function ChartBar({ maxValue, value, date }: ChartBarProps) {
     label = date.toLocaleDateString("ja-JP", { weekday: "short" });
   } else if (period === "month" && date.getDate() % 5 === 0) {
     label = date.getDate().toString();
+  } else if (period === "year") {
+    label = (date.getMonth() + 1).toString();
   }
   return (
     <div

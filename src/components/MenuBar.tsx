@@ -18,7 +18,6 @@ export default function MunuBar() {
   const props = {
     isAuthenticated,
     allBuckets: useRecoilValue(allBucketsState),
-    filteredBuckets: useRecoilValue(bucketsByDateState),
     loading: useRecoilValue(allBucketsLoadingState),
     error: useRecoilValue(allBucketsErrorState),
   };
