@@ -1,11 +1,11 @@
-// components/LoginModal.tsx
 "use client";
-
-import { useAuth } from "@/recoil/authState";
 import { useState } from "react";
 
-const LoginModal = () => {
-  const { login } = useAuth();
+const LoginModal = ({
+  login,
+}: {
+  login: (email: string, password: string) => Promise<void>;
+}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -14,7 +14,6 @@ const LoginModal = () => {
     e.preventDefault();
     try {
       await login(email, password);
-      // ログイン成功後にモーダルを閉じる
       const checkbox = document.getElementById(
         "my-modal-4"
       ) as HTMLInputElement;

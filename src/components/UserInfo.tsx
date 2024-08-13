@@ -40,7 +40,7 @@ export default function UserInfo(props: UserInfoProps) {
   }, [buckets]);
 
   return isAuthenticated ? (
-    <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full">
+    <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full select-none">
       <button className="flex justify-between items-center w-full pt-6 ">
         <div className="flex items-center text-blue-300">
           <span className="material-icons text-sm pr-3">account_circle</span>
@@ -91,7 +91,7 @@ export default function UserInfo(props: UserInfoProps) {
         >
           <div className="flex items-center text-blue-300">
             <span className="material-icons text-sm pr-3">login</span>
-            <p className="text-sm">ログイン</p>
+            <p className="text-sm select-none">ログイン</p>
           </div>
         </label>
         <label
@@ -100,7 +100,7 @@ export default function UserInfo(props: UserInfoProps) {
         >
           <div className="flex items-center text-blue-300">
             <span className="material-icons text-sm pr-2">person_add</span>
-            <p className="text-sm">アカウント作成</p>
+            <p className="text-sm select-none">アカウント作成</p>
           </div>
         </label>
       </div>

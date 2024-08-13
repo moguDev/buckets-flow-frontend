@@ -4,7 +4,6 @@ import { RecoilRoot } from "recoil";
 import RainBackground from "@/components/RainBackground";
 import Header from "@/components/Header";
 import MenuBar from "@/components/MenuBar";
-import LoginModal from "@/components/modals/LoginModal";
 
 export default function Home() {
   return (
@@ -19,7 +18,6 @@ export default function Home() {
           <MenuBar />
         </div>
       </div>
-      <LoginModal />
     </RecoilRoot>
   );
 }

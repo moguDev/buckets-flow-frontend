@@ -44,7 +44,7 @@ export default function Activity(props: ActivityProps) {
   };
 
   return (
-    <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full">
+    <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full select-none">
       <label
         htmlFor={isAuthenticated ? "" : "my-modal-4"}
         className="flex justify-between items-center w-full py-6"

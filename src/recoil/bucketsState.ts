@@ -66,8 +66,7 @@ export const bucketsByDateErrorState = atom<string | null>({
 export const useBuckets = () => {
   const [allBuckets, setAllBuckets] = useRecoilState(allBucketsState);
   const period = useRecoilValue(periodState);
-  const [filteredBuckets, setFilteredBuckets] =
-    useRecoilState(bucketsByDateState);
+  const [bucketsByDate, setBucketsByDate] = useRecoilState(bucketsByDateState);
   const setAllBucketsLoading = useSetRecoilState(allBucketsLoadingState);
   const setAllBucketsError = useSetRecoilState(allBucketsErrorState);
   const setBucketsByDateLoading = useSetRecoilState(bucketsByDateLoadingState);
@@ -95,7 +94,7 @@ export const useBuckets = () => {
             period,
           },
         });
-        setFilteredBuckets(response.data);
+        setBucketsByDate(response.data);
       } catch (error) {
         setAllBucketsError("データの取得に失敗しました");
         console.error(error);
@@ -103,7 +102,7 @@ export const useBuckets = () => {
         setBucketsByDateLoading(false);
       }
     },
-    [period, setFilteredBuckets, setBucketsByDateLoading, setAllBucketsError]
+    [period, setBucketsByDate, setBucketsByDateLoading, setAllBucketsError]
   );
 
   const createBucket = useCallback(
@@ -120,10 +119,6 @@ export const useBuckets = () => {
   );
 
   useEffect(() => {
-    fetchAllBuckets();
-  }, [fetchAllBuckets]);
-
-  useEffect(() => {
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
     fetchBucketsByPeriod(oneWeekAgo);
@@ -133,7 +128,7 @@ export const useBuckets = () => {
     allBuckets,
     allBucketsLoading: useRecoilValue(allBucketsLoadingState),
     error: useRecoilValue(allBucketsErrorState),
-    filteredBuckets,
+    bucketsByDate,
     bucketsByDateLoading: useRecoilValue(bucketsByDateLoadingState),
     fetchAllBuckets,
     createBucket,

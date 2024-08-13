@@ -47,7 +47,15 @@ export default function ChartBar({ maxValue, value, date }: ChartBarProps) {
     >
       <div className="relative w-full h-56 bg-gray-100 bg-opacity-5 rounded-lg overflow-hidden">
         <div
-          className="absolute bottom-0 w-full bg-blue-300 transition-all duration-500"
+          className={`absolute bottom-0 w-full bg-blue-400 ${
+            maxValue * 0.75 < value
+              ? "bg-opacity-90"
+              : maxValue * 0.5 < value
+              ? "bg-opacity-80"
+              : maxValue * 0.25 < value
+              ? "bg-opacity-70"
+              : "bg-opacity-60"
+          } transition-all rounded duration-500`}
           style={{ height }}
         />
       </div>

@@ -4,7 +4,6 @@ import { login as loginUser, logout as logoutUser } from "@/libs/auth";
 import { useBuckets } from "./bucketsState"; // Buckets関連のカスタムフックのインポート
 import { useEffect, useCallback } from "react";
 
-// アトム定義
 export const authState = atom({
   key: "authState",
   default: {
@@ -14,7 +13,7 @@ export const authState = atom({
 
 export const userNameState = atom({
   key: "userNameState",
-  default: "", // 初期値を空文字にする
+  default: "",
 });
 
 // セレクタ定義

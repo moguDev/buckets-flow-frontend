@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import ChartBar from "./ChartBar";
-import LoginModal from "./modals/LoginModal";
 import {
   bucketsByDateLoadingState,
   bucketsByDateState,
@@ -18,7 +17,7 @@ export default function RainfallCharts({
   isAuthenticated,
 }: RainfallChartsProps) {
   const contentRef = useRef<HTMLDivElement | null>(null);
-  const [height, setHeight] = useState("auto");
+  const [height, setHeight] = useState("0px");
   const [isOpen, setIsOpen] = useState(false);
   const [period, setPeriod] = useRecoilState(periodState);
   const bucketsByDate = useRecoilValue(bucketsByDateState);
@@ -28,15 +27,12 @@ export default function RainfallCharts({
   const [maxValue, setMaxValue] = useState(0);
 
   useEffect(() => {
-    if (contentRef.current) {
+    contentRef.current &&
       setHeight(isOpen ? `${contentRef.current.scrollHeight}px` : "0px");
-    }
-  }, [isOpen]);
+  }, [loading, isOpen]);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      setIsOpen(false);
-    }
+    !isAuthenticated && setIsOpen(false);
   }, [isAuthenticated]);
 
   useEffect(() => {
@@ -71,13 +67,11 @@ export default function RainfallCharts({
     });
 
   const handleOpen = () => {
-    if (isAuthenticated) {
-      setIsOpen((prev) => !prev);
-    }
+    isAuthenticated && setIsOpen((prev) => !prev);
   };
 
   return (
-    <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full">
+    <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full select-none">
       <label
         htmlFor={isAuthenticated ? "" : "my-modal-4"}
         className="flex justify-between items-center w-full py-6"
@@ -116,9 +110,7 @@ export default function RainfallCharts({
           ))}
         </div>
         {loading ? (
-          <div className="flex items-center justify-center h-full">
-            <Loading />
-          </div>
+          <Loading />
         ) : (
           <>
             <div className="flex items-center justify-between px-1 py-3 text-blue-300">
@@ -151,7 +143,6 @@ export default function RainfallCharts({
         )}
         <div className="flex w-full p-1 pb-3"></div>
       </div>
-      <LoginModal />
     </div>
   );
 }

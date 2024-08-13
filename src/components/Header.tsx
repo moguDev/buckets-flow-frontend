@@ -3,7 +3,8 @@ import { useAuth } from "@/recoil/authState";
 import LoginModal from "./modals/LoginModal";
 
 export default function Header() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, login, logout } = useAuth();
+  const props = { isAuthenticated, login, logout };
 
   const handleLogout = async () => {
     try {
@@ -44,8 +45,7 @@ export default function Header() {
           </label>
         )}
       </div>
-      <LoginModal />
-      {/* Open the modal using document.getElementById('ID').showModal() method */}
+      <LoginModal {...props} />
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box bg-gray-900 bg-opacity-80 backdrop-blur-sm">
           <p className="py-4 text-blue-100">ログアウトしますか？</p>
