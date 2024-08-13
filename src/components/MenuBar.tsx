@@ -8,9 +8,9 @@ import UserInfo from "./UserInfo";
 import { useRecoilValue } from "recoil";
 import {
   allBucketsState,
-  errorState,
+  allBucketsErrorState,
   bucketsByDateState,
-  loadingState,
+  allBucketsLoadingState,
 } from "@/recoil/bucketsState";
 
 export default function MunuBar() {
@@ -19,8 +19,8 @@ export default function MunuBar() {
     isAuthenticated,
     allBuckets: useRecoilValue(allBucketsState),
     filteredBuckets: useRecoilValue(bucketsByDateState),
-    loading: useRecoilValue(loadingState),
-    error: useRecoilValue(errorState),
+    loading: useRecoilValue(allBucketsLoadingState),
+    error: useRecoilValue(allBucketsErrorState),
   };
   return (
     <>

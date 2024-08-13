@@ -2,8 +2,13 @@
 import { useEffect, useRef, useState } from "react";
 import ChartBar from "./ChartBar";
 import LoginModal from "./modals/LoginModal";
-import { bucketsByDateState, periodState } from "@/recoil/bucketsState";
+import {
+  bucketsByDateLoadingState,
+  bucketsByDateState,
+  periodState,
+} from "@/recoil/bucketsState";
 import { useRecoilState, useRecoilValue } from "recoil";
+import Loading from "./Loading";
 
 type RainfallChartsProps = {
   isAuthenticated: boolean;
@@ -15,6 +20,7 @@ export default function RainfallCharts(props: RainfallChartsProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [period, setPeriod] = useRecoilState(periodState);
   const bucketsByDate = useRecoilValue(bucketsByDateState);
+  const loading = useRecoilValue(bucketsByDateLoadingState);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const { isAuthenticated } = props;
@@ -109,33 +115,38 @@ export default function RainfallCharts(props: RainfallChartsProps) {
             年間
           </button>
         </div>
-        <div className="flex items-center justify-between px-1 py-3 text-blue-300">
-          <button className="material-icons text-xl">
-            keyboard_arrow_left
-          </button>
-          <p className="text-sm font-thin">
-            {startDate}〜{endDate} -{" "}
-            <button className="font-semibold">
-              {bucketsByDate && Object.values(bucketsByDate).flat().length}{" "}
-              <span className="font-thin">bucket</span>
-            </button>
-          </p>
-          <button className="material-icons text-xl">
-            keyboard_arrow_right
-          </button>
-        </div>
-
-        <div className="flex w-full p-1 pb-3">
-          {bucketsByDate &&
-            Object.entries(bucketsByDate).map(([date, buckets]) => (
-              <ChartBar
-                key={date}
-                maxValue={10}
-                value={buckets.length}
-                date={new Date(date)}
-              />
-            ))}
-        </div>
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            <div className="flex items-center justify-between px-1 py-3 text-blue-300">
+              <button className="material-icons text-xl">
+                keyboard_arrow_left
+              </button>
+              <p className="text-sm font-thin">
+                {startDate}〜{endDate} -{" "}
+                <button className="font-semibold">
+                  {bucketsByDate && Object.values(bucketsByDate).flat().length}{" "}
+                  <span className="font-thin">bucket</span>
+                </button>
+              </p>
+              <button className="material-icons text-xl">
+                keyboard_arrow_right
+              </button>
+            </div>
+            <div className="flex w-full p-1 pb-3">
+              {bucketsByDate &&
+                Object.entries(bucketsByDate).map(([date, buckets]) => (
+                  <ChartBar
+                    key={date}
+                    maxValue={10}
+                    value={buckets.length}
+                    date={new Date(date)}
+                  />
+                ))}
+            </div>
+          </>
+        )}
         <div className="flex w-full p-1 pb-3"></div>
       </div>
       <LoginModal />
