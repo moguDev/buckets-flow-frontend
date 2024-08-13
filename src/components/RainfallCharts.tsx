@@ -2,11 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import ChartBar from "./ChartBar";
 import LoginModal from "./modals/LoginModal";
-import {
-  BucketsByDate,
-  bucketsByDateState,
-  periodState,
-} from "@/recoil/bucketsState";
+import { bucketsByDateState, periodState } from "@/recoil/bucketsState";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 type RainfallChartsProps = {
@@ -124,7 +120,6 @@ export default function RainfallCharts(props: RainfallChartsProps) {
               <span className="font-thin">bucket</span>
             </button>
           </p>
-
           <button className="material-icons text-xl">
             keyboard_arrow_right
           </button>
@@ -134,6 +129,7 @@ export default function RainfallCharts(props: RainfallChartsProps) {
           {bucketsByDate &&
             Object.entries(bucketsByDate).map(([date, buckets]) => (
               <ChartBar
+                key={date}
                 maxValue={10}
                 value={buckets.length}
                 date={new Date(date)}

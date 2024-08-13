@@ -71,7 +71,6 @@ export const useBuckets = () => {
 
   // 集計期間に基づいてバケツを取得する関数
   const fetchBucketsByPeriod = async (date: Date) => {
-    setLoading(true);
     try {
       const response = await axiosInstance.get("buckets/show_buckets", {
         params: {
@@ -83,8 +82,6 @@ export const useBuckets = () => {
     } catch (error) {
       setError("データの取得に失敗しました");
       console.error(error);
-    } finally {
-      setLoading(false);
     }
   };
 
