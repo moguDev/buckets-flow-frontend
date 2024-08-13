@@ -1,5 +1,5 @@
 import { periodState } from "@/recoil/bucketsState";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 
 type ChartBarProps = {
@@ -9,8 +9,28 @@ type ChartBarProps = {
 };
 
 export default function ChartBar({ maxValue, value, date }: ChartBarProps) {
-  const height = `${(value / maxValue) * 100}%`;
+  const [animatedValue, setAnimatedValue] = useState(0);
   const [period] = useRecoilState(periodState);
+
+  useEffect(() => {
+    let start: number | null = null;
+
+    const animate = (time: number) => {
+      if (start === null) start = time;
+      const progress = Math.min((time - start) / 100, 1); // 1秒でアニメーション完了
+      setAnimatedValue(Math.floor(progress * value));
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setAnimatedValue(value); // 最終的に値を設定
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [value]);
+
+  const height = `${(animatedValue / maxValue) * 100}%`;
   let label = "";
   if (period === "week") {
     label = date.toLocaleDateString("ja-JP", { weekday: "short" });
@@ -19,10 +39,11 @@ export default function ChartBar({ maxValue, value, date }: ChartBarProps) {
   } else if (period === "year") {
     label = (date.getMonth() + 1).toString();
   }
+
   return (
     <div
       className="relative w-full p-0.5 opacity-60 tooltip tooltip-info"
-      data-tip={`${value} buckets`}
+      data-tip={`${animatedValue} buckets`}
     >
       <div className="relative w-full h-56 bg-gray-100 bg-opacity-5 rounded-lg overflow-hidden">
         <div
