@@ -91,7 +91,9 @@ export default function RainfallCharts(props: RainfallChartsProps) {
       <div ref={contentRef} className="transition-height" style={{ height }}>
         <div className="flex items-center bg-blue-900 bg-opacity-10 rounded-lg mt-2 p-1">
           <button
-            onClick={() => setPeriod("week")}
+            onClick={() => {
+              !loading && setPeriod("week");
+            }}
             className={`w-1/3 chart-tab ${
               period === "week" && "chart-tab-selected"
             }`}
@@ -99,7 +101,9 @@ export default function RainfallCharts(props: RainfallChartsProps) {
             週間
           </button>
           <button
-            onClick={() => setPeriod("month")}
+            onClick={() => {
+              !loading && setPeriod("month");
+            }}
             className={`w-1/3 chart-tab ${
               period === "month" && "chart-tab-selected"
             }`}
@@ -107,7 +111,9 @@ export default function RainfallCharts(props: RainfallChartsProps) {
             月間
           </button>
           <button
-            onClick={() => setPeriod("year")}
+            onClick={() => {
+              !loading && setPeriod("year");
+            }}
             className={`w-1/3 chart-tab ${
               period === "year" && "chart-tab-selected"
             }`}
