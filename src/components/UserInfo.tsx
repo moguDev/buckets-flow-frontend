@@ -23,15 +23,15 @@ const determineLevel = (value: number) => {
 
 type UserInfoProps = {
   isAuthenticated: boolean;
+  userName: string;
   allBuckets: Bucket[];
   loading: boolean;
 };
 
 export default function UserInfo(props: UserInfoProps) {
-  const userName = useRecoilValue(userNameState);
   const [currentValue, setCurrenValue] = useState(0);
   const { allBuckets: buckets, loading } = props;
-  const { isAuthenticated } = props;
+  const { isAuthenticated, userName } = props;
 
   useEffect(() => {
     setCurrenValue(

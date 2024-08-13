@@ -13,9 +13,10 @@ import {
 } from "@/recoil/bucketsState";
 
 export default function MunuBar() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, userName } = useAuth();
   const props = {
     isAuthenticated,
+    userName,
     allBuckets: useRecoilValue(allBucketsState),
     loading: useRecoilValue(allBucketsLoadingState),
     error: useRecoilValue(allBucketsErrorState),

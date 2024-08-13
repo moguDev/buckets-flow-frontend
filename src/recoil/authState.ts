@@ -14,7 +14,7 @@ export const authState = atom({
 
 export const userNameState = atom({
   key: "userNameState",
-  default: "user-name",
+  default: "", // 初期値を空文字にする
 });
 
 // セレクタ定義
@@ -23,10 +23,15 @@ export const isAuthenticatedSelector = selector({
   get: ({ get }) => get(authState).isAuthenticated,
 });
 
+export const userNameSelector = selector({
+  key: "userNameSelector",
+  get: ({ get }) => get(userNameState),
+});
+
 // カスタムフック
 export const useAuth = () => {
   const [auth, setAuth] = useRecoilState(authState);
-  const setUserName = useSetRecoilState(userNameState);
+  const [userName, setUserName] = useRecoilState(userNameState);
   const { fetchAllBuckets } = useBuckets(); // Buckets関連のカスタムフックの利用
 
   // 認証状態をチェックする関数
@@ -52,7 +57,7 @@ export const useAuth = () => {
       try {
         const { data } = await loginUser(email, password);
         setAuth({ isAuthenticated: true });
-        setUserName(data.name);
+        setUserName(data.name); // ユーザー名を設定
         fetchAllBuckets();
       } catch (error) {
         console.error("ログインに失敗しました:", error);
@@ -67,15 +72,17 @@ export const useAuth = () => {
     try {
       await logoutUser();
       setAuth({ isAuthenticated: false });
+      setUserName(""); // ユーザー名をリセット
       fetchAllBuckets();
     } catch (error) {
       console.error("ログアウトに失敗しました:", error);
       throw new Error("ログアウトに失敗しました。");
     }
-  }, [setAuth, fetchAllBuckets]);
+  }, [setAuth, setUserName, fetchAllBuckets]);
 
   return {
     isAuthenticated: auth.isAuthenticated,
+    userName, // ユーザー名を返す
     login,
     logout,
   };

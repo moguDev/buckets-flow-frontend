@@ -116,7 +116,9 @@ export default function RainfallCharts({
           ))}
         </div>
         {loading ? (
-          <Loading />
+          <div className="flex items-center justify-center h-full">
+            <Loading />
+          </div>
         ) : (
           <>
             <div className="flex items-center justify-between px-1 py-3 text-blue-300">
