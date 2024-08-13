@@ -9,7 +9,6 @@ import { useRecoilValue } from "recoil";
 import {
   allBucketsState,
   allBucketsErrorState,
-  bucketsByDateState,
   allBucketsLoadingState,
 } from "@/recoil/bucketsState";
 

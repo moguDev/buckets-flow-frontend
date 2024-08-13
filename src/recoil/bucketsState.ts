@@ -5,7 +5,7 @@ import {
   useSetRecoilState,
 } from "recoil";
 import axiosInstance from "@/libs/axiosInstance";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 
 export interface Bucket {
   id: number;
@@ -21,6 +21,7 @@ export interface BucketsByDate {
   [date: string]: Bucket[];
 }
 
+// State Atoms
 export const allBucketsState = atom<Bucket[]>({
   key: "allBucketsState",
   default: [],
@@ -36,9 +37,14 @@ export const allBucketsErrorState = atom<string | null>({
   default: null,
 });
 
-export const periodState = atom<String>({
+export const periodState = atom<string>({
   key: "periodState",
   default: "week",
+});
+
+export const periodCountState = atom<number>({
+  key: "periodCountState",
+  default: 0,
 });
 
 export const bucketsByDateState = atom<BucketsByDate | null>({
@@ -56,7 +62,7 @@ export const bucketsByDateErrorState = atom<string | null>({
   default: null,
 });
 
-// バケツ取得のカスタムフック
+// Custom Hooks
 export const useBuckets = () => {
   const [allBuckets, setAllBuckets] = useRecoilState(allBucketsState);
   const period = useRecoilValue(periodState);
@@ -65,10 +71,8 @@ export const useBuckets = () => {
   const setAllBucketsLoading = useSetRecoilState(allBucketsLoadingState);
   const setAllBucketsError = useSetRecoilState(allBucketsErrorState);
   const setBucketsByDateLoading = useSetRecoilState(bucketsByDateLoadingState);
-  const setBucketsByDateError = useSetRecoilState(bucketsByDateErrorState);
 
-  // 既存のすべてのバケツを取得する関数
-  const fetchAllBuckets = async () => {
+  const fetchAllBuckets = useCallback(async () => {
     setAllBucketsLoading(true);
     try {
       const response = await axiosInstance.get("buckets");
@@ -79,140 +83,123 @@ export const useBuckets = () => {
     } finally {
       setAllBucketsLoading(false);
     }
-  };
+  }, [setAllBuckets, setAllBucketsLoading, setAllBucketsError]);
 
-  // 集計期間に基づいてバケツを取得する関数
-  const fetchBucketsByPeriod = async (date: Date) => {
-    setBucketsByDateLoading(true);
-    try {
-      const response = await axiosInstance.get("buckets/show_buckets", {
-        params: {
-          date: date.toISOString().split("T")[0], // 例: "2024-08-12"
-          period,
-        },
-      });
-      setFilteredBuckets(response.data);
-    } catch (error) {
-      setAllBucketsError("データの取得に失敗しました");
-      console.error(error);
-    } finally {
-      setBucketsByDateLoading(false);
-    }
-  };
+  const fetchBucketsByPeriod = useCallback(
+    async (date: Date) => {
+      setBucketsByDateLoading(true);
+      try {
+        const response = await axiosInstance.get("buckets/show_buckets", {
+          params: {
+            date: date.toISOString().split("T")[0],
+            period,
+          },
+        });
+        setFilteredBuckets(response.data);
+      } catch (error) {
+        setAllBucketsError("データの取得に失敗しました");
+        console.error(error);
+      } finally {
+        setBucketsByDateLoading(false);
+      }
+    },
+    [period, setFilteredBuckets, setBucketsByDateLoading, setAllBucketsError]
+  );
 
-  const createBucket = async (newBucket: Omit<Bucket, "id" | "user_id">) => {
-    try {
-      const response = await axiosInstance.post("buckets", newBucket);
-      setAllBuckets((prevBuckets) => [...prevBuckets, response.data]);
-    } catch (error) {
-      setAllBucketsError("新しいバケットの作成に失敗しました");
-      console.error(error);
-    }
-  };
+  const createBucket = useCallback(
+    async (newBucket: Omit<Bucket, "id" | "user_id">) => {
+      try {
+        const response = await axiosInstance.post("buckets", newBucket);
+        setAllBuckets((prevBuckets) => [...prevBuckets, response.data]);
+      } catch (error) {
+        setAllBucketsError("新しいバケットの作成に失敗しました");
+        console.error(error);
+      }
+    },
+    [setAllBuckets, setAllBucketsError]
+  );
 
   useEffect(() => {
-    fetchAllBuckets(); // 初期ロード時にすべてのバケツを取得
-  }, []);
+    fetchAllBuckets();
+  }, [fetchAllBuckets]);
 
   useEffect(() => {
-    // 現在の日付から一週間前の日付を計算
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-
-    // `fetchBucketsByPeriod` 関数に一週間前の日付を渡す
     fetchBucketsByPeriod(oneWeekAgo);
-  }, [period]);
+  }, [fetchBucketsByPeriod, period]);
 
   return {
     allBuckets,
     allBucketsLoading: useRecoilValue(allBucketsLoadingState),
     error: useRecoilValue(allBucketsErrorState),
     filteredBuckets,
-    bucketsByDateLoading: useRecoilValue(bucketsByDateState),
-    fetchAllBuckets, // すべてのバケツを取得する関数をエクスポート
+    bucketsByDateLoading: useRecoilValue(bucketsByDateLoadingState),
+    fetchAllBuckets,
     createBucket,
   };
 };
 
-/**
- * Functions.
- * */
-
-export const isSameDay = (date1: Date, date2: Date): boolean => {
-  return (
-    date1.getFullYear() === date2.getFullYear() &&
-    date1.getMonth() === date2.getMonth() &&
-    date1.getDate() === date2.getDate()
-  );
-};
+// Utility Functions
+export const isSameDay = (date1: Date, date2: Date): boolean =>
+  date1.getFullYear() === date2.getFullYear() &&
+  date1.getMonth() === date2.getMonth() &&
+  date1.getDate() === date2.getDate();
 
 export const getTodayBuckets = (buckets: Bucket[]): Bucket[] => {
   const today = new Date();
-
-  return buckets.filter((bucket) => {
-    const bucketDate = new Date(bucket.starttime * 1000); // 秒単位のエポックタイムをミリ秒に変換
-    return isSameDay(bucketDate, today);
-  });
+  return buckets.filter((bucket) =>
+    isSameDay(new Date(bucket.starttime * 1000), today)
+  );
 };
 
 export const getMaxStreak = (buckets: Bucket[]): number => {
   if (buckets.length === 0) return 0;
 
-  // バケットのstarttimeを日付に変換し、一意の日付のリストを作成
-  const uniqueDays = new Set<string>(
-    buckets.map((bucket) => {
-      const date = new Date(bucket.starttime * 1000); // ミリ秒単位に変換
-      return date.toISOString().split("T")[0]; // YYYY-MM-DD形式の日付文字列に変換
-    })
-  );
-
-  // 日付を配列に変換し、昇順にソート
-  const sortedDays = Array.from(uniqueDays).sort();
+  const uniqueDays = Array.from(
+    new Set(
+      buckets.map((bucket) => {
+        const date = new Date(bucket.starttime * 1000);
+        return date.toISOString().split("T")[0];
+      })
+    )
+  ).sort();
 
   let maxStreak = 1;
   let currentStreak = 1;
 
-  for (let i = 1; i < sortedDays.length; i++) {
-    const prevDate = new Date(sortedDays[i - 1]);
-    const currDate = new Date(sortedDays[i]);
+  for (let i = 1; i < uniqueDays.length; i++) {
+    const prevDate = new Date(uniqueDays[i - 1]);
+    const currDate = new Date(uniqueDays[i]);
 
-    // 前の日付と現在の日付が連続しているか確認
-    const diffInTime = currDate.getTime() - prevDate.getTime();
-    const diffInDays = diffInTime / (1000 * 3600 * 24);
+    const diffInDays =
+      (currDate.getTime() - prevDate.getTime()) / (1000 * 3600 * 24);
 
     if (diffInDays === 1) {
-      // 連続している場合
       currentStreak++;
     } else {
-      // 連続していない場合
       currentStreak = 1;
     }
 
-    // 最大の継続日数を更新
     maxStreak = Math.max(maxStreak, currentStreak);
   }
 
   return maxStreak;
 };
 
-export const wait = (ms: number) =>
+export const wait = (ms: number): Promise<void> =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
 export const getOldestBucketDate = (buckets: Bucket[]): string | null => {
-  if (buckets.length === 0) {
-    return null;
-  }
+  if (buckets.length === 0) return null;
 
-  // 一番古いstarttimeを持つバケツを探す
   const oldestBucket = buckets.reduce(
     (oldest, bucket) => (bucket.starttime < oldest.starttime ? bucket : oldest),
     buckets[0]
   );
 
-  // starttimeをDateオブジェクトに変換
-  const date = new Date(oldestBucket.starttime * 1000); // 秒単位なのでミリ秒に変換
+  const date = new Date(oldestBucket.starttime * 1000);
 
-  // 年月日を取得
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");

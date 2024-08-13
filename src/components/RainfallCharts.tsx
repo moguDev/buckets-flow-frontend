@@ -14,7 +14,9 @@ type RainfallChartsProps = {
   isAuthenticated: boolean;
 };
 
-export default function RainfallCharts(props: RainfallChartsProps) {
+export default function RainfallCharts({
+  isAuthenticated,
+}: RainfallChartsProps) {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState("auto");
   const [isOpen, setIsOpen] = useState(false);
@@ -23,44 +25,55 @@ export default function RainfallCharts(props: RainfallChartsProps) {
   const loading = useRecoilValue(bucketsByDateLoadingState);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const { isAuthenticated } = props;
+  const [maxValue, setMaxValue] = useState(0);
 
   useEffect(() => {
     if (contentRef.current) {
-      if (isOpen) {
-        setHeight(`${contentRef.current.scrollHeight}px`);
-      } else {
-        setHeight("0px");
-      }
+      setHeight(isOpen ? `${contentRef.current.scrollHeight}px` : "0px");
     }
   }, [isOpen]);
 
   useEffect(() => {
-    isAuthenticated === false && setIsOpen(false);
+    if (!isAuthenticated) {
+      setIsOpen(false);
+    }
   }, [isAuthenticated]);
 
   useEffect(() => {
     if (bucketsByDate) {
       const dates = Object.keys(bucketsByDate);
-      setStartDate(
-        new Date(dates[0]).toLocaleDateString("ja-JP", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })
-      );
-      setEndDate(
-        new Date(dates[dates.length - 1]).toLocaleDateString("ja-JP", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })
-      );
+      setStartDate(formatDate(dates[0]));
+      setEndDate(formatDate(dates[dates.length - 1]));
+
+      // 最大値を計算する
+      let maxBuckets = 0;
+      if (period === "year") {
+        const bucketsByMonth = dates.reduce((acc, date) => {
+          const month = date.substring(0, 7); // "YYYY-MM"
+          acc[month] = (acc[month] || 0) + bucketsByDate[date].length;
+          return acc;
+        }, {} as Record<string, number>);
+        maxBuckets = Math.max(...Object.values(bucketsByMonth));
+      } else {
+        maxBuckets = Math.max(
+          ...Object.values(bucketsByDate).map((buckets) => buckets.length)
+        );
+      }
+      setMaxValue(maxBuckets);
     }
-  }, [bucketsByDate]);
+  }, [bucketsByDate, period]);
+
+  const formatDate = (date: string) =>
+    new Date(date).toLocaleDateString("ja-JP", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
 
   const handleOpen = () => {
-    isAuthenticated && setIsOpen((prev) => !prev);
+    if (isAuthenticated) {
+      setIsOpen((prev) => !prev);
+    }
   };
 
   return (
@@ -72,7 +85,7 @@ export default function RainfallCharts(props: RainfallChartsProps) {
       >
         <div className="flex items-center text-blue-300">
           <span className="material-icons text-sm pr-3">equalizer</span>
-          <p className="">降水量チャート</p>
+          <p>降水量チャート</p>
         </div>
         <div className="material-icons text-blue-300 rounded-full bg-opacity-0 border-none">
           {isAuthenticated ? (
@@ -90,43 +103,24 @@ export default function RainfallCharts(props: RainfallChartsProps) {
       </label>
       <div ref={contentRef} className="transition-height" style={{ height }}>
         <div className="flex items-center bg-blue-900 bg-opacity-10 rounded-lg mt-2 p-1">
-          <button
-            onClick={() => {
-              !loading && setPeriod("week");
-            }}
-            className={`w-1/3 chart-tab ${
-              period === "week" && "chart-tab-selected"
-            }`}
-          >
-            週間
-          </button>
-          <button
-            onClick={() => {
-              !loading && setPeriod("month");
-            }}
-            className={`w-1/3 chart-tab ${
-              period === "month" && "chart-tab-selected"
-            }`}
-          >
-            月間
-          </button>
-          <button
-            onClick={() => {
-              !loading && setPeriod("year");
-            }}
-            className={`w-1/3 chart-tab ${
-              period === "year" && "chart-tab-selected"
-            }`}
-          >
-            年間
-          </button>
+          {["week", "month", "year"].map((value) => (
+            <button
+              key={value}
+              onClick={() => !loading && setPeriod(value)}
+              className={`w-1/3 chart-tab ${
+                period === value && "chart-tab-selected"
+              }`}
+            >
+              {value === "week" ? "週間" : value === "month" ? "月間" : "年間"}
+            </button>
+          ))}
         </div>
         {loading ? (
           <Loading />
         ) : (
           <>
             <div className="flex items-center justify-between px-1 py-3 text-blue-300">
-              <button className="material-icons text-xl">
+              <button aria-label="前の期間" className="material-icons text-xl">
                 keyboard_arrow_left
               </button>
               <p className="text-sm font-thin">
@@ -136,7 +130,7 @@ export default function RainfallCharts(props: RainfallChartsProps) {
                   <span className="font-thin">bucket</span>
                 </button>
               </p>
-              <button className="material-icons text-xl">
+              <button aria-label="次の期間" className="material-icons text-xl">
                 keyboard_arrow_right
               </button>
             </div>
@@ -145,7 +139,7 @@ export default function RainfallCharts(props: RainfallChartsProps) {
                 Object.entries(bucketsByDate).map(([date, buckets]) => (
                   <ChartBar
                     key={date}
-                    maxValue={10}
+                    maxValue={maxValue}
                     value={buckets.length}
                     date={new Date(date)}
                   />
