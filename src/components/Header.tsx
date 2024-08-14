@@ -1,26 +1,18 @@
 "use client";
 import { useAuth } from "@/recoil/authState";
 import LoginModal from "./modals/LoginModal";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { menuBarIsHiddenState } from "./MenuBar";
 
 export default function Header({
   isAuthenticated,
-  login,
   logout,
 }: {
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
 }) {
-  const childProps = { isAuthenticated, login, logout };
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error("ログアウト中にエラーが発生しました:", error);
-    }
-  };
-
+  const [menuBarIsHidden, setMenuBarIsHidden] =
+    useRecoilState(menuBarIsHiddenState);
   return (
     <header className="fixed top-0 h-16 w-full md:px-5 px-3 z-50">
       <div className="flex items-center justify-between h-full">
@@ -31,17 +23,18 @@ export default function Header({
           </p>
         </div>
         {isAuthenticated ? (
-          <button
-            onClick={() => {
-              const modal = document.getElementById(
-                "my_modal_1"
-              ) as HTMLDialogElement;
-              modal !== null && modal.showModal();
-            }}
-            className="flex items-center text-blue-300 bg-opacity-0 border-none btn"
+          <div
+            className={`flex items-center rounded-full ${
+              !menuBarIsHidden && "bg-blue-500 bg-opacity-10"
+            }`}
           >
-            <span className="material-icons text-xs">logout</span>
-          </button>
+            <button
+              onClick={() => setMenuBarIsHidden((prev) => !prev)}
+              className="flex items-center text-blue-300 bg-opacity-0 border-none btn rounded-full"
+            >
+              <span className={`material-icons text-xs`}>menu</span>
+            </button>
+          </div>
         ) : (
           <label
             htmlFor="my-modal-4"
@@ -52,24 +45,6 @@ export default function Header({
           </label>
         )}
       </div>
-      <dialog id="my_modal_1" className="modal">
-        <div className="modal-box bg-gray-900 bg-opacity-80 backdrop-blur-sm">
-          <p className="py-4 text-blue-100">ログアウトしますか？</p>
-          <div className="modal-action">
-            <form method="dialog">
-              <button className="btn text-blue-100 bg-opacity-0 border-none">
-                キャンセル
-              </button>
-              <button
-                onClick={handleLogout}
-                className="btn text-white bg-red-900 border-none"
-              >
-                ログアウト
-              </button>
-            </form>
-          </div>
-        </div>
-      </dialog>
     </header>
   );
 }

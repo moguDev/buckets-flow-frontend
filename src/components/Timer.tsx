@@ -31,7 +31,6 @@ export default function Timer() {
     resetFlow,
     timer,
   } = useTimer();
-
   const [selectedTag, setSelectedTag] = useRecoilState(selectedLabelState);
 
   return (
@@ -42,9 +41,9 @@ export default function Timer() {
         {timer === TimerState.LONG_BREAK && <p>長い休憩</p>}
       </div>
       <p
-        className={`text-center text-blue-300 font-semibold md:text-9xl text-8xl transition-transform duration-700 transition-brightness ${
+        className={`text-center text-blue-300 font-semibold md:text-timer text-8xl md:pb-8 pb-3 transition-transform duration-700 transition-brightness ${
           isPlaying ? "scale-105 brightness-110" : "scale-90 brightness-90"
-        } mb-5 select-none`}
+        } select-none`}
       >
         {Math.floor(remainingTime / 60)
           .toString()
