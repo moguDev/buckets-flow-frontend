@@ -30,7 +30,6 @@ export default function RainfallCharts({
 
   useEffect(() => {
     if (contentRef.current) {
-      contentRef.current.style.height = "auto"; // 高さを一度自動に設定して、正確なscrollHeightを取得する
       const newHeight = isOpen ? `${contentRef.current.scrollHeight}px` : "0px";
       setHeight(newHeight);
     }
@@ -46,7 +45,6 @@ export default function RainfallCharts({
       setStartDate(formatDate(dates[0]));
       setEndDate(formatDate(dates[dates.length - 1]));
 
-      // 最大値を計算する
       let maxBuckets = 0;
       if (period === "year") {
         const bucketsByMonth = dates.reduce((acc, date) => {
