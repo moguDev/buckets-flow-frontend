@@ -1,22 +1,18 @@
-import { atom, selector, useRecoilState, useSetRecoilState } from "recoil";
+import { atom, selector, useRecoilState } from "recoil";
 import Cookies from "js-cookie";
 import { login as loginUser, logout as logoutUser } from "@/libs/auth";
-import { useBuckets } from "./bucketsState"; // Buckets関連のカスタムフックのインポート
+import { useBuckets } from "./bucketsState";
 import { useEffect, useCallback } from "react";
+import axiosInstance from "@/libs/axiosInstance";
 
 export const authState = atom({
   key: "authState",
   default: {
     isAuthenticated: false,
+    userName: "",
   },
 });
 
-export const userNameState = atom({
-  key: "userNameState",
-  default: "",
-});
-
-// セレクタ定義
 export const isAuthenticatedSelector = selector({
   key: "isAuthenticatedSelector",
   get: ({ get }) => get(authState).isAuthenticated,
@@ -24,64 +20,75 @@ export const isAuthenticatedSelector = selector({
 
 export const userNameSelector = selector({
   key: "userNameSelector",
-  get: ({ get }) => get(userNameState),
+  get: ({ get }) => get(authState).userName,
 });
 
-// カスタムフック
 export const useAuth = () => {
   const [auth, setAuth] = useRecoilState(authState);
-  const [userName, setUserName] = useRecoilState(userNameState);
-  const { fetchAllBuckets } = useBuckets(); // Buckets関連のカスタムフックの利用
+  const { fetchAllBuckets } = useBuckets();
 
-  // 認証状態をチェックする関数
-  const checkAuth = useCallback(() => {
+  const checkAuth = useCallback(async () => {
     const token = Cookies.get("access-token");
     const client = Cookies.get("client");
     const uid = Cookies.get("uid");
 
     if (token && client && uid) {
-      setAuth({ isAuthenticated: true });
-      fetchAllBuckets();
+      try {
+        const response = await axiosInstance.get("/auth/validate_token", {
+          headers: {
+            "access-token": token,
+            client: client,
+            uid: uid,
+          },
+        });
+
+        const userName = response.data.data.name;
+
+        setAuth({
+          isAuthenticated: true,
+          userName: userName, // ユーザー名を設定
+        });
+
+        fetchAllBuckets();
+      } catch (error) {
+        console.error("認証トークンの検証に失敗しました:", error);
+        setAuth({ isAuthenticated: false, userName: "" });
+      }
     }
   }, [setAuth, fetchAllBuckets]);
 
-  // コンポーネントの初回レンダリング時に認証状態をチェック
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
 
-  // ログイン処理
   const login = useCallback(
     async (email: string, password: string) => {
       try {
         const { data } = await loginUser(email, password);
-        setAuth({ isAuthenticated: true });
-        setUserName(data.name); // ユーザー名を設定
+        setAuth({ isAuthenticated: true, userName: data.name });
         fetchAllBuckets();
       } catch (error) {
         console.error("ログインに失敗しました:", error);
         throw new Error("ログインに失敗しました。");
       }
     },
-    [setAuth, setUserName, fetchAllBuckets]
+    [setAuth, fetchAllBuckets]
   );
 
-  // ログアウト処理
   const logout = useCallback(async () => {
     try {
       await logoutUser();
-      setAuth({ isAuthenticated: false });
-      setUserName(""); // ユーザー名をリセット
+      setAuth({ isAuthenticated: false, userName: "" });
       fetchAllBuckets();
     } catch (error) {
       console.error("ログアウトに失敗しました:", error);
       throw new Error("ログアウトに失敗しました。");
     }
-  }, [setAuth, setUserName, fetchAllBuckets]);
+  }, [setAuth, fetchAllBuckets]);
 
   return {
     isAuthenticated: auth.isAuthenticated,
-    userName, // ユーザー名を返す
+    userName: auth.userName, // ユーザー名を返す
     login,
     logout,
   };

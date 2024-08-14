@@ -12,9 +12,14 @@ import {
   allBucketsLoadingState,
 } from "@/recoil/bucketsState";
 
-export default function MunuBar() {
-  const { isAuthenticated, userName } = useAuth();
-  const props = {
+export default function MunuBar({
+  isAuthenticated,
+  userName,
+}: {
+  isAuthenticated: boolean;
+  userName: string;
+}) {
+  const childProps = {
     isAuthenticated,
     userName,
     allBuckets: useRecoilValue(allBucketsState),
@@ -25,13 +30,13 @@ export default function MunuBar() {
     <>
       <div className="relative mb-3">
         <div className="pb-3">
-          <UserInfo {...props} />
+          <UserInfo {...childProps} />
         </div>
         <div className="pb-3">
-          <Activity {...props} />
+          <Activity {...childProps} />
         </div>
         <div>
-          <RainfallCharts {...props} />
+          <RainfallCharts {...childProps} />
         </div>
       </div>
       <div className="pb-3">

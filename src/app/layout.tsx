@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import "./globals.css";
 import GoogleAnalytics from "@/components/googleAnalytics/GoogleAnalytics";
 import Footer from "@/components/Footer";
+import RecoilRootRapper from "@/components/RecoilRouteRapper";
 
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"] });
 
@@ -27,8 +28,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
       </head>
       <body className={notoSansJP.className}>
-        <div>{children}</div>
-        <Footer />
+        <RecoilRootRapper>
+          <div>{children}</div>
+          <Footer />
+        </RecoilRootRapper>
       </body>
     </html>
   );

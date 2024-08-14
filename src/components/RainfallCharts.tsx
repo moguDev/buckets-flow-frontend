@@ -7,8 +7,13 @@ import {
   periodCountState,
   periodState,
 } from "@/recoil/bucketsState";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { atom, useRecoilState, useRecoilValue } from "recoil";
 import Loading from "./Loading";
+
+export const selectedDateState = atom<string>({
+  key: "selectedDateState",
+  default: "",
+});
 
 type RainfallChartsProps = {
   isAuthenticated: boolean;
@@ -121,10 +126,10 @@ export default function RainfallCharts({
           <Loading />
         ) : (
           <>
-            <div className="flex items-center justify-between px-1 py-1 text-blue-300">
+            <div className="flex items-center justify-between px-1 py-3 text-blue-300">
               <button
                 aria-label="前の期間"
-                className="material-icons text-xl btn bg-opacity-0 rounded-full h-full border-none"
+                className="material-icons text-xl hover:text-white"
                 onClick={() => setPeriodCount((prev) => prev + 1)}
               >
                 keyboard_arrow_left
@@ -138,7 +143,7 @@ export default function RainfallCharts({
               </p>
               <button
                 aria-label="次の期間"
-                className="material-icons text-xl btn bg-opacity-0 rounded-full h-full border-none"
+                className="material-icons text-xl hover:text-white"
                 onClick={() => {
                   periodCount > 0 && setPeriodCount((prev) => prev - 1);
                 }}

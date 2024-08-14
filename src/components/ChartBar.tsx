@@ -1,6 +1,7 @@
 import { periodState } from "@/recoil/bucketsState";
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
+import { selectedDateState } from "./RainfallCharts";
 
 type ChartBarProps = {
   maxValue: number;
@@ -11,6 +12,7 @@ type ChartBarProps = {
 export default function ChartBar({ maxValue, value, date }: ChartBarProps) {
   const [animatedValue, setAnimatedValue] = useState(0);
   const [period] = useRecoilState(periodState);
+  const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
 
   useEffect(() => {
     let start: number | null = null;
@@ -44,6 +46,10 @@ export default function ChartBar({ maxValue, value, date }: ChartBarProps) {
     <div
       className="relative w-full p-0.5 opacity-60 tooltip tooltip-info"
       data-tip={`${animatedValue} buckets`}
+      onClick={() => {
+        value > 0 && setSelectedDate(date.toString());
+        console.log(selectedDate);
+      }}
     >
       <div className="relative w-full h-56 bg-gray-100 bg-opacity-5 rounded-lg overflow-hidden">
         <div
@@ -55,7 +61,7 @@ export default function ChartBar({ maxValue, value, date }: ChartBarProps) {
               : maxValue * 0.25 < value
               ? "bg-opacity-70"
               : "bg-opacity-60"
-          } transition-all rounded duration-500`}
+          } transition-all rounded duration-500 hover:brightness-150`}
           style={{ height }}
         />
       </div>

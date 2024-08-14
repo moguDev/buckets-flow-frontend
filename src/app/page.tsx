@@ -4,20 +4,25 @@ import { RecoilRoot } from "recoil";
 import RainBackground from "@/components/RainBackground";
 import Header from "@/components/Header";
 import MenuBar from "@/components/MenuBar";
+import LoginModal from "@/components/modals/LoginModal";
+import { useAuth } from "@/recoil/authState";
 
 export default function Home() {
+  const { isAuthenticated, userName, login, logout } = useAuth();
+  const props = { isAuthenticated, userName, login, logout };
   return (
-    <RecoilRoot>
-      <Header />
+    <>
+      <Header {...props} />
       <RainBackground />
       <div className="lg:flex w-full h-full pt-20 pb-3 lg:px-10 px-5 bg-opacity-0">
         <div className="flex flex-col items-center lg:w-2/3 lg:pt-5">
           <Timer />
         </div>
         <div className="lg:w-1/3 lg:pt-5">
-          <MenuBar />
+          <MenuBar {...props} />
         </div>
       </div>
-    </RecoilRoot>
+      <LoginModal {...props} />
+    </>
   );
 }
