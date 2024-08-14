@@ -35,10 +35,6 @@ export default function Activity(props: ActivityProps) {
       setHeight(isOpen ? `${contentRef.current.scrollHeight}px` : "0px");
   }, [loading, isOpen]);
 
-  useEffect(() => {
-    setIsOpen(isAuthenticated);
-  }, [isAuthenticated]);
-
   const handleOpen = () => {
     isAuthenticated && setIsOpen((prev) => !prev);
   };

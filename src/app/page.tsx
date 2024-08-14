@@ -1,6 +1,6 @@
 "use client";
 import Timer from "@/components/Timer";
-import { RecoilRoot, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import RainBackground from "@/components/RainBackground";
 import Header from "@/components/Header";
 import MenuBar, { menuBarIsHiddenState } from "@/components/MenuBar";
@@ -22,7 +22,7 @@ export default function Home() {
     <>
       <Header {...props} />
       <RainBackground />
-      <div className="lg:flex w-full h-full pt-20 pb-3 lg:px-10 px-5 bg-opacity-0">
+      <div className="lg:flex w-full h-full pt-24 pb-3 lg:px-10 px-5 bg-opacity-0">
         <div
           className={`flex flex-col items-center py-5 transition-all duration-300 ${
             menuBarIsHidden ? "w-full" : "lg:w-2/3 lg:pt-5`"
