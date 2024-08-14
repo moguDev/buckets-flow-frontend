@@ -9,22 +9,19 @@ import {
 } from "@/recoil/bucketsState";
 import { atom, useRecoilState, useRecoilValue } from "recoil";
 import Loading from "./Loading";
+import { authState } from "@/recoil/authState";
 
 export const selectedDateState = atom<string>({
   key: "selectedDateState",
   default: "",
 });
 
-type RainfallChartsProps = {
-  isAuthenticated: boolean;
-};
-
-export default function RainfallCharts({
-  isAuthenticated,
-}: RainfallChartsProps) {
+export default function RainfallCharts() {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState("0px");
   const [isOpen, setIsOpen] = useState(false);
+
+  const isAuthenticated = useRecoilValue(authState).isAuthenticated;
   const [period, setPeriod] = useRecoilState(periodState);
   const [periodCount, setPeriodCount] = useRecoilState(periodCountState);
   const bucketsByDate = useRecoilValue(bucketsByDateState);

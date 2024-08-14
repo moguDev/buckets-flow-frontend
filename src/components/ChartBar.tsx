@@ -44,8 +44,7 @@ export default function ChartBar({ maxValue, value, date }: ChartBarProps) {
 
   return (
     <div
-      className="relative w-full p-0.5 opacity-60 tooltip tooltip-info"
-      data-tip={`${animatedValue} buckets`}
+      className="relative w-full p-0.5 opacity-60"
       onClick={() => {
         value > 0 && setSelectedDate(date.toString());
         console.log(selectedDate);
@@ -61,7 +60,7 @@ export default function ChartBar({ maxValue, value, date }: ChartBarProps) {
               : maxValue * 0.25 < value
               ? "bg-opacity-70"
               : "bg-opacity-60"
-          } transition-all rounded duration-500 hover:brightness-150`}
+          } transition-all rounded-lg duration-500 hover:brightness-150`}
           style={{ height }}
         />
       </div>

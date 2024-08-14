@@ -1,18 +1,13 @@
 "use client";
-import { useAuth } from "@/recoil/authState";
-import LoginModal from "./modals/LoginModal";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { menuBarIsHiddenState } from "./MenuBar";
+import { authState } from "@/recoil/authState";
 
-export default function Header({
-  isAuthenticated,
-  logout,
-}: {
-  isAuthenticated: boolean;
-  logout: () => Promise<void>;
-}) {
+export default function Header() {
+  const isAuthenticated = useRecoilValue(authState).isAuthenticated;
   const [menuBarIsHidden, setMenuBarIsHidden] =
     useRecoilState(menuBarIsHiddenState);
+
   return (
     <header className="fixed top-0 h-16 w-full md:px-5 px-3 z-50">
       <div className="flex items-center justify-between h-full">

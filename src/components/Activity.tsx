@@ -1,18 +1,16 @@
 import { useState, useRef, useEffect } from "react";
 import { BucketIcon } from "./BucketIcon";
 import {
+  allBucketsLoadingState,
+  allBucketsState,
   Bucket,
   getMaxStreak,
   getOldestBucketDate,
   getTodayBuckets,
 } from "@/recoil/bucketsState";
 import Loading from "./Loading";
-
-type ActivityProps = {
-  isAuthenticated: boolean;
-  allBuckets: Bucket[];
-  loading: boolean;
-};
+import { useRecoilValue } from "recoil";
+import { authState } from "@/recoil/authState";
 
 function getCurrentDate(): string {
   const today = new Date();
@@ -23,17 +21,23 @@ function getCurrentDate(): string {
   return `${year}年${month}月${day}日`;
 }
 
-export default function Activity(props: ActivityProps) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Activity() {
   const contentRef = useRef<HTMLDivElement | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
   const [height, setHeight] = useState("0px"); // 初期値を0pxに設定
-  const { isAuthenticated } = props;
-  const { allBuckets: buckets, loading } = props;
+
+  const isAuthenticated = useRecoilValue(authState).isAuthenticated;
+  const allBuckets = useRecoilValue(allBucketsState);
+  const loading = useRecoilValue(allBucketsLoadingState);
 
   useEffect(() => {
     contentRef.current &&
-      setHeight(isOpen ? `${contentRef.current.scrollHeight}px` : "0px");
-  }, [loading, isOpen]);
+      setHeight(
+        isOpen && isAuthenticated
+          ? `${contentRef.current.scrollHeight}px`
+          : "0px"
+      );
+  }, [loading, isOpen, isAuthenticated]);
 
   const handleOpen = () => {
     isAuthenticated && setIsOpen((prev) => !prev);
@@ -90,9 +94,9 @@ export default function Activity(props: ActivityProps) {
                     <BucketIcon />
                   </span>
                   <p className="font-semibold text-xl">
-                    {`${getTodayBuckets(buckets).length} `}
+                    {`${getTodayBuckets(allBuckets).length} `}
                     <span className="text-sm font-thin">
-                      {getTodayBuckets(buckets).length === 1
+                      {getTodayBuckets(allBuckets).length === 1
                         ? "bucket"
                         : "buckets"}
                     </span>
@@ -104,7 +108,7 @@ export default function Activity(props: ActivityProps) {
                   </span>
                   <p className="font-semibold text-lg">
                     {`${(
-                      (getTodayBuckets(buckets).reduce(
+                      (getTodayBuckets(allBuckets).reduce(
                         (sum, bucket) => sum + bucket.storage,
                         0
                       ) /
@@ -122,14 +126,14 @@ export default function Activity(props: ActivityProps) {
                   </span>
                   <button className="font-semibold text-xl">
                     {`${Math.floor(
-                      getTodayBuckets(buckets).reduce(
+                      getTodayBuckets(allBuckets).reduce(
                         (sum, bucket) => sum + bucket.duration / 60,
                         0
                       ) / 60
                     )} `}
                     <span className="text-sm font-thin">{"h"}</span>
                     {` ${Math.floor(
-                      getTodayBuckets(buckets).reduce(
+                      getTodayBuckets(allBuckets).reduce(
                         (sum, bucket) => sum + bucket.duration / 60,
                         0
                       ) % 60
@@ -151,7 +155,7 @@ export default function Activity(props: ActivityProps) {
               <p className="text-sm">すべての期間</p>
             </div>
             <p className="text-xs text-blue-300 font-light">
-              {`${getOldestBucketDate(buckets)} - ${getCurrentDate()}`}
+              {`${getOldestBucketDate(allBuckets)} - ${getCurrentDate()}`}
             </p>
           </div>
           {loading ? (
@@ -164,9 +168,9 @@ export default function Activity(props: ActivityProps) {
                     <BucketIcon />
                   </span>
                   <p className="font-semibold text-xl">
-                    {`${buckets.length} `}
+                    {`${allBuckets.length} `}
                     <span className="text-sm font-thin">
-                      {getTodayBuckets(buckets).length === 1
+                      {getTodayBuckets(allBuckets).length === 1
                         ? "bucket"
                         : "buckets"}
                     </span>
@@ -178,7 +182,7 @@ export default function Activity(props: ActivityProps) {
                   </span>
                   <p className="font-semibold text-lg">
                     {`${(
-                      (buckets.reduce(
+                      (allBuckets.reduce(
                         (sum, bucket) => sum + bucket.storage,
                         0
                       ) /
@@ -196,14 +200,14 @@ export default function Activity(props: ActivityProps) {
                   </span>
                   <button className="font-semibold text-xl">
                     {`${Math.floor(
-                      buckets.reduce(
+                      allBuckets.reduce(
                         (sum, bucket) => sum + bucket.duration / 60,
                         0
                       ) / 60
                     )} `}
                     <span className="text-sm font-thin">{"h"}</span>
                     {` ${Math.floor(
-                      buckets.reduce(
+                      allBuckets.reduce(
                         (sum, bucket) => sum + bucket.duration / 60,
                         0
                       ) % 60
@@ -218,7 +222,7 @@ export default function Activity(props: ActivityProps) {
                     whatshot
                   </span>
                   <button className="font-semibold text-xl">
-                    {getMaxStreak(buckets)}{" "}
+                    {getMaxStreak(allBuckets)}{" "}
                     <span className="font-thin text-sm">day streak.</span>
                   </button>
                 </div>

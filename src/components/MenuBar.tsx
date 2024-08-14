@@ -1,47 +1,30 @@
 "use client";
-import { useAuth } from "@/recoil/authState";
+import { authState } from "@/recoil/authState";
 import Activity from "./Activity";
 import LeaderBoard from "./LeaderBoard";
 import Preferences from "./Preferences";
 import RainfallCharts from "./RainfallCharts";
 import UserInfo from "./UserInfo";
 import { atom, useRecoilValue } from "recoil";
-import {
-  allBucketsState,
-  allBucketsErrorState,
-  allBucketsLoadingState,
-} from "@/recoil/bucketsState";
 
 export const menuBarIsHiddenState = atom<boolean>({
   key: "menuBarIsHiddenState",
   default: false,
 });
 
-export default function MunuBar({
-  isAuthenticated,
-  userName,
-}: {
-  isAuthenticated: boolean;
-  userName: string;
-}) {
-  const childProps = {
-    isAuthenticated,
-    userName,
-    allBuckets: useRecoilValue(allBucketsState),
-    loading: useRecoilValue(allBucketsLoadingState),
-    error: useRecoilValue(allBucketsErrorState),
-  };
+export default function MunuBar() {
+  const isAuthenticated = useRecoilValue(authState).isAuthenticated;
   return (
     <div>
       <div className="relative mb-3">
         <div className="pb-3">
-          <UserInfo {...childProps} />
+          <UserInfo />
         </div>
         <div className="pb-3">
-          <Activity {...childProps} />
+          <Activity />
         </div>
         <div>
-          <RainfallCharts {...childProps} />
+          <RainfallCharts />
         </div>
       </div>
       <div className="pb-3">

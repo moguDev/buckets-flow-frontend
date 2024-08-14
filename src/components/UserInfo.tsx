@@ -1,5 +1,12 @@
-import { Bucket } from "@/recoil/bucketsState";
+import { authState } from "@/recoil/authState";
+import {
+  allBucketsLoadingState,
+  allBucketsState,
+  Bucket,
+} from "@/recoil/bucketsState";
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
 
 const determineLevel = (value: number) => {
   const thresholds = [
@@ -19,25 +26,19 @@ const determineLevel = (value: number) => {
   return { limit: Infinity, lv: 7, label: "学校のプール", storage: 422000 };
 };
 
-type UserInfoProps = {
-  isAuthenticated: boolean;
-  userName: string;
-  allBuckets: Bucket[];
-  loading: boolean;
-};
-
-export default function UserInfo(props: UserInfoProps) {
+export default function UserInfo() {
   const [currentValue, setCurrenValue] = useState(0);
-  const { allBuckets: buckets, loading } = props;
-  const { isAuthenticated, userName } = props;
+  const allBuckets = useRecoilValue(allBucketsState);
+  const loading = useRecoilValue(allBucketsLoadingState);
+  const auth = useRecoilValue(authState);
 
   useEffect(() => {
     setCurrenValue(
-      (buckets.reduce((sum, bucket) => sum + bucket.storage, 0) / 1500) * 8
+      (allBuckets.reduce((sum, bucket) => sum + bucket.storage, 0) / 1500) * 8
     );
-  }, [buckets]);
+  }, [allBuckets]);
 
-  return isAuthenticated ? (
+  return auth.isAuthenticated ? (
     loading ? (
       <div className="flex items-center justify-center py-10 w-full">
         <span className="loading loading-dots loading-xs bg-blue-300" />
@@ -47,7 +48,7 @@ export default function UserInfo(props: UserInfoProps) {
         <button className="flex justify-between items-center w-full pt-6 ">
           <div className="flex items-center text-blue-300">
             <span className="material-icons text-sm pr-3">account_circle</span>
-            <p className="">{userName}</p>
+            <p className="">{auth.userName}</p>
           </div>
           <div className="text-blue-300">
             <p className="text-sm font-thin">
@@ -89,7 +90,7 @@ export default function UserInfo(props: UserInfoProps) {
     <div className="backdrop-blur-sm w-full">
       <div className="flex items-center">
         <label
-          htmlFor={isAuthenticated ? "" : "my-modal-4"}
+          htmlFor={auth.isAuthenticated ? "" : "my-modal-4"}
           className="flex justify-between items-center w-full py-6 px-5 mr-1 bg-blue-900 bg-opacity-10 rounded-xl "
         >
           <div className="flex items-center text-blue-300">
@@ -98,12 +99,14 @@ export default function UserInfo(props: UserInfoProps) {
           </div>
         </label>
         <label
-          htmlFor={isAuthenticated ? "" : ""}
+          htmlFor={auth.isAuthenticated ? "" : ""}
           className="flex justify-between items-center w-full py-6 px-5 ml-1 bg-blue-900 bg-opacity-20 rounded-xl "
         >
           <div className="flex items-center text-blue-300">
             <span className="material-icons text-sm pr-2">person_add</span>
-            <p className="text-sm select-none">アカウント作成</p>
+            <Link href="/signup" className="text-sm select-none">
+              アカウント作成
+            </Link>
           </div>
         </label>
       </div>

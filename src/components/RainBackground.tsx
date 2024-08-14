@@ -29,13 +29,16 @@ const RainAnimation: React.FC = () => {
     };
 
     const initializeDrops = (width: number, height: number) => {
-      const numberOfDrops = 120;
+      const numberOfDrops = canvas.width > 600 ? 150 : 80;
       const drops: Drop[] = [];
       for (let i = 0; i < numberOfDrops; i++) {
         drops.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          length: Math.random() * 50 + 100,
+          length:
+            canvas.width > 600
+              ? Math.random() * 50 + 100
+              : Math.random() * 50 + 60,
           velocity: Math.random() * 2 + 20,
         });
       }
@@ -46,7 +49,7 @@ const RainAnimation: React.FC = () => {
       context.clearRect(0, 0, width, height);
       context.fillStyle = "#040612";
       context.fillRect(0, 0, width, height);
-      context.strokeStyle = "#A0A0FF20";
+      context.strokeStyle = "#AAAAFF25";
       context.lineWidth = 1;
 
       drops.forEach((drop) => {

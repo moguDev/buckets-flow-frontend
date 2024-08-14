@@ -17,6 +17,9 @@ const config: Config = {
       fontSize: {
         timer: "160px", // カスタムクラス .text-timer を追加
       },
+      backgroundColor: {
+        theme: "#040612",
+      },
     },
   },
   plugins: [require("daisyui")],

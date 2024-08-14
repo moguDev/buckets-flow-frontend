@@ -2,24 +2,6 @@
 import React from "react";
 import { TimerState, useTimer } from "@/recoil/timerState";
 import BucketMeter from "./BucketMeter";
-import { useRecoilState } from "recoil";
-import { selectedLabelState } from "./LabelList";
-
-const LabelArea = () => {
-  const [selectedLabel, setSelectedLabel] = useRecoilState(selectedLabelState);
-
-  const styleUtils = selectedLabel
-    ? "text-blue-300 bg-blue-500 bg-opacity-10"
-    : "bg-opacity-0 text-gray-300 opacity-50 font-light";
-
-  return (
-    <div className={`flex items-center rounded-lg px-4 py-2 ${styleUtils}`}>
-      <button onClick={() => setSelectedLabel(null)} className="">
-        {selectedLabel ? `${selectedLabel}` : "ラベルなし"}
-      </button>
-    </div>
-  );
-};
 
 export default function Timer() {
   const {
@@ -31,17 +13,23 @@ export default function Timer() {
     resetFlow,
     timer,
   } = useTimer();
-  const [selectedTag, setSelectedTag] = useRecoilState(selectedLabelState);
 
   return (
     <div className="flex flex-col items-center justify-center w-full">
-      <div className="relative text-center text-blue-300 font-semibold text-opacity-80">
-        {timer === TimerState.WORKING && <LabelArea />}
-        {timer === TimerState.SHORT_BREAK && <p>短い休憩</p>}
-        {timer === TimerState.LONG_BREAK && <p>長い休憩</p>}
+      <div className="relative text-center text-blue-300 font-semibold text-opacity-80 my-3">
+        {timer === TimerState.SHORT_BREAK && (
+          <p className="bg-blue-300 bg-opacity-70 rounded-full px-10 py-0.5 text-theme text-sm">
+            休憩
+          </p>
+        )}
+        {timer === TimerState.LONG_BREAK && (
+          <p className="bg-blue-300 bg-opacity-70 rounded-full px-10 py-0.5 text-theme text-sm">
+            長い休憩
+          </p>
+        )}
       </div>
       <p
-        className={`text-center text-blue-300 font-semibold md:text-timer text-8xl md:pb-8 pb-3 transition-transform duration-700 transition-brightness ${
+        className={`text-center text-blue-300 font-medium md:text-timer text-8xl md:pb-8 pb-3 transition-transform duration-700 transition-brightness ${
           isPlaying ? "scale-105 brightness-110" : "scale-90 brightness-90"
         } select-none`}
       >
@@ -77,8 +65,7 @@ export default function Timer() {
               bg-blue-700 bg-opacity-10 backdrop-blur-sm
               text-gray-500 
               flex items-center justify-center
-              h-16 w-16 rounded-full tooltip`}
-            data-tip="スタート"
+              h-16 w-16 rounded-full`}
           >
             <span className="material-icons">play_arrow</span>
           </button>
@@ -90,8 +77,7 @@ export default function Timer() {
               bg-gray-700 bg-opacity-10 backdrop-blur-sm
               text-gray-500
               flex items-center justify-center
-              h-16 w-16 rounded-full tooltip`}
-          data-tip="リセット"
+              h-16 w-16 rounded-full`}
         >
           <span className="material-icons">refresh</span>
         </button>

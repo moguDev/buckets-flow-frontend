@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 
 const LoginModal = ({
@@ -27,7 +28,7 @@ const LoginModal = ({
     <div>
       <input type="checkbox" id="my-modal-4" className="modal-toggle" />
       <div className="modal">
-        <div className="modal-box bg-gray-900 backdrop-blur-sm">
+        <div className="modal-box bg-theme bg-opacity-90 border-2 border-blue-300 border-opacity-10 backdrop-blur-sm">
           <div className="flex items-center">
             <span className="material-icons text-blue-200 opacity-50 pr-2">
               login
@@ -35,48 +36,57 @@ const LoginModal = ({
             <h3 className="font-bold text-xl py-3 text-blue-200">ログイン</h3>
           </div>
           <form onSubmit={handleSubmit}>
-            <div className="form-control pb-2">
+            <div className="form-control pb-3">
               <label className="label ">
                 <span className="label-text text-blue-200 text-opacity-70">
-                  *メールアドレス
+                  メールアドレス
                 </span>
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="input border-none bg-opacity-5 text-blue-200"
+                className="input border-b border-blue-500 border-opacity-20 bg-opacity-0 text-blue-200 rounded-xl"
+                placeholder="user@example.com"
                 required
               />
             </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text text-blue-200 text-opacity-70">
-                  *パスワード
+                  パスワード
                 </span>
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="input border-none bg-opacity-5 text-blue-200"
+                className="input border-b border-blue-500 border-opacity-20 bg-theme text-blue-200 rounded-xl"
                 required
               />
             </div>
             {error && <p className="text-red-500">{error}</p>}
-            <div className="modal-action">
-              <label
-                htmlFor="my-modal-4"
-                className="btn border-none text-gray-300 bg-opacity-0"
+            <div className="modal-action justify-between">
+              <Link
+                href="/signup"
+                className="btn border-none text-blue-400 font-semibold text-xs bg-opacity-0"
               >
-                キャンセル
-              </label>
-              <button
-                type="submit"
-                className="btn bg-blue-800 bg-opacity-80 text-white border-none"
-              >
-                ログイン
-              </button>
+                アカウントを作成
+              </Link>
+              <div>
+                <label
+                  htmlFor="my-modal-4"
+                  className="btn border-none text-gray-300 font-thin bg-opacity-0"
+                >
+                  キャンセル
+                </label>
+                <button
+                  type="submit"
+                  className="btn font-bold text-white border-none bg-opacity-0"
+                >
+                  ログイン
+                </button>
+              </div>
             </div>
           </form>
         </div>
