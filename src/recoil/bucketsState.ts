@@ -66,6 +66,7 @@ export const bucketsByDateErrorState = atom<string | null>({
 export const useBuckets = () => {
   const [allBuckets, setAllBuckets] = useRecoilState(allBucketsState);
   const period = useRecoilValue(periodState);
+  const [periodCount, setPeriodCount] = useRecoilState(periodCountState);
   const [bucketsByDate, setBucketsByDate] = useRecoilState(bucketsByDateState);
   const setAllBucketsLoading = useSetRecoilState(allBucketsLoadingState);
   const setAllBucketsError = useSetRecoilState(allBucketsErrorState);
@@ -119,10 +120,12 @@ export const useBuckets = () => {
   );
 
   useEffect(() => {
-    const oneWeekAgo = new Date();
-    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-    fetchBucketsByPeriod(oneWeekAgo);
-  }, [fetchBucketsByPeriod, period]);
+    const targetDate = new Date();
+    period === "week"
+      ? targetDate.setDate(targetDate.getDate() - 7 * periodCount)
+      : targetDate.setMonth(targetDate.getMonth() - periodCount);
+    fetchBucketsByPeriod(targetDate);
+  }, [fetchBucketsByPeriod, period, periodCount]);
 
   return {
     allBuckets,

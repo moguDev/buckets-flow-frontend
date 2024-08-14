@@ -4,9 +4,10 @@ import ChartBar from "./ChartBar";
 import {
   bucketsByDateLoadingState,
   bucketsByDateState,
+  periodCountState,
   periodState,
 } from "@/recoil/bucketsState";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Loading from "./Loading";
 
 type RainfallChartsProps = {
@@ -20,6 +21,7 @@ export default function RainfallCharts({
   const [height, setHeight] = useState("0px");
   const [isOpen, setIsOpen] = useState(false);
   const [period, setPeriod] = useRecoilState(periodState);
+  const [periodCount, setPeriodCount] = useRecoilState(periodCountState);
   const bucketsByDate = useRecoilValue(bucketsByDateState);
   const loading = useRecoilValue(bucketsByDateLoadingState);
   const [startDate, setStartDate] = useState("");
@@ -100,7 +102,12 @@ export default function RainfallCharts({
           {["week", "month", "year"].map((value) => (
             <button
               key={value}
-              onClick={() => !loading && setPeriod(value)}
+              onClick={() => {
+                if (!loading) {
+                  setPeriodCount(0);
+                  setPeriod(value);
+                }
+              }}
               className={`w-1/3 chart-tab ${
                 period === value && "chart-tab-selected"
               }`}
@@ -113,8 +120,12 @@ export default function RainfallCharts({
           <Loading />
         ) : (
           <>
-            <div className="flex items-center justify-between px-1 py-3 text-blue-300">
-              <button aria-label="前の期間" className="material-icons text-xl">
+            <div className="flex items-center justify-between px-1 py-1 text-blue-300">
+              <button
+                aria-label="前の期間"
+                className="material-icons text-xl btn bg-opacity-0 rounded-full h-full border-none"
+                onClick={() => setPeriodCount((prev) => prev + 1)}
+              >
                 keyboard_arrow_left
               </button>
               <p className="text-sm font-thin">
@@ -124,7 +135,13 @@ export default function RainfallCharts({
                   <span className="font-thin">bucket</span>
                 </button>
               </p>
-              <button aria-label="次の期間" className="material-icons text-xl">
+              <button
+                aria-label="次の期間"
+                className="material-icons text-xl btn bg-opacity-0 rounded-full h-full border-none"
+                onClick={() => {
+                  periodCount > 0 && setPeriodCount((prev) => prev - 1);
+                }}
+              >
                 keyboard_arrow_right
               </button>
             </div>
