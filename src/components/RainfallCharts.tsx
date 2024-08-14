@@ -33,7 +33,7 @@ export default function RainfallCharts({
       const newHeight = isOpen ? `${contentRef.current.scrollHeight}px` : "0px";
       setHeight(newHeight);
     }
-  }, [loading, isOpen]);
+  }, [isOpen]);
 
   useEffect(() => {
     !isAuthenticated && setIsOpen(false);
