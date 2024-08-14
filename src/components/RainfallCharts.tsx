@@ -29,8 +29,11 @@ export default function RainfallCharts({
   const [maxValue, setMaxValue] = useState(0);
 
   useEffect(() => {
-    contentRef.current &&
-      setHeight(isOpen ? `${contentRef.current.scrollHeight}px` : "0px");
+    if (contentRef.current) {
+      contentRef.current.style.height = "auto"; // 高さを一度自動に設定して、正確なscrollHeightを取得する
+      const newHeight = isOpen ? `${contentRef.current.scrollHeight}px` : "0px";
+      setHeight(newHeight);
+    }
   }, [loading, isOpen]);
 
   useEffect(() => {
