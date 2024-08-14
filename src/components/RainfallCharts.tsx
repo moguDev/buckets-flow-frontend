@@ -50,7 +50,7 @@ export default function RainfallCharts() {
       let maxBuckets = 0;
       if (period === "year") {
         const bucketsByMonth = dates.reduce((acc, date) => {
-          const month = date.substring(0, 7); // "YYYY-MM"
+          const month = date.substring(0, 7);
           acc[month] = (acc[month] || 0) + bucketsByDate[date].length;
           return acc;
         }, {} as Record<string, number>);
@@ -62,7 +62,7 @@ export default function RainfallCharts() {
       }
       setMaxValue(maxBuckets);
     }
-  }, [bucketsByDate, period]);
+  }, [bucketsByDate]);
 
   const formatDate = (date: string) =>
     new Date(date).toLocaleDateString("ja-JP", {
