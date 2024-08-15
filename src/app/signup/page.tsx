@@ -15,6 +15,7 @@ export default function SignupPage() {
   const [termIsChecked, setTermIsChecked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error] = useRecoilState(authErrorState);
+  const env = process.env.NEXT_PUBLIC_ENV;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,8 +30,8 @@ export default function SignupPage() {
     }
   };
 
-  return (
-    <div className="max-w-4xl mx-auto p-6 bg-opacity-0 shadow-md rounded-lg">
+  return env === "dev" ? (
+    <div className="max-w-4xl mx-auto p-2 placeholder:bg-opacity-0 shadow-md rounded-lg">
       <div className="flex items-center">
         <span className="material-icons text-blue-200 pr-2">person_add</span>
         <h3 className="font-bold text-2xl py-3 text-blue-200">
@@ -156,5 +157,7 @@ export default function SignupPage() {
         </form>
       </div>
     </div>
+  ) : (
+    <div>メンテナンス中</div>
   );
 }
