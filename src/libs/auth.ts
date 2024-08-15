@@ -35,10 +35,7 @@ export const signup = async (
     }
     return response.data;
   } catch (error) {
-    console.error(
-      "サインアップに失敗しました:",
-      error.response.data.errors.full_messages
-    );
+    console.error("サインアップに失敗しました:", error);
     throw new Error("サインアップに失敗しました。");
   }
 };
