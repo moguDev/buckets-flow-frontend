@@ -27,13 +27,13 @@ export const allBucketsState = atom<Bucket[]>({
   default: [],
 });
 
-export const allBucketsLoadingState = atom<boolean>({
-  key: "allBucketsLoadingState",
+export const loadingState = atom<boolean>({
+  key: "loadingState",
   default: true,
 });
 
-export const allBucketsErrorState = atom<string | null>({
-  key: "allBucketsErrorState",
+export const errorState = atom<string | null>({
+  key: "errorState",
   default: null,
 });
 
@@ -68,26 +68,26 @@ export const useBuckets = () => {
   const period = useRecoilValue(periodState);
   const [periodCount, setPeriodCount] = useRecoilState(periodCountState);
   const [bucketsByDate, setBucketsByDate] = useRecoilState(bucketsByDateState);
-  const setAllBucketsLoading = useSetRecoilState(allBucketsLoadingState);
-  const setAllBucketsError = useSetRecoilState(allBucketsErrorState);
+  const setLoading = useSetRecoilState(loadingState);
+  const setError = useSetRecoilState(errorState);
   const setBucketsByDateLoading = useSetRecoilState(bucketsByDateLoadingState);
 
   const fetchAllBuckets = useCallback(async () => {
-    setAllBucketsLoading(true);
+    setLoading(true);
     try {
       const response = await axiosInstance.get("buckets");
       setAllBuckets(response.data);
     } catch (error) {
-      setAllBucketsError("データの取得に失敗しました");
+      setError("データの取得に失敗しました");
       console.error(error);
     } finally {
-      setAllBucketsLoading(false);
+      setLoading(false);
     }
-  }, [setAllBuckets, setAllBucketsLoading, setAllBucketsError]);
+  }, [setAllBuckets, setLoading, setError]);
 
   const fetchBucketsByPeriod = useCallback(
     async (date: Date) => {
-      setBucketsByDateLoading(true);
+      setLoading(true);
       try {
         const response = await axiosInstance.get("buckets/show_buckets", {
           params: {
@@ -97,13 +97,13 @@ export const useBuckets = () => {
         });
         setBucketsByDate(response.data);
       } catch (error) {
-        setAllBucketsError("データの取得に失敗しました");
+        setError("データの取得に失敗しました");
         console.error(error);
       } finally {
-        setBucketsByDateLoading(false);
+        setLoading(false);
       }
     },
-    [period, setBucketsByDate, setBucketsByDateLoading, setAllBucketsError]
+    [period, setBucketsByDate, setBucketsByDateLoading, setError]
   );
 
   const createBucket = useCallback(
@@ -112,11 +112,11 @@ export const useBuckets = () => {
         const response = await axiosInstance.post("buckets", newBucket);
         setAllBuckets((prevBuckets) => [...prevBuckets, response.data]);
       } catch (error) {
-        setAllBucketsError("新しいバケットの作成に失敗しました");
+        setError("新しいバケットの作成に失敗しました");
         console.error(error);
       }
     },
-    [setAllBuckets, setAllBucketsError]
+    [setAllBuckets, setError]
   );
 
   useEffect(() => {
@@ -129,8 +129,8 @@ export const useBuckets = () => {
 
   return {
     allBuckets,
-    allBucketsLoading: useRecoilValue(allBucketsLoadingState),
-    error: useRecoilValue(allBucketsErrorState),
+    allBucketsLoading: useRecoilValue(loadingState),
+    error: useRecoilValue(errorState),
     bucketsByDate,
     bucketsByDateLoading: useRecoilValue(bucketsByDateLoadingState),
     fetchAllBuckets,

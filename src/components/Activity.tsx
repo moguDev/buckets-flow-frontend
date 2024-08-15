@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { BucketIcon } from "./BucketIcon";
 import {
-  allBucketsLoadingState,
+  loadingState,
   allBucketsState,
   Bucket,
   getMaxStreak,
@@ -28,7 +28,7 @@ export default function Activity() {
 
   const isAuthenticated = useRecoilValue(authState).isAuthenticated;
   const allBuckets = useRecoilValue(allBucketsState);
-  const loading = useRecoilValue(allBucketsLoadingState);
+  const loading = useRecoilValue(loadingState);
 
   useEffect(() => {
     contentRef.current &&

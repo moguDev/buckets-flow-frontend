@@ -1,9 +1,5 @@
 import { authState } from "@/recoil/authState";
-import {
-  allBucketsLoadingState,
-  allBucketsState,
-  Bucket,
-} from "@/recoil/bucketsState";
+import { loadingState, allBucketsState, Bucket } from "@/recoil/bucketsState";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
@@ -29,7 +25,7 @@ const determineLevel = (value: number) => {
 export default function UserInfo() {
   const [currentValue, setCurrenValue] = useState(0);
   const allBuckets = useRecoilValue(allBucketsState);
-  const loading = useRecoilValue(allBucketsLoadingState);
+  const loading = useRecoilValue(loadingState);
   const auth = useRecoilValue(authState);
 
   useEffect(() => {
