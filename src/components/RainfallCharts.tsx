@@ -2,13 +2,16 @@
 import { useState, useEffect } from "react";
 import ChartBar from "./ChartBar";
 import {
+  allBucketsErrorState,
+  allBucketsLoadingState,
+  bucketsByDateLoadingState,
   bucketsByDateState,
   periodCountState,
   periodState,
 } from "@/recoil/bucketsState";
 import { atom, useRecoilState, useRecoilValue } from "recoil";
 import Loading from "./Loading";
-import { authState, loadingState } from "@/recoil/authState";
+import { authState } from "@/recoil/authState";
 import { formatDateString } from "./Activity";
 import { MenuAccordion } from "./MyComponents";
 
@@ -22,7 +25,7 @@ export default function RainfallCharts() {
   const [period, setPeriod] = useRecoilState(periodState);
   const [periodCount, setPeriodCount] = useRecoilState(periodCountState);
   const bucketsByDate = useRecoilValue(bucketsByDateState);
-  const loading = useRecoilValue(loadingState);
+  const loading = useRecoilValue(bucketsByDateLoadingState);
   const [isOpen, setIsOpen] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -55,12 +58,12 @@ export default function RainfallCharts() {
     }
   }, [bucketsByDate]);
 
-  const handleOpen = () => isAuthenticated && setIsOpen((prev) => !prev);
-
   return (
     <MenuAccordion
       isOpen={isOpen}
-      handleOpen={handleOpen}
+      handleOpen={() => {
+        setIsOpen((prev) => !prev);
+      }}
       iconName="equalizer"
       label="降水量チャート"
       isAuthenticated={isAuthenticated}

@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { BucketIcon } from "./BucketIcon";
 import {
+  allBucketsLoadingState,
   allBucketsState,
   getMaxStreak,
   getOldestBucketDate,
@@ -8,7 +9,7 @@ import {
 } from "@/recoil/bucketsState";
 import Loading from "./Loading";
 import { useRecoilValue } from "recoil";
-import { authState, loadingState } from "@/recoil/authState";
+import { authState } from "@/recoil/authState";
 import { MenuAccordion } from "./MyComponents";
 
 export function formatDateString(date: Date): string {
@@ -20,31 +21,17 @@ export function formatDateString(date: Date): string {
 }
 
 export default function Activity() {
-  const contentRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [height, setHeight] = useState("0px");
-
   const isAuthenticated = useRecoilValue(authState).isAuthenticated;
   const allBuckets = useRecoilValue(allBucketsState);
-  const loading = useRecoilValue(loadingState);
-
-  useEffect(() => {
-    contentRef.current &&
-      setHeight(
-        isOpen && isAuthenticated
-          ? `${contentRef.current.scrollHeight}px`
-          : "0px"
-      );
-  }, [loading, isOpen, isAuthenticated]);
-
-  const handleOpen = () => {
-    isAuthenticated && setIsOpen((prev) => !prev);
-  };
+  const loading = useRecoilValue(allBucketsLoadingState);
 
   return (
     <MenuAccordion
       isOpen={isOpen}
-      handleOpen={handleOpen}
+      handleOpen={() => {
+        setIsOpen((prev) => !prev);
+      }}
       iconName="trending_up"
       label="アクティビティ"
       isAuthenticated={isAuthenticated}
