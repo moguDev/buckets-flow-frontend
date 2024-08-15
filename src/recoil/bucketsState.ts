@@ -6,6 +6,7 @@ import {
 } from "recoil";
 import axiosInstance from "@/libs/axiosInstance";
 import { useEffect, useCallback } from "react";
+import { errorState, loadingState } from "./authState";
 
 export interface Bucket {
   id: number;
@@ -27,14 +28,9 @@ export const allBucketsState = atom<Bucket[]>({
   default: [],
 });
 
-export const loadingState = atom<boolean>({
-  key: "loadingState",
-  default: true,
-});
-
-export const errorState = atom<string | null>({
-  key: "errorState",
-  default: null,
+export const bucketsByDateState = atom<BucketsByDate | null>({
+  key: "bucketsByDateState",
+  default: {},
 });
 
 export const periodState = atom<string>({
@@ -47,30 +43,14 @@ export const periodCountState = atom<number>({
   default: 0,
 });
 
-export const bucketsByDateState = atom<BucketsByDate | null>({
-  key: "bucketsByDateState",
-  default: {},
-});
-
-export const bucketsByDateLoadingState = atom<boolean>({
-  key: "bucketsByDateLoadingState",
-  default: true,
-});
-
-export const bucketsByDateErrorState = atom<string | null>({
-  key: "bucketsByDateErrorState",
-  default: null,
-});
-
 // Custom Hooks
 export const useBuckets = () => {
   const [allBuckets, setAllBuckets] = useRecoilState(allBucketsState);
-  const period = useRecoilValue(periodState);
-  const [periodCount, setPeriodCount] = useRecoilState(periodCountState);
-  const [bucketsByDate, setBucketsByDate] = useRecoilState(bucketsByDateState);
+  const [period, setPeriod] = useRecoilState(periodState);
+  const [periodCount] = useRecoilState(periodCountState);
+  const [, setBucketsByDate] = useRecoilState(bucketsByDateState);
   const setLoading = useSetRecoilState(loadingState);
   const setError = useSetRecoilState(errorState);
-  const setBucketsByDateLoading = useSetRecoilState(bucketsByDateLoadingState);
 
   const fetchAllBuckets = useCallback(async () => {
     setLoading(true);
@@ -83,19 +63,19 @@ export const useBuckets = () => {
     } finally {
       setLoading(false);
     }
-  }, [setAllBuckets, setLoading, setError]);
+  }, [setAllBuckets]);
 
   const fetchBucketsByPeriod = useCallback(
     async (date: Date) => {
       setLoading(true);
       try {
-        const response = await axiosInstance.get("buckets/show_buckets", {
+        const res = await axiosInstance.get("buckets/show_buckets", {
           params: {
             date: date.toISOString().split("T")[0],
             period,
           },
         });
-        setBucketsByDate(response.data);
+        setBucketsByDate(res.data);
       } catch (error) {
         setError("データの取得に失敗しました");
         console.error(error);
@@ -103,14 +83,14 @@ export const useBuckets = () => {
         setLoading(false);
       }
     },
-    [period, setBucketsByDate, setBucketsByDateLoading, setError]
+    [setBucketsByDate, period]
   );
 
   const createBucket = useCallback(
     async (newBucket: Omit<Bucket, "id" | "user_id">) => {
       try {
-        const response = await axiosInstance.post("buckets", newBucket);
-        setAllBuckets((prevBuckets) => [...prevBuckets, response.data]);
+        const res = await axiosInstance.post("buckets", newBucket);
+        setAllBuckets((prevBuckets) => [...prevBuckets, res.data]);
       } catch (error) {
         setError("新しいバケットの作成に失敗しました");
         console.error(error);
@@ -129,10 +109,8 @@ export const useBuckets = () => {
 
   return {
     allBuckets,
-    allBucketsLoading: useRecoilValue(loadingState),
+    loading: useRecoilValue(loadingState),
     error: useRecoilValue(errorState),
-    bucketsByDate,
-    bucketsByDateLoading: useRecoilValue(bucketsByDateLoadingState),
     fetchAllBuckets,
     createBucket,
   };

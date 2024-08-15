@@ -23,6 +23,16 @@ export const userNameSelector = selector({
   get: ({ get }) => get(authState).userName,
 });
 
+export const loadingState = atom<boolean>({
+  key: "loadingState",
+  default: true,
+});
+
+export const errorState = atom<string | null>({
+  key: "errorState",
+  default: null,
+});
+
 export const useAuth = () => {
   const [auth, setAuth] = useRecoilState(authState);
   const { fetchAllBuckets } = useBuckets();
@@ -51,8 +61,8 @@ export const useAuth = () => {
 
         fetchAllBuckets();
       } catch (error) {
-        console.error("認証トークンの検証に失敗しました:", error);
         setAuth({ isAuthenticated: false, userName: "" });
+      } finally {
       }
     }
   }, [setAuth, fetchAllBuckets]);
@@ -70,6 +80,7 @@ export const useAuth = () => {
       } catch (error) {
         console.error("ログインに失敗しました:", error);
         throw new Error("ログインに失敗しました。");
+      } finally {
       }
     },
     [setAuth, fetchAllBuckets]

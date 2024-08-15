@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="lg:fixed lg:bottom-0 absolute bottom-0">
         <ul className="lg:flex items-center text-sm text-blue-200 text-opacity-60">
           <li className="mx-3 my-3">
-            <Link href="/terms">ご利用規約</Link>
+            <Link href="/terms">利用規約</Link>
           </li>
           <li className="mx-3 my-3">
             <Link href="/privacy">プライバシーポリシー</Link>

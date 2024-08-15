@@ -7,9 +7,8 @@ export default function Preferences() {
   const [height, setHeight] = useState("0px");
   const [isOpen, setIsOpen] = useState(false);
   const [sliderValue, setSliderValue] = useState(3); // スライダーの値を状態管理
-  const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setSliderValue(Number(event.target.value)); // 値を更新
-  };
   const SliderMark = ({ value }: { value: number }) => (
     <span className="relative">
       <p className="text-center">|</p>
@@ -28,9 +27,7 @@ export default function Preferences() {
     }
   }, [isOpen]);
 
-  const handleOpen = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const handleOpen = () => setIsOpen((prev) => !prev);
 
   return (
     <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full">
