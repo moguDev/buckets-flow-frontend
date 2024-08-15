@@ -6,6 +6,7 @@ import GoogleAnalytics from "@/components/googleAnalytics/GoogleAnalytics";
 import Footer from "@/components/Footer";
 import RecoilRootRapper from "@/components/RecoilRouteRapper";
 import Header from "@/components/Header";
+import { SuccessMessage } from "@/components/MyComponents";
 
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"] });
 
@@ -31,7 +32,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className={notoSansJP.className}>
         <RecoilRootRapper>
           <Header />
-          <div className="pt-24 lg:px-16 px-5">{children}</div>
+          <div className="pt-24 lg:px-16 px-5">
+            <SuccessMessage />
+            {children}
+          </div>
           <Footer />
         </RecoilRootRapper>
       </body>

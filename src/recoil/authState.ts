@@ -1,9 +1,12 @@
 import { atom, selector, useRecoilState, useSetRecoilState } from "recoil";
 import Cookies from "js-cookie";
-import { login as loginUser, logout as logoutUser } from "@/libs/auth";
+import { login as loginUser } from "@/libs/auth";
+import { logout as logoutUser } from "@/libs/auth";
+import { signup as signupUser } from "@/libs/auth";
 import { useBuckets } from "./bucketsState";
 import { useEffect, useCallback } from "react";
 import axiosInstance from "@/libs/axiosInstance";
+import { SuccessMessage, successMessageState } from "@/components/MyComponents";
 
 export const authState = atom({
   key: "authState",
@@ -38,6 +41,7 @@ export const useAuth = () => {
   const { fetchAllBuckets } = useBuckets();
   const setLoading = useSetRecoilState(authLoadingState);
   const setError = useSetRecoilState(authErrorState);
+  const setSuccessMessage = useSetRecoilState(successMessageState);
 
   const checkAuth = useCallback(async () => {
     const token = Cookies.get("access-token");
@@ -74,6 +78,34 @@ export const useAuth = () => {
     checkAuth();
   }, [checkAuth]);
 
+  const signup = useCallback(
+    async (
+      email: string,
+      password: string,
+      passwordConfirmation: string,
+      userName: string
+    ) => {
+      setLoading(true);
+      try {
+        const { data } = await signupUser(
+          email,
+          password,
+          passwordConfirmation,
+          userName
+        );
+        setAuth({ isAuthenticated: true, userName: data.name });
+        fetchAllBuckets();
+      } catch (error) {
+        console.log(error);
+        setError("サインアップに失敗しました。");
+      } finally {
+        setLoading(false);
+        setSuccessMessage(`bucket Flowへようこそ！`);
+      }
+    },
+    [setAuth, fetchAllBuckets]
+  );
+
   const login = useCallback(
     async (email: string, password: string) => {
       setLoading(true);
@@ -86,6 +118,7 @@ export const useAuth = () => {
         throw new Error("ログインに失敗しました。");
       } finally {
         setLoading(false);
+        setSuccessMessage("ログインしました。");
       }
     },
     [setAuth, fetchAllBuckets]
@@ -102,8 +135,9 @@ export const useAuth = () => {
       throw new Error("ログアウトに失敗しました。");
     } finally {
       setLoading(false);
+      setSuccessMessage("ログアウトしました。");
     }
   }, [setAuth, fetchAllBuckets]);
 
-  return { login, logout };
+  return { signup, login, logout };
 };

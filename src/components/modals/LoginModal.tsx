@@ -41,7 +41,7 @@ const LoginModal = ({
           <div className="relative">
             {loading && (
               <div className="absolute flex items-center justify-center bg-theme bg-opacity-90 h-full w-full">
-                <p className="text-blue-300 opacity-80">
+                <p className="flex items-center text-blue-300 opacity-80">
                   <span className="loading loading-spinner loading-xs mr-2" />
                   ログイン中...
                 </p>

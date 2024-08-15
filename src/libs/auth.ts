@@ -9,6 +9,40 @@ interface LoginResponse {
   };
 }
 
+export const signup = async (
+  email: string,
+  password: string,
+  passwordConfirmation: string,
+  userName: string
+): Promise<LoginResponse> => {
+  try {
+    const response = await axiosInstance.post("auth", {
+      email,
+      password,
+      password_confirmation: passwordConfirmation,
+      name: userName,
+    });
+
+    const { "access-token": accessToken, client, uid } = response.headers;
+
+    if (accessToken && client && uid) {
+      Cookies.set("access-token", accessToken, {
+        secure: true,
+        sameSite: "strict",
+      });
+      Cookies.set("client", client, { secure: true, sameSite: "strict" });
+      Cookies.set("uid", uid, { secure: true, sameSite: "strict" });
+    }
+    return response.data;
+  } catch (error) {
+    console.error(
+      "サインアップに失敗しました:",
+      error.response.data.errors.full_messages
+    );
+    throw new Error("サインアップに失敗しました。");
+  }
+};
+
 export const login = async (
   email: string,
   password: string

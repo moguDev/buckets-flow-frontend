@@ -17,7 +17,7 @@ export default function Header() {
             <span className="text-xl font-thin ">buckets </span>Flow
           </p>
         </div>
-        {isAuthenticated ? (
+        {isAuthenticated && (
           <div
             className={`flex items-center rounded-full ${
               !menuBarIsHidden && "bg-blue-500 bg-opacity-10"
@@ -30,14 +30,6 @@ export default function Header() {
               <span className={`material-icons text-xs`}>menu</span>
             </button>
           </div>
-        ) : (
-          <label
-            htmlFor="my-modal-4"
-            className="flex items-center text-blue-300 bg-opacity-0 border-none btn"
-          >
-            <span className="material-icons text-xs">login</span>
-            <p className="font-normal">ログイン</p>
-          </label>
         )}
       </div>
     </header>
