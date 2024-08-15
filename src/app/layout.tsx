@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className={notoSansJP.className}>
         <RecoilRootRapper>
           <Header />
-          <div>{children}</div>
+          <div className="pt-24 lg:px-16 px-5">{children}</div>
           <Footer />
         </RecoilRootRapper>
       </body>

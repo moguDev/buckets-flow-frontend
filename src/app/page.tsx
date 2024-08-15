@@ -14,7 +14,7 @@ export default function Home() {
     <>
       <main>
         <RainBackground />
-        <div className="lg:flex w-full h-full pt-24 pb-3 lg:px-16 px-5 bg-opacity-0">
+        <div className="lg:flex w-full h-full pb-3 bg-opacity-0">
           <div
             className={`flex flex-col items-center transition-all duration-300 ${
               menuBarIsHidden ? "w-full" : "lg:w-2/3 lg:pt-5`"

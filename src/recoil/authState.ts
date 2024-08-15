@@ -25,7 +25,7 @@ export const userNameSelector = selector({
 
 export const authLoadingState = atom<boolean>({
   key: "loadingState",
-  default: true,
+  default: false,
 });
 
 export const authErrorState = atom<string | null>({
@@ -54,9 +54,7 @@ export const useAuth = () => {
             uid: uid,
           },
         });
-
         const userName = response.data.data.name;
-
         setAuth({
           isAuthenticated: true,
           userName: userName, // ユーザー名を設定
@@ -67,6 +65,7 @@ export const useAuth = () => {
         setAuth({ isAuthenticated: false, userName: "" });
       } finally {
         setLoading(false);
+        setError("");
       }
     }
   }, [setAuth, fetchAllBuckets]);

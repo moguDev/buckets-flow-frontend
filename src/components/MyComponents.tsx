@@ -32,14 +32,20 @@ export const MenuAccordion = ({
     <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full select-none">
       <label
         htmlFor={isAuthenticated ? "" : "my-modal-4"}
-        className="flex justify-between items-center w-full py-6"
-        onClick={handleOpen}
+        className={`flex justify-between items-center w-full py-6 ${
+          isAuthenticated
+            ? "text-blue-300"
+            : "text-gray- text-gray-400 text-opacity-60"
+        }`}
+        onClick={() => {
+          if (isAuthenticated) handleOpen();
+        }}
       >
-        <div className="flex items-center text-blue-300">
+        <div className="flex items-center">
           <span className="material-icons text-sm pr-3">{iconName}</span>
           <p>{label}</p>
         </div>
-        <div className="material-icons text-blue-300 rounded-full bg-opacity-0 border-none">
+        <div className="material-icons rounded-full bg-opacity-0 border-none">
           {isAuthenticated ? (
             isOpen ? (
               "expand_more"

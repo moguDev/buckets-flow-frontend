@@ -35,18 +35,20 @@ export default function UserInfo() {
   }, [allBuckets]);
 
   return auth.isAuthenticated ? (
-    loading ? (
-      <div className="flex items-center justify-center py-10 w-full">
-        <span className="loading loading-dots loading-xs bg-blue-300" />
-      </div>
-    ) : (
-      <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full select-none">
-        <button className="flex justify-between items-center w-full pt-6 ">
-          <div className="flex items-center text-blue-300">
-            <span className="material-icons text-sm pr-3">account_circle</span>
+    <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full select-none">
+      <button className="flex justify-between items-center w-full pt-6 ">
+        <div className="flex items-center text-blue-300">
+          <span className="material-icons text-sm pr-3">account_circle</span>
+          {loading ? (
+            <div className="skeleton h-4 w-20 bg-blue-950"></div>
+          ) : (
             <p className="">{auth.userName}</p>
-          </div>
-          <div className="text-blue-300">
+          )}
+        </div>
+        <div className="text-blue-300">
+          {loading ? (
+            <div className="skeleton h-4 w-32 bg-blue-950"></div>
+          ) : (
             <p className="text-sm font-thin">
               {`Lv.${determineLevel(currentValue).lv}`}
               {determineLevel(currentValue).lv > 0 && (
@@ -55,33 +57,33 @@ export default function UserInfo() {
                 </span>
               )}
             </p>
-          </div>
-        </button>
-        <div className="pt-3 pb-6 text-blue-300">
-          <p className="text-right text-xs font-thin text-opacity-80 px-1">
-            次のレベルまであと...
-            <span className="font-semibold text-sm">
-              {` ${Math.ceil(
-                determineLevel(currentValue).limit - currentValue
-              )}L `}
-            </span>
-          </p>
-          <div className="w-full bg-gray-500 bg-opacity-30 rounded-full h-2 my-2">
-            <div
-              className="bg-blue-300 bg-opacity-60 h-2 rounded-full transition-all duration-500"
-              style={{
-                width: `${
-                  ((currentValue - determineLevel(currentValue).storage) /
-                    (determineLevel(currentValue).limit -
-                      determineLevel(currentValue).storage)) *
-                  100
-                }%`,
-              }}
-            />
-          </div>
+          )}
+        </div>
+      </button>
+      <div className="pt-3 pb-6 text-blue-300">
+        <p className="text-right text-xs font-thin text-opacity-80 px-1">
+          次のレベルまであと...
+          <span className="font-semibold text-sm">
+            {` ${Math.ceil(
+              determineLevel(currentValue).limit - currentValue
+            )}L `}
+          </span>
+        </p>
+        <div className="w-full bg-gray-500 bg-opacity-30 rounded-full h-2 my-2">
+          <div
+            className="bg-blue-300 bg-opacity-60 h-2 rounded-full transition-all duration-500"
+            style={{
+              width: `${
+                ((currentValue - determineLevel(currentValue).storage) /
+                  (determineLevel(currentValue).limit -
+                    determineLevel(currentValue).storage)) *
+                100
+              }%`,
+            }}
+          />
         </div>
       </div>
-    )
+    </div>
   ) : (
     <div className="backdrop-blur-sm w-full">
       <div className="flex items-center">

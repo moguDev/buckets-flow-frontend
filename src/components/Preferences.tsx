@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { MenuAccordion } from "./MyComponents";
+import { authState } from "@/recoil/authState";
+import { useRecoilValue } from "recoil";
 
 export const timerValues = [15, 20, 25, 30, 45, 50, 60, 90];
 
 export default function Preferences() {
   const [isOpen, setIsOpen] = useState(false);
+  const isAuthenticated = useRecoilValue(authState).isAuthenticated;
+
   const [sliderValue, setSliderValue] = useState(3); // スライダーの値を状態管理
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setSliderValue(Number(event.target.value)); // 値を更新
@@ -20,12 +24,10 @@ export default function Preferences() {
   return (
     <MenuAccordion
       isOpen={isOpen}
-      handleOpen={() => {
-        setIsOpen((prev) => !prev);
-      }}
+      handleOpen={() => setIsOpen((prev) => !prev)}
       iconName="settings"
       label="設定"
-      isAuthenticated={true}
+      isAuthenticated={isAuthenticated}
     >
       <ul className="p-2">
         <div className="flex items-center justify-between text-gray-500">
