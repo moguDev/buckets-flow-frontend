@@ -51,7 +51,8 @@ export const RainfallCharts = () => {
         const durationByMonth = dates.reduce((acc, date) => {
           const month = date.substring(0, 7);
           const totalDurationForDate = bucketsByDate[date].reduce(
-            (sum, bucket) => sum + bucket.duration,
+            (sum, bucket) =>
+              Math.floor(sum + (bucket.duration / 1500) * 8 * 10) / 10,
             0
           );
           acc[month] = (acc[month] || 0) + totalDurationForDate;
@@ -61,8 +62,14 @@ export const RainfallCharts = () => {
         maxDuration = Math.max(...Object.values(durationByMonth));
       } else {
         maxDuration = Math.max(
-          ...Object.values(bucketsByDate).map((buckets) =>
-            buckets.reduce((sum, bucket) => sum + bucket.duration, 0)
+          ...Object.values(bucketsByDate).map(
+            (buckets) =>
+              Math.floor(
+                (buckets.reduce((sum, bucket) => sum + bucket.duration, 0) /
+                  1500) *
+                  8 *
+                  10
+              ) / 10
           )
         );
       }
@@ -142,10 +149,17 @@ export const RainfallCharts = () => {
                 <ChartBar
                   key={date}
                   maxValue={maxValue}
-                  value={buckets.reduce(
-                    (sum, bucket) => sum + bucket.duration,
-                    0
-                  )}
+                  value={
+                    Math.floor(
+                      (buckets.reduce(
+                        (sum, bucket) => sum + bucket.duration,
+                        0
+                      ) /
+                        1500) *
+                        8 *
+                        10
+                    ) / 10
+                  }
                   date={new Date(date)}
                 />
               ))}
