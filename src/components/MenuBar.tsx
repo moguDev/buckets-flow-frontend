@@ -1,10 +1,10 @@
 "use client";
 import { authState } from "@/recoil/authState";
-import Activity from "./Activity";
+import { Activity } from "./Activity";
 import LeaderBoard from "./LeaderBoard";
-import Preferences from "./Preferences";
-import RainfallCharts from "./RainfallCharts";
-import UserInfo from "./UserInfo";
+import { Preferences } from "./Preferences";
+import { RainfallCharts } from "./RainfallCharts";
+import { UserInfo } from "./UserInfo";
 import { atom, useRecoilValue } from "recoil";
 
 export const menuBarIsHiddenState = atom<boolean>({

@@ -3,7 +3,7 @@ import React from "react";
 import { TimerState, useTimer } from "@/recoil/timerState";
 import BucketMeter from "./BucketMeter";
 
-export default function Timer() {
+export const Timer = () => {
   const {
     isPlaying,
     remainingTime,
@@ -84,4 +84,4 @@ export default function Timer() {
       </div>
     </div>
   );
-}
+};

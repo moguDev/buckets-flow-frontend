@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 
-export default function Footer() {
+export const Footer = () => {
   return (
     <footer className="relative md:px-5 px-3 z-50 lg:h-12 h-36">
       <div className="lg:fixed lg:bottom-0 absolute bottom-0">
@@ -28,4 +28,4 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+};

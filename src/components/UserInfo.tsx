@@ -22,7 +22,7 @@ const determineLevel = (value: number) => {
   return { limit: Infinity, lv: 7, label: "学校のプール", storage: 422000 };
 };
 
-export default function UserInfo() {
+export const UserInfo = () => {
   const [currentValue, setCurrenValue] = useState(0);
   const allBuckets = useRecoilValue(allBucketsState);
   const loading = useRecoilValue(authLoadingState);
@@ -39,25 +39,17 @@ export default function UserInfo() {
       <button className="flex justify-between items-center w-full pt-6 ">
         <div className="flex items-center text-blue-300">
           <span className="material-icons text-sm pr-3">account_circle</span>
-          {loading ? (
-            <div className="skeleton h-4 w-20 bg-blue-950"></div>
-          ) : (
-            <p className="">{auth.userName}</p>
-          )}
+          <p className="">{auth.userName}</p>
         </div>
         <div className="text-blue-300">
-          {loading ? (
-            <div className="skeleton h-4 w-32 bg-blue-950"></div>
-          ) : (
-            <p className="text-sm font-thin">
-              {`Lv.${determineLevel(currentValue).lv}`}
-              {determineLevel(currentValue).lv > 0 && (
-                <span className="text-md font-semibold px-1">
-                  {` ${determineLevel(currentValue).label}`}
-                </span>
-              )}
-            </p>
-          )}
+          <p className="text-sm font-thin">
+            {`Lv.${determineLevel(currentValue).lv}`}
+            {determineLevel(currentValue).lv > 0 && (
+              <span className="text-md font-semibold px-1">
+                {` ${determineLevel(currentValue).label}`}
+              </span>
+            )}
+          </p>
         </div>
       </button>
       <div className="pt-3 pb-6 text-blue-300">
@@ -108,4 +100,4 @@ export default function UserInfo() {
       </div>
     </div>
   );
-}
+};

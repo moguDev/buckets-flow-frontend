@@ -7,10 +7,9 @@ import {
   getOldestBucketDate,
   getTodayBuckets,
 } from "@/recoil/bucketsState";
-import Loading from "./Loading";
 import { useRecoilValue } from "recoil";
 import { authState } from "@/recoil/authState";
-import { MenuAccordion } from "./MyComponents";
+import { MenuAccordion, Loading } from "./MyComponents";
 
 export function formatDateString(date: Date): string {
   return date.toLocaleDateString("ja-JP", {
@@ -20,7 +19,7 @@ export function formatDateString(date: Date): string {
   });
 }
 
-export default function Activity() {
+export const Activity = () => {
   const [isOpen, setIsOpen] = useState(false);
   const isAuthenticated = useRecoilValue(authState).isAuthenticated;
   const allBuckets = useRecoilValue(allBucketsState);
@@ -196,4 +195,4 @@ export default function Activity() {
       <div className="flex w-full p-1 pb-3"></div>
     </MenuAccordion>
   );
-}
+};

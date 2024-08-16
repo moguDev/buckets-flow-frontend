@@ -2,15 +2,13 @@
 import { useState, useEffect } from "react";
 import ChartBar from "./ChartBar";
 import {
-  allBucketsErrorState,
-  allBucketsLoadingState,
   bucketsByDateLoadingState,
   bucketsByDateState,
   periodCountState,
   periodState,
 } from "@/recoil/bucketsState";
 import { atom, useRecoilState, useRecoilValue } from "recoil";
-import Loading from "./Loading";
+import { Loading } from "./MyComponents";
 import { authState } from "@/recoil/authState";
 import { formatDateString } from "./Activity";
 import { MenuAccordion } from "./MyComponents";
@@ -20,7 +18,7 @@ export const selectedDateState = atom<string>({
   default: "",
 });
 
-export default function RainfallCharts() {
+export const RainfallCharts = () => {
   const isAuthenticated = useRecoilValue(authState).isAuthenticated;
   const [period, setPeriod] = useRecoilState(periodState);
   const [periodCount, setPeriodCount] = useRecoilState(periodCountState);
@@ -130,4 +128,4 @@ export default function RainfallCharts() {
       )}
     </MenuAccordion>
   );
-}
+};

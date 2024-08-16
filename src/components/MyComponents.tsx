@@ -1,6 +1,15 @@
 "use client";
 import { useEffect, useRef, useState, ReactNode } from "react";
 import { atom, useRecoilState } from "recoil";
+import { RecoilRoot } from "recoil";
+
+export const RecoilRootWrapper = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  return <RecoilRoot>{children}</RecoilRoot>;
+};
 
 export const successMessageState = atom<string>({
   key: "successMessageState",
@@ -28,7 +37,7 @@ export const SuccessMessage = () => {
   return (
     <div
       role="alert"
-      className="relative bg-blue-300 bg-opacity-80 text-theme z-20 rounded-xl transition-height"
+      className="fixed top-16 w-56 bg-blue-300 bg-opacity-80 text-theme z-20 rounded-xl transition-height"
       ref={contentRef}
       style={{ height }}
     >
@@ -101,6 +110,14 @@ export const MenuAccordion = ({
       <div ref={contentRef} className="transition-height" style={{ height }}>
         {children}
       </div>
+    </div>
+  );
+};
+
+export const Loading = () => {
+  return (
+    <div className="flex flex-col h-full items-center justify-center">
+      <span className="loading loading-ring loading-lg bg-blue-300 bg-opacity-50 my-5"></span>
     </div>
   );
 };
