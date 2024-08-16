@@ -15,7 +15,7 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       fontSize: {
-        timer: "160px", // カスタムクラス .text-timer を追加
+        timer: "180px", // カスタムクラス .text-timer を追加
       },
       backgroundColor: {
         theme: "#040612",

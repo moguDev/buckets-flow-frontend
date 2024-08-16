@@ -46,8 +46,7 @@ export default function ChartBar({ maxValue, value, date }: ChartBarProps) {
     <div
       className="relative w-full p-0.5 opacity-60"
       onClick={() => {
-        value > 0 && setSelectedDate(date.toString());
-        console.log(selectedDate);
+        value > 0 && setSelectedDate(date);
       }}
     >
       <div className="relative w-full h-56 bg-gray-100 bg-opacity-5 rounded-lg overflow-hidden">

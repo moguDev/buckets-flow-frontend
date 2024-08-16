@@ -96,7 +96,7 @@ export const useAuth = () => {
         );
         setAuth({ isAuthenticated: true, userName: data.name });
         fetchAllBuckets();
-        fetchBucketsByPeriod();
+        fetchBucketsByPeriod(new Date());
       } catch (error) {
         console.log(error);
         setError("サインアップに失敗しました。");
@@ -115,7 +115,7 @@ export const useAuth = () => {
         const { data } = await loginUser(email, password);
         setAuth({ isAuthenticated: true, userName: data.name });
         fetchAllBuckets();
-        fetchBucketsByPeriod();
+        fetchBucketsByPeriod(new Date());
       } catch (error) {
         console.error("ログインに失敗しました:", error);
         throw new Error("ログインに失敗しました。");
@@ -133,7 +133,7 @@ export const useAuth = () => {
       await logoutUser();
       setAuth({ isAuthenticated: false, userName: "" });
       fetchAllBuckets();
-      fetchBucketsByPeriod();
+      fetchBucketsByPeriod(new Date());
     } catch (error) {
       console.error("ログアウトに失敗しました:", error);
       throw new Error("ログアウトに失敗しました。");

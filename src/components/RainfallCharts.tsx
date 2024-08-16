@@ -13,9 +13,9 @@ import { authState } from "@/recoil/authState";
 import { formatDateString } from "./Activity";
 import { MenuAccordion } from "./MyComponents";
 
-export const selectedDateState = atom<string>({
+export const selectedDateState = atom<Date | null>({
   key: "selectedDateState",
-  default: "",
+  default: null,
 });
 
 export const RainfallCharts = () => {
@@ -28,10 +28,16 @@ export const RainfallCharts = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [maxValue, setMaxValue] = useState(0);
+  const [selectedDate] = useRecoilState(selectedDateState);
 
   useEffect(() => {
     !isAuthenticated && setIsOpen(false);
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (selectedDate) {
+    }
+  }, [selectedDate]);
 
   useEffect(() => {
     if (bucketsByDate) {
@@ -39,22 +45,31 @@ export const RainfallCharts = () => {
       setStartDate(formatDateString(new Date(dates[0])));
       setEndDate(formatDateString(new Date(dates[dates.length - 1])));
 
-      let maxBuckets = 0;
+      let maxDuration = 0;
+
       if (period === "year") {
-        const bucketsByMonth = dates.reduce((acc, date) => {
+        const durationByMonth = dates.reduce((acc, date) => {
           const month = date.substring(0, 7);
-          acc[month] = (acc[month] || 0) + bucketsByDate[date].length;
+          const totalDurationForDate = bucketsByDate[date].reduce(
+            (sum, bucket) => sum + bucket.duration,
+            0
+          );
+          acc[month] = (acc[month] || 0) + totalDurationForDate;
           return acc;
         }, {} as Record<string, number>);
-        maxBuckets = Math.max(...Object.values(bucketsByMonth));
+
+        maxDuration = Math.max(...Object.values(durationByMonth));
       } else {
-        maxBuckets = Math.max(
-          ...Object.values(bucketsByDate).map((buckets) => buckets.length)
+        maxDuration = Math.max(
+          ...Object.values(bucketsByDate).map((buckets) =>
+            buckets.reduce((sum, bucket) => sum + bucket.duration, 0)
+          )
         );
       }
-      setMaxValue(maxBuckets);
+
+      setMaxValue(maxDuration);
     }
-  }, [bucketsByDate]);
+  }, [bucketsByDate, period]);
 
   return (
     <MenuAccordion
@@ -127,7 +142,10 @@ export const RainfallCharts = () => {
                 <ChartBar
                   key={date}
                   maxValue={maxValue}
-                  value={buckets.length}
+                  value={buckets.reduce(
+                    (sum, bucket) => sum + bucket.duration,
+                    0
+                  )}
                   date={new Date(date)}
                 />
               ))}

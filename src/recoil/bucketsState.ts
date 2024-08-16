@@ -81,34 +81,32 @@ export const useBuckets = () => {
     }
   }, [setAllBuckets]);
 
-  const fetchBucketsByPeriod = useCallback(async () => {
-    setBucketsByDateLoading(true);
-    const targetDate = new Date();
-    period === "week"
-      ? targetDate.setDate(targetDate.getDate() - 7 * periodCount)
-      : targetDate.setMonth(targetDate.getMonth() - periodCount);
-    try {
-      const res = await axiosInstance.get("buckets/show_buckets", {
-        params: {
-          date: targetDate.toISOString().split("T")[0],
-          period,
-        },
-      });
-      setBucketsByDate(res.data);
-    } catch (error) {
-      setBucketsByDateError("データの取得に失敗しました");
-      console.error(error);
-    } finally {
-      setBucketsByDateLoading(false);
-    }
-  }, [setBucketsByDate, period]);
+  const fetchBucketsByPeriod = useCallback(
+    async (date: Date) => {
+      setBucketsByDateLoading(true);
+      try {
+        const res = await axiosInstance.get("buckets/show_buckets", {
+          params: {
+            date: date.toISOString().split("T")[0],
+            period,
+          },
+        });
+        setBucketsByDate(res.data);
+      } catch (error) {
+        setBucketsByDateError("データの取得に失敗しました");
+        console.error(error);
+      } finally {
+        setBucketsByDateLoading(false);
+      }
+    },
+    [setBucketsByDate, period]
+  );
 
   const createBucket = useCallback(
     async (newBucket: Omit<Bucket, "id" | "user_id">) => {
       try {
         const res = await axiosInstance.post("buckets", newBucket);
         setAllBuckets((prevBuckets) => [...prevBuckets, res.data]);
-        fetchBucketsByPeriod();
       } catch (error) {
         setAllBucketsError("新しいバケットの作成に失敗しました");
         console.error(error);
@@ -118,7 +116,13 @@ export const useBuckets = () => {
   );
 
   useEffect(() => {
-    fetchBucketsByPeriod();
+    const targetDate = new Date();
+    period === "week"
+      ? targetDate.setDate(targetDate.getDate() - 7 * periodCount)
+      : period === "month"
+      ? targetDate.setMonth(targetDate.getMonth() - periodCount)
+      : targetDate.setFullYear(targetDate.getFullYear() - periodCount);
+    fetchBucketsByPeriod(targetDate);
   }, [fetchBucketsByPeriod, period, periodCount]);
 
   return {
