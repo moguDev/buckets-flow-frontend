@@ -65,7 +65,7 @@ export const useAuth = () => {
         });
 
         fetchAllBuckets();
-        fetchBucketsByPeriod();
+        fetchBucketsByPeriod(new Date());
       } catch (error) {
         setAuth({ isAuthenticated: false, userName: "" });
       } finally {
