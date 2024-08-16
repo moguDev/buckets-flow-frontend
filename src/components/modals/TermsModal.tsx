@@ -278,7 +278,7 @@ export const TermsModal = ({
   modalId: string;
 }) => {
   return (
-    <div>
+    <>
       <input type="checkbox" id={modalId} className="modal-toggle" />
       <div className="modal">
         <div className="modal-box bg-theme bg-opacity-90 border-2 border-blue-300 border-opacity-10 backdrop-blur-sm">
@@ -293,6 +293,6 @@ export const TermsModal = ({
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };

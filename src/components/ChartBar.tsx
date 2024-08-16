@@ -19,13 +19,13 @@ export default function ChartBar({ maxValue, value, date }: ChartBarProps) {
 
     const animate = (time: number) => {
       if (start === null) start = time;
-      const progress = Math.min((time - start) / 100, 1);
+      const progress = Math.min((time - start) / 100, 1); // 1秒でアニメーション完了
       setAnimatedValue(Math.floor(progress * value));
 
       if (progress < 1) {
         requestAnimationFrame(animate);
       } else {
-        setAnimatedValue(value);
+        setAnimatedValue(value); // 最終的に値を設定
       }
     };
 
@@ -47,7 +47,6 @@ export default function ChartBar({ maxValue, value, date }: ChartBarProps) {
       className="relative w-full p-0.5 opacity-60"
       onClick={() => {
         value > 0 && setSelectedDate(date);
-        console.log(value);
       }}
     >
       <div className="relative w-full h-56 bg-gray-100 bg-opacity-5 rounded-lg overflow-hidden">
