@@ -99,8 +99,16 @@ export const RainfallCharts = () => {
             <p className="text-sm font-thin">
               {startDate}〜{endDate} -{" "}
               <button className="font-semibold">
-                {bucketsByDate && Object.values(bucketsByDate).flat().length}{" "}
-                <span className="font-thin">bucket</span>
+                {bucketsByDate &&
+                  Math.floor(
+                    (Object.values(bucketsByDate)
+                      .flat()
+                      .reduce((sum, bucket) => sum + bucket.duration, 0) /
+                      1500) *
+                      8 *
+                      10
+                  ) / 10}{" "}
+                <span className="font-thin">L</span>
               </button>
             </p>
             <button

@@ -18,21 +18,31 @@ export default function Home() {
       <RainBackground />
       <div className="lg:flex w-full h-full pb-3 bg-opacity-0">
         <div
-          className={`transition-all duration-300 ${
-            menuBarIsHidden ? "w-full" : "lg:w-2/3 lg:pt-5`"
+          className={`relative transition-all duration-700 lg:pt-5 ${
+            menuBarIsHidden ? "w-full" : "lg:w-2/3"
           }`}
         >
-          <div
-            className={`pb-5 w-full h-max ${
-              othersIsHidden && "flex justify-center"
-            }`}
-          >
+          <div className="pb-5 w-full h-full">
+            <div
+              className={`transition-all duration-700 ${
+                othersIsHidden && menuBarIsHidden ? "h-1/3" : "h-0"
+              }`}
+            />
             <Timer />
+            <div
+              className={`transition-all duration-700 ${
+                othersIsHidden && menuBarIsHidden ? "h-2/3" : "h-0"
+              }`}
+            />
           </div>
         </div>
         <div
-          className={`
-            ${menuBarIsHidden ? "w-0 h-0 overflow-hidden" : "lg:w-1/3 lg:pt-5"}
+          className={`transition-opacity duration-300 
+            ${
+              menuBarIsHidden
+                ? "w-0 h-0 overflow-hidden opacity-0"
+                : "lg:w-1/3 lg:pt-5 opacity-100"
+            }
           `}
         >
           <MenuBar />

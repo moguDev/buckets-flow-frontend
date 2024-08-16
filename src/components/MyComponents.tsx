@@ -71,10 +71,13 @@ export const MenuAccordion = ({
 
   useEffect(() => {
     if (contentRef.current) {
-      const newHeight = isOpen ? `${contentRef.current.scrollHeight}px` : "0px";
+      const newHeight =
+        isOpen && isAuthenticated
+          ? `${contentRef.current.scrollHeight}px`
+          : "0px";
       setHeight(newHeight);
     }
-  }, [isOpen]);
+  }, [isOpen, isAuthenticated]);
 
   return (
     <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full select-none">

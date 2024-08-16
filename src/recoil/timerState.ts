@@ -50,12 +50,12 @@ export const useTimer = () => {
   const [bucketCount, setBucketCount] =
     useRecoilState<number>(bucketCountState);
   const [timer, setTimer] = useRecoilState<TimerState>(timerState);
-  const [settings] = useRecoilState(timerSettingsState);
+  const [timerSettings] = useRecoilState(timerSettingsState);
 
   const [startTime, setStartTime] = useState<number>(-1);
   const [endTime, setEndTime] = useState<number>(-1);
   const [remainingTime, setRemainingTime] = useState<number>(
-    settings[TimerState.WORKING]
+    timerSettings[TimerState.WORKING]
   );
   const [bucketMeterPropses, setBucketMeterPropses] = useState<
     BucketMeterProps[]
@@ -103,8 +103,8 @@ export const useTimer = () => {
   };
 
   useEffect(() => {
-    !isPlaying && setRemainingTime(settings[timer]);
-  }, [settings]);
+    !isPlaying && setRemainingTime(timerSettings[timer]);
+  }, [timerSettings]);
 
   /** タイマーのカウント **/
   useEffect(() => {
@@ -122,14 +122,15 @@ export const useTimer = () => {
               ? {
                   ...bucket,
                   filled:
-                    (1 - newRemainingTime / settings[TimerState.WORKING]) * 100,
+                    (1 - newRemainingTime / timerSettings[TimerState.WORKING]) *
+                    100,
                   active: true,
                 }
               : { ...bucket, active: false };
           })
         );
 
-      if (newRemainingTime <= 0) finishFlow();
+      newRemainingTime <= 0 && finishFlow();
     };
 
     const timerId = setInterval(updateTimer, 1000);
@@ -161,7 +162,7 @@ export const useTimer = () => {
             if (index === bucketCount % 4) {
               return {
                 ...bucket,
-                filled: (1 - remainingTime / settings[timer]) * 100,
+                filled: (1 - remainingTime / timerSettings[timer]) * 100,
                 active: true,
               };
             } else if (index < bucketCount % 4) {
@@ -187,17 +188,17 @@ export const useTimer = () => {
     if (timer === TimerState.WORKING) {
       createBucket({
         filled: true,
-        duration: settings[TimerState.WORKING],
-        storage: settings[TimerState.WORKING],
+        duration: timerSettings[TimerState.WORKING],
+        storage: timerSettings[TimerState.WORKING],
         starttime: Math.ceil(startTime / 1000),
         endtime: Math.ceil(endTime / 1000),
       });
       if (bucketCount % 4 === 3) {
         setTimer(TimerState.LONG_BREAK);
-        setRemainingTime(settings[TimerState.LONG_BREAK]);
+        setRemainingTime(timerSettings[TimerState.LONG_BREAK]);
       } else {
         setTimer(TimerState.SHORT_BREAK);
-        setRemainingTime(settings[TimerState.SHORT_BREAK]);
+        setRemainingTime(timerSettings[TimerState.SHORT_BREAK]);
       }
     } else {
       if (timer === TimerState.LONG_BREAK) {
@@ -215,7 +216,7 @@ export const useTimer = () => {
       await playBucketSound();
       setBucketCount((prev) => prev + 1);
       setTimer(TimerState.WORKING);
-      setRemainingTime(settings[TimerState.WORKING]);
+      setRemainingTime(timerSettings[TimerState.WORKING]);
     }
     setStartTime(-1);
     if (gainNodeRef.current) {
@@ -240,8 +241,8 @@ export const useTimer = () => {
 
   const resetFlow = () => {
     stopFlow();
-    setRemainingTime(settings[timer]);
-    setEndTime(Date.now() + settings[timer] * 1000);
+    setRemainingTime(timerSettings[timer]);
+    setEndTime(Date.now() + timerSettings[timer] * 1000);
   };
 
   return {

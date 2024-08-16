@@ -70,12 +70,15 @@ export const Activity = () => {
                 </span>
                 <p className="font-semibold text-lg">
                   {`${(
-                    (getTodayBuckets(allBuckets).reduce(
-                      (sum, bucket) => sum + bucket.storage,
-                      0
-                    ) /
-                      1500) *
-                    8
+                    Math.floor(
+                      (getTodayBuckets(allBuckets).reduce(
+                        (sum, bucket) => sum + bucket.storage,
+                        0
+                      ) /
+                        1500) *
+                        8 *
+                        10
+                    ) / 10
                   ).toLocaleString()} `}{" "}
                   <span className="font-thin text-sm">L</span>
                 </p>
@@ -144,12 +147,15 @@ export const Activity = () => {
                 </span>
                 <p className="font-semibold text-lg">
                   {`${(
-                    (allBuckets.reduce(
-                      (sum, bucket) => sum + bucket.storage,
-                      0
-                    ) /
-                      1500) *
-                    8
+                    Math.floor(
+                      (allBuckets.reduce(
+                        (sum, bucket) => sum + bucket.storage,
+                        0
+                      ) /
+                        1500) *
+                        8 *
+                        10
+                    ) / 10
                   ).toLocaleString()} `}{" "}
                   <span className="font-thin text-sm">L</span>
                 </p>

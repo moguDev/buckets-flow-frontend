@@ -52,8 +52,7 @@ export const Timer = () => {
               bg-blue-700 bg-opacity-10 backdrop-blur-sm
               text-gray-500
               flex items-center justify-center
-              h-16 w-16 rounded-full tooltip`}
-            data-tip="一時停止"
+              h-16 w-16 rounded-full`}
           >
             <span className="material-icons">pause</span>
           </button>
