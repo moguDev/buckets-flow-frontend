@@ -120,21 +120,19 @@ export default function SignupPage() {
                 className="checkbox checkbox-info mr-1"
               />
               <span>
-                <a
-                  href="/terms"
-                  className="underline text-blue-300 px-1"
-                  target="_blank"
+                <label
+                  htmlFor="my-modal-2"
+                  className="underline text-blue-300 px-1 cursor-pointer"
                 >
                   利用規約
-                </a>
+                </label>
                 および
-                <a
-                  href="/privacy"
-                  className="underline text-blue-300 px-1"
-                  target="_blank"
+                <label
+                  htmlFor="my-modal-3"
+                  className="underline text-blue-300 px-1 cursor-pointer"
                 >
                   プライバシーポリシー
-                </a>
+                </label>
                 に同意しました。
               </span>
             </label>

@@ -81,7 +81,7 @@ export const UserInfo = () => {
       <div className="flex items-center">
         <label
           htmlFor={auth.isAuthenticated ? "" : "my-modal-4"}
-          className="flex justify-between items-center w-full py-6 px-5 mr-1 bg-blue-900 bg-opacity-10 rounded-xl cursor-pointer"
+          className="flex justify-between items-center w-full py-6 px-5 mr-1 bg-blue-900 bg-opacity-10 hover:bg-opacity-20 rounded-xl cursor-pointer"
         >
           <div className="flex items-center text-blue-300">
             <span className="material-icons text-sm pr-3">login</span>
@@ -90,7 +90,7 @@ export const UserInfo = () => {
         </label>
         <Link
           href="/signup"
-          className="flex justify-between items-center w-full py-6 px-5 ml-1 bg-blue-900 bg-opacity-20 rounded-xl "
+          className="flex justify-between items-center w-full py-6 px-5 ml-1 bg-blue-900 bg-opacity-20 hover:bg-opacity-30 rounded-xl "
         >
           <div className="flex items-center text-blue-300">
             <span className="material-icons text-sm pr-2">person_add</span>

@@ -148,10 +148,12 @@ export const getTodayBuckets = (buckets: Bucket[]): Bucket[] => {
 export const getMaxStreak = (buckets: Bucket[]): number => {
   if (buckets.length === 0) return 0;
 
+  const jstOffset = 9 * 60; // JST is UTC+9
+
   const uniqueDays = Array.from(
     new Set(
       buckets.map((bucket) => {
-        const date = new Date(bucket.starttime * 1000);
+        const date = new Date((bucket.starttime + jstOffset * 60) * 1000);
         return date.toISOString().split("T")[0];
       })
     )

@@ -92,7 +92,7 @@ const LoginModal = ({
                 </label>
                 <button
                   type="submit"
-                  className="btn font-bold text-white border-none bg-opacity-0"
+                  className="btn font-bold text-blue-300 border-none bg-opacity-0"
                 >
                   ログイン
                 </button>

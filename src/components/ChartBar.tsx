@@ -25,7 +25,7 @@ export default function ChartBar({ maxValue, value, date }: ChartBarProps) {
       if (progress < 1) {
         requestAnimationFrame(animate);
       } else {
-        setAnimatedValue(value); // 最終的に値を設定
+        setAnimatedValue(value);
       }
     };
 

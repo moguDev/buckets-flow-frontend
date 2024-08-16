@@ -7,10 +7,10 @@ export const Footer = () => {
       <div className="lg:fixed lg:bottom-0 absolute bottom-0">
         <ul className="lg:flex items-center text-sm text-blue-200 text-opacity-60">
           <li className="mx-3 my-3">
-            <Link href="/terms">利用規約</Link>
+            <label htmlFor="my-modal-2">利用規約</label>
           </li>
           <li className="mx-3 my-3">
-            <Link href="/privacy">プライバシーポリシー</Link>
+            <label htmlFor="my-modal-3">プライバシーポリシー</label>
           </li>
           <li className="mx-3 my-3">
             <Link
