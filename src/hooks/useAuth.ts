@@ -142,6 +142,7 @@ export const useAuth = () => {
     isAuthenticated: auth.isAuthenticated,
     userName: auth.userName,
     loading: useRecoilValue(loadingState),
+    error: useRecoilValue(errorState),
     signup,
     login,
     logout,

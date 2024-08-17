@@ -1,10 +1,8 @@
 "use client";
-import { signup } from "@/lib/auth";
-import { authErrorState, authLoadingState } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useRecoilState } from "recoil";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -13,8 +11,9 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [termIsChecked, setTermIsChecked] = useState(false);
+
   const [loading, setLoading] = useState(false);
-  const [error] = useRecoilState(authErrorState);
+  const { signup, error } = useAuth();
   const env = process.env.NEXT_PUBLIC_ENV;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

@@ -1,5 +1,4 @@
 "use client";
-import { useAuth } from "@/hooks/useAuth";
 import { useRecoilValue } from "recoil";
 import RainBackground from "@/components/RainBackground";
 import { Timer } from "@/components/Timer";
