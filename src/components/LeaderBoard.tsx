@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Loading, MenuAccordion } from "./MyComponents";
 import { useTopUsers } from "@/hooks/useTopUsers";
+import Image from "next/image";
 
 const ItemComponent = ({
   rank,
@@ -25,7 +26,7 @@ const ItemComponent = ({
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center">
           {image !== null ? (
-            <img
+            <Image
               src={image}
               alt={name}
               className="w-10 h-10 rounded-full mr-3"
