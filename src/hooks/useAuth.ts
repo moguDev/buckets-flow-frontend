@@ -76,10 +76,6 @@ export const useAuth = () => {
     }
   }, [setAuth]);
 
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
-
   const signup = useCallback(
     async (
       email: string,
@@ -143,6 +139,7 @@ export const useAuth = () => {
     userName: auth.userName,
     loading: useRecoilValue(loadingState),
     error: useRecoilValue(errorState),
+    checkAuth,
     signup,
     login,
     logout,

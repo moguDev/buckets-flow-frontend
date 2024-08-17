@@ -6,10 +6,17 @@ import MenuBar, { menuBarIsHiddenState } from "@/components/MenuBar";
 import LoginModal from "@/components/modals/LoginModal";
 import LogoutModal from "@/components/modals/LogoutModal";
 import { othersIsHiddenState } from "@/components/Others";
+import { useAuth } from "@/hooks/useAuth";
+import { useEffect } from "react";
 
 export default function Home() {
+  const { isAuthenticated, checkAuth } = useAuth();
   const othersIsHidden = useRecoilValue(othersIsHiddenState);
   const menuBarIsHidden = useRecoilValue(menuBarIsHiddenState);
+
+  useEffect(() => {
+    checkAuth();
+  }, [isAuthenticated]);
 
   return (
     <main className="h-full">
