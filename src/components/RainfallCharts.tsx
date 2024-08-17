@@ -4,12 +4,12 @@ import ChartBar from "./ChartBar";
 import {
   bucketsByDateLoadingState,
   bucketsByDateState,
-  periodCountState,
-  periodState,
-} from "@/recoil/bucketsState";
+  chartPeriodCountState,
+  chartPeriodState,
+} from "@/hooks/useBuckets";
 import { atom, useRecoilState, useRecoilValue } from "recoil";
 import { Loading } from "./MyComponents";
-import { authState } from "@/recoil/authState";
+import { authState } from "@/hooks/useAuth";
 import { formatDateString } from "./Activity";
 import { MenuAccordion } from "./MyComponents";
 
@@ -20,8 +20,8 @@ export const selectedDateState = atom<Date | null>({
 
 export const RainfallCharts = () => {
   const isAuthenticated = useRecoilValue(authState).isAuthenticated;
-  const [period, setPeriod] = useRecoilState(periodState);
-  const [periodCount, setPeriodCount] = useRecoilState(periodCountState);
+  const [period, setPeriod] = useRecoilState(chartPeriodState);
+  const [periodCount, setPeriodCount] = useRecoilState(chartPeriodCountState);
   const bucketsByDate = useRecoilValue(bucketsByDateState);
   const loading = useRecoilValue(bucketsByDateLoadingState);
   const [isOpen, setIsOpen] = useState(false);

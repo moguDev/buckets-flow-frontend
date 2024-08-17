@@ -6,9 +6,9 @@ import {
   getMaxStreak,
   getOldestBucketDate,
   getTodayBuckets,
-} from "@/recoil/bucketsState";
+} from "@/hooks/useBuckets";
 import { useRecoilValue } from "recoil";
-import { authState } from "@/recoil/authState";
+import { authState } from "@/hooks/useAuth";
 import { MenuAccordion, Loading } from "./MyComponents";
 
 export function formatDateString(date: Date): string {

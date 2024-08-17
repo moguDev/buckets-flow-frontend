@@ -1,12 +1,12 @@
 import { atom, selector, useRecoilState, useSetRecoilState } from "recoil";
 import Cookies from "js-cookie";
-import { login as loginUser } from "@/libs/auth";
-import { logout as logoutUser } from "@/libs/auth";
-import { signup as signupUser } from "@/libs/auth";
-import { useBuckets } from "./bucketsState";
+import { login as loginUser } from "@/lib/auth";
+import { logout as logoutUser } from "@/lib/auth";
+import { signup as signupUser } from "@/lib/auth";
+import { useBuckets } from "./useBuckets";
 import { useEffect, useCallback } from "react";
-import axiosInstance from "@/libs/axiosInstance";
-import { SuccessMessage, successMessageState } from "@/components/MyComponents";
+import axiosInstance from "@/lib/axiosInstance";
+import { successMessageState } from "@/components/MyComponents";
 
 export const authState = atom({
   key: "authState",

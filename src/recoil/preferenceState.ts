@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import axiosInstance from "@/libs/axiosInstance";
+import axiosInstance from "@/lib/axiosInstance";
 
 // Preferenceの型定義
 export interface Preference {

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { isPlayingState, TimerState, timerState } from "@/recoil/timerState";
+import { isPlayingState, TimerState, timerState } from "@/hooks/useTimer";
 
 interface Drop {
   x: number;

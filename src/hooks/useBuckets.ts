@@ -1,5 +1,5 @@
 import { atom, useRecoilState, useSetRecoilState } from "recoil";
-import axiosInstance from "@/libs/axiosInstance";
+import axiosInstance from "@/lib/axiosInstance";
 import { useEffect, useCallback } from "react";
 
 export interface Bucket {
@@ -32,6 +32,7 @@ export const allBucketsErrorState = atom<string | null>({
   default: null,
 });
 
+// チャート関連のRecoilState
 export const bucketsByDateState = atom<BucketsByDate | null>({
   key: "bucketsByDateState",
   default: {},
@@ -47,21 +48,20 @@ export const bucketsByDateErrorState = atom<string | null>({
   default: null,
 });
 
-export const periodState = atom<string>({
-  key: "periodState",
+export const chartPeriodState = atom<string>({
+  key: "chartPeriodState",
   default: "week",
 });
 
-export const periodCountState = atom<number>({
-  key: "periodCountState",
+export const chartPeriodCountState = atom<number>({
+  key: "chartPeriodCountState",
   default: 0,
 });
 
-// Custom Hooks
 export const useBuckets = () => {
   const [allBuckets, setAllBuckets] = useRecoilState(allBucketsState);
-  const [period, setPeriod] = useRecoilState(periodState);
-  const [periodCount] = useRecoilState(periodCountState);
+  const [period, setPeriod] = useRecoilState(chartPeriodState);
+  const [periodCount] = useRecoilState(chartPeriodCountState);
   const [, setBucketsByDate] = useRecoilState(bucketsByDateState);
   const setAllBucketsLoading = useSetRecoilState(allBucketsLoadingState);
   const setAllBucketsError = useSetRecoilState(allBucketsErrorState);

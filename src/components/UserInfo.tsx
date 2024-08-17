@@ -1,5 +1,5 @@
-import { authLoadingState, authState } from "@/recoil/authState";
-import { allBucketsState } from "@/recoil/bucketsState";
+import { authLoadingState, authState } from "@/hooks/useAuth";
+import { allBucketsState } from "@/hooks/useBuckets";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";

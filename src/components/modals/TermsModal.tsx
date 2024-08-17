@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 export const Terms = () => {
   return (
-    <div className="relative max-w-4xl mx-1 p-2 bg-opacity-0 shadow-md rounded-lg">
+    <div className="relative mx-1 p-2 bg-opacity-0 shadow-md rounded-lg">
       <h1 className="text-3xl font-bold text-blue-200 mb-6">ご利用規約</h1>
       <div className="text-sm">
         <section className="mb-8">
@@ -280,8 +280,8 @@ export const TermsModal = ({
   return (
     <>
       <input type="checkbox" id={modalId} className="modal-toggle" />
-      <div className="modal">
-        <div className="modal-box bg-theme bg-opacity-90 border-2 border-blue-300 border-opacity-10 backdrop-blur-sm">
+      <div className="modal w-full">
+        <div className="modal-box w-2/3 bg-theme bg-opacity-90 border-2 border-blue-300 border-opacity-10 backdrop-blur-sm">
           {children}
           <div className="modal-action">
             <label

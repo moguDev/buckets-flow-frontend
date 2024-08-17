@@ -1,7 +1,7 @@
 "use client";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { menuBarIsHiddenState } from "./MenuBar";
-import { authState } from "@/recoil/authState";
+import { authState } from "@/hooks/useAuth";
 import { othersIsHiddenState } from "./Others";
 import Link from "next/link";
 

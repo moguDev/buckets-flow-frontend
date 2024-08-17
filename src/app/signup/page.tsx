@@ -1,6 +1,6 @@
 "use client";
-import { signup } from "@/libs/auth";
-import { authErrorState, authLoadingState } from "@/recoil/authState";
+import { signup } from "@/lib/auth";
+import { authErrorState, authLoadingState } from "@/hooks/useAuth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

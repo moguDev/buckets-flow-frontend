@@ -1,5 +1,5 @@
 "use client";
-import { authState } from "@/recoil/authState";
+import { authState } from "@/hooks/useAuth";
 import { Activity } from "./Activity";
 import LeaderBoard from "./LeaderBoard";
 import { Preferences } from "./Preferences";

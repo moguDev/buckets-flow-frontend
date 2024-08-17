@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { TimerState, useTimer } from "@/recoil/timerState";
+import { TimerState, useTimer } from "@/hooks/useTimer";
 import BucketMeter from "./BucketMeter";
 
 export const Timer = () => {

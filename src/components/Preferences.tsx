@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { MenuAccordion } from "./MyComponents";
-import { authState } from "@/recoil/authState";
+import { authState } from "@/hooks/useAuth";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { timerSettingsState, TimerState } from "@/recoil/timerState";
+import { timerSettingsState, TimerState } from "@/hooks/useTimer";
 
 export const timerValues = [15, 20, 25, 30, 45, 50, 60, 90];
 export const breakValues = [3, 4, 5, 6, 7, 8, 9, 10];
