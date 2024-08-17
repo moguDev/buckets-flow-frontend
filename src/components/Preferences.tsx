@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MenuAccordion } from "./MyComponents";
 import { useAuth } from "@/hooks/useAuth";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { timerSettingsState, TimerState } from "@/hooks/useTimer";
+import { timerSettingsState, TimerStatus } from "@/hooks/useTimer";
 
 export const timerValues = [15, 20, 25, 30, 45, 50, 60, 90];
 export const breakValues = [3, 4, 5, 6, 7, 8, 9, 10];
@@ -17,7 +17,7 @@ export const Preferences = () => {
   const [longBreakSliderIndex, setLongBreakSliderIndex] = useState(4);
   const [timerSettings, setTimerSettings] = useRecoilState(timerSettingsState);
 
-  const updateTimerSetting = (state: TimerState, newValue: number) => {
+  const updateTimerSetting = (state: TimerStatus, newValue: number) => {
     setTimerSettings((prevSettings) => ({
       ...prevSettings,
       [state]: newValue * 60,
@@ -56,7 +56,7 @@ export const Preferences = () => {
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               const index = Number(event.target.value);
               setTimerSliderIndex(index);
-              updateTimerSetting(TimerState.WORKING, timerValues[index]);
+              updateTimerSetting(TimerStatus.WORKING, timerValues[index]);
             }}
           />
           <div className="flex w-full justify-between px-2 text-xs text-blue-300">
@@ -79,7 +79,7 @@ export const Preferences = () => {
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               const index = Number(event.target.value);
               setBreakSliderIndex(index);
-              updateTimerSetting(TimerState.SHORT_BREAK, breakValues[index]);
+              updateTimerSetting(TimerStatus.SHORT_BREAK, breakValues[index]);
             }}
           />
           <div className="flex w-full justify-between px-2 text-xs text-blue-300">
@@ -102,7 +102,10 @@ export const Preferences = () => {
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               const index = Number(event.target.value);
               setLongBreakSliderIndex(Number(index));
-              updateTimerSetting(TimerState.LONG_BREAK, longBreakValues[index]);
+              updateTimerSetting(
+                TimerStatus.LONG_BREAK,
+                longBreakValues[index]
+              );
             }}
           />
           <div className="flex w-full justify-between px-2 text-xs text-blue-300">

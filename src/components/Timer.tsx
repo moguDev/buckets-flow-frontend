@@ -1,28 +1,27 @@
 "use client";
 import React from "react";
-import { TimerState, useTimer } from "@/hooks/useTimer";
+import { TimerStatus, useTimer } from "@/hooks/useTimer";
 import BucketMeter from "./BucketMeter";
 
 export const Timer = () => {
   const {
-    isPlaying,
     remainingTime,
     bucketPropses,
+    timer,
     startFlow,
     stopFlow,
     resetFlow,
-    timer,
   } = useTimer();
 
   return (
     <div className="flex flex-col items-center justify-center w-full">
       <div className="relative text-center text-blue-300 font-semibold text-opacity-80 my-3">
-        {timer === TimerState.SHORT_BREAK && (
+        {timer.status === TimerStatus.SHORT_BREAK && (
           <p className="bg-blue-300 bg-opacity-70 rounded-full px-10 py-0.5 text-theme text-sm">
             休憩
           </p>
         )}
-        {timer === TimerState.LONG_BREAK && (
+        {timer.status === TimerStatus.LONG_BREAK && (
           <p className="bg-blue-300 bg-opacity-70 rounded-full px-10 py-0.5 text-theme text-sm">
             長い休憩
           </p>
@@ -30,7 +29,9 @@ export const Timer = () => {
       </div>
       <p
         className={`text-center text-blue-300 font-medium md:text-timer text-8xl md:pb-8 pb-3 transition-transform duration-700 transition-brightness ${
-          isPlaying ? "scale-105 brightness-110" : "scale-90 brightness-90"
+          timer.isPlaying
+            ? "scale-105 brightness-110"
+            : "scale-90 brightness-90"
         } select-none`}
       >
         {Math.floor(remainingTime / 60)
@@ -44,7 +45,7 @@ export const Timer = () => {
         ))}
       </div>
       <div className="flex items-center justify-center py-2">
-        {isPlaying ? (
+        {timer.isPlaying ? (
           <button
             onClick={stopFlow}
             className={`

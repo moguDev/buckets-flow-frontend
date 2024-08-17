@@ -12,20 +12,17 @@ export default function SignupPage() {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [termIsChecked, setTermIsChecked] = useState(false);
 
-  const [loading, setLoading] = useState(false);
-  const { signup, error } = useAuth();
+  const { signup, loading } = useAuth();
+  const [error, setError] = useState("");
   const env = process.env.NEXT_PUBLIC_ENV;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      setLoading(true);
       await signup(email, password, passwordConfirmation, userName);
       router.push("/");
     } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
+      setError("アカウントの作成に失敗しました。");
     }
   };
 
@@ -37,7 +34,7 @@ export default function SignupPage() {
           アカウント作成
         </h3>
       </div>
-      {error && <p className="text-red-500">{}</p>}
+      <p className="text-red-500 relative p-3 w-full">{error}</p>
       <div className="relative">
         {loading && (
           <div className="absolute flex items-center justify-center bg-theme bg-opacity-90 h-full w-full">

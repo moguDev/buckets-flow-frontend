@@ -20,10 +20,10 @@ export function formatDateString(date: Date): string {
 export const Activity = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated } = useAuth();
-  const { buckets, loading, fetchData } = useBuckets();
+  const { buckets, loading, fetchBuckets } = useBuckets();
 
   useEffect(() => {
-    fetchData();
+    fetchBuckets();
   }, [isAuthenticated]);
 
   return (

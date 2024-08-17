@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
+import { timerState, TimerStatus, useTimer } from "@/hooks/useTimer";
 import { useRecoilValue } from "recoil";
-import { isPlayingState, TimerState, timerState } from "@/hooks/useTimer";
 
 interface Drop {
   x: number;
@@ -12,7 +12,6 @@ interface Drop {
 
 const RainAnimation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const isPlaying = useRecoilValue(isPlayingState);
   const timer = useRecoilValue(timerState);
   const animationFrameIdRef = useRef<number | null>(null);
 
@@ -79,8 +78,8 @@ const RainAnimation: React.FC = () => {
       const width = canvas.width;
       const height = canvas.height;
       const drops = initializeDrops(width, height);
-      isPlaying &&
-        timer === TimerState.WORKING &&
+      timer.isPlaying &&
+        timer.status === TimerStatus.WORKING &&
         drawRain(drops, width, height);
     };
 
@@ -95,7 +94,7 @@ const RainAnimation: React.FC = () => {
       }
       window.removeEventListener("resize", handleResize);
     };
-  }, [isPlaying, timer]);
+  }, [timer]);
 
   return (
     <div className="z-[-1]">

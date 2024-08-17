@@ -22,7 +22,7 @@ export const useBuckets = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
-  const fetchData = useCallback(async () => {
+  const fetchBuckets = useCallback(async () => {
     setLoading(true);
     try {
       const response = await axiosInstance.get("buckets");
@@ -39,7 +39,7 @@ export const useBuckets = () => {
     async (newBucket: Omit<Bucket, "id" | "user_id">) => {
       try {
         const res = await axiosInstance.post("buckets", newBucket);
-        fetchData();
+        fetchBuckets();
       } catch (error) {
         setError("新しいバケットの作成に失敗しました");
         console.error(error);
@@ -48,7 +48,7 @@ export const useBuckets = () => {
     [buckets]
   );
 
-  return { buckets, loading, error, fetchData, createBucket };
+  return { buckets, loading, error, fetchBuckets, createBucket };
 };
 
 // Utility Functions

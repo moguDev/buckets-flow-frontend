@@ -4,34 +4,27 @@ import { useRecoilState } from "recoil";
 import { useBuckets } from "./useBuckets";
 import { BucketMeterProps } from "@/components/BucketMeter";
 
-export enum TimerState {
+export enum TimerStatus {
   WORKING,
   SHORT_BREAK,
   LONG_BREAK,
 }
 
-export const timerSettingsState = atom<Record<TimerState, number>>({
-  key: "timerSettingsState",
+export const timerState = atom({
+  key: "timeState",
   default: {
-    [TimerState.WORKING]: 25 * 60, // 25分
-    [TimerState.SHORT_BREAK]: 5 * 60, // 5分
-    [TimerState.LONG_BREAK]: 30 * 60, // 30分
+    isPlaying: false,
+    status: TimerStatus.WORKING,
   },
 });
 
-export const isPlayingState = atom<boolean>({
-  key: "isPlayingState",
-  default: false,
-});
-
-export const bucketCountState = atom<number>({
-  key: "bucketCountState",
-  default: 0,
-});
-
-export const timerState = atom<TimerState>({
-  key: "timerState",
-  default: TimerState.WORKING,
+export const timerSettingsState = atom<Record<TimerStatus, number>>({
+  key: "timerSettingsState",
+  default: {
+    [TimerStatus.WORKING]: 25 * 60, // 25分
+    [TimerStatus.SHORT_BREAK]: 5 * 60, // 5分
+    [TimerStatus.LONG_BREAK]: 30 * 60, // 30分
+  },
 });
 
 const setTimerCountToTitle = (remainingTime: number) => {
@@ -46,16 +39,14 @@ export const useTimer = () => {
   const sourceRef = useRef<AudioBufferSourceNode | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
 
-  const [isPlaying, setIsPlaying] = useRecoilState<boolean>(isPlayingState);
-  const [bucketCount, setBucketCount] =
-    useRecoilState<number>(bucketCountState);
-  const [timer, setTimer] = useRecoilState<TimerState>(timerState);
+  const [timer, setTimer] = useRecoilState(timerState);
+  const [bucketCount, setBucketCount] = useState<number>(0);
   const [timerSettings] = useRecoilState(timerSettingsState);
 
   const [startTime, setStartTime] = useState<number>(-1);
   const [endTime, setEndTime] = useState<number>(-1);
   const [remainingTime, setRemainingTime] = useState<number>(
-    timerSettings[TimerState.WORKING]
+    timerSettings[TimerStatus.WORKING]
   );
   const [bucketMeterPropses, setBucketMeterPropses] = useState<
     BucketMeterProps[]
@@ -102,26 +93,27 @@ export const useTimer = () => {
   };
 
   useEffect(() => {
-    !isPlaying && setRemainingTime(timerSettings[timer]);
+    !timer.isPlaying && setRemainingTime(timerSettings[timer.status]);
   }, [timerSettings]);
 
   /** タイマーのカウント **/
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!timer.isPlaying) return;
 
     const updateTimer = () => {
       const currentTime = Date.now();
       const newRemainingTime = Math.ceil((endTime - currentTime) / 1000);
       setTimerCountToTitle(newRemainingTime);
       setRemainingTime(newRemainingTime);
-      timer === TimerState.WORKING &&
+      timer.status === TimerStatus.WORKING &&
         setBucketMeterPropses(
           bucketMeterPropses.map((bucket, index) => {
             return index === bucketCount % 4
               ? {
                   ...bucket,
                   filled:
-                    (1 - newRemainingTime / timerSettings[TimerState.WORKING]) *
+                    (1 -
+                      newRemainingTime / timerSettings[TimerStatus.WORKING]) *
                     100,
                   active: true,
                 }
@@ -134,15 +126,15 @@ export const useTimer = () => {
 
     const timerId = setInterval(updateTimer, 1000);
     return () => clearInterval(timerId);
-  }, [isPlaying, endTime, bucketCount, bucketMeterPropses]);
+  }, [timer, endTime, bucketCount, bucketMeterPropses]);
 
   const startFlow = () => {
     if (audioContextRef.current && audioBufferRef.current) {
       startTime < 0 && setStartTime(Date.now());
       setTimerCountToTitle(remainingTime);
       setEndTime(Date.now() + remainingTime * 1000);
-      setIsPlaying(true);
-      if (timer === TimerState.WORKING) {
+      setTimer({ ...timer, isPlaying: true });
+      if (timer.status === TimerStatus.WORKING) {
         const context = audioContextRef.current;
         const source = context.createBufferSource();
         const gainNode = context.createGain();
@@ -161,7 +153,7 @@ export const useTimer = () => {
             if (index === bucketCount % 4) {
               return {
                 ...bucket,
-                filled: (1 - remainingTime / timerSettings[timer]) * 100,
+                filled: (1 - remainingTime / timerSettings[timer.status]) * 100,
                 active: true,
               };
             } else if (index < bucketCount % 4) {
@@ -179,28 +171,28 @@ export const useTimer = () => {
       sourceRef.current.stop();
       sourceRef.current = null;
     }
-    setIsPlaying(false);
+    setTimer({ ...timer, isPlaying: false });
   };
 
   const finishFlow = async () => {
-    setIsPlaying(false);
-    if (timer === TimerState.WORKING) {
+    setTimer({ ...timer, isPlaying: true });
+    if (timer.status === TimerStatus.WORKING) {
       createBucket({
         filled: true,
-        duration: timerSettings[TimerState.WORKING],
-        storage: timerSettings[TimerState.WORKING],
+        duration: timerSettings[TimerStatus.WORKING],
+        storage: timerSettings[TimerStatus.WORKING],
         starttime: Math.ceil(startTime / 1000),
         endtime: Math.ceil(endTime / 1000),
       });
       if (bucketCount % 4 === 3) {
-        setTimer(TimerState.LONG_BREAK);
-        setRemainingTime(timerSettings[TimerState.LONG_BREAK]);
+        setTimer({ ...timer, status: TimerStatus.LONG_BREAK });
+        setRemainingTime(timerSettings[TimerStatus.LONG_BREAK]);
       } else {
-        setTimer(TimerState.SHORT_BREAK);
-        setRemainingTime(timerSettings[TimerState.SHORT_BREAK]);
+        setTimer({ ...timer, status: TimerStatus.SHORT_BREAK });
+        setRemainingTime(timerSettings[TimerStatus.SHORT_BREAK]);
       }
     } else {
-      if (timer === TimerState.LONG_BREAK) {
+      if (timer.status === TimerStatus.LONG_BREAK) {
         setBucketMeterPropses([
           { filled: 0, active: false },
           { filled: 0, active: false },
@@ -214,8 +206,8 @@ export const useTimer = () => {
       }
       await playBucketSound();
       setBucketCount((prev) => prev + 1);
-      setTimer(TimerState.WORKING);
-      setRemainingTime(timerSettings[TimerState.WORKING]);
+      setTimer({ ...timer, status: TimerStatus.WORKING });
+      setRemainingTime(timerSettings[TimerStatus.WORKING]);
     }
     setStartTime(-1);
     if (gainNodeRef.current) {
@@ -240,17 +232,16 @@ export const useTimer = () => {
 
   const resetFlow = () => {
     stopFlow();
-    setRemainingTime(timerSettings[timer]);
-    setEndTime(Date.now() + timerSettings[timer] * 1000);
+    setRemainingTime(timerSettings[timer.status]);
+    setEndTime(Date.now() + timerSettings[timer.status] * 1000);
   };
 
   return {
-    isPlaying,
+    timer,
     remainingTime,
     bucketPropses: bucketMeterPropses,
     startFlow,
     stopFlow,
     resetFlow,
-    timer,
   };
 };

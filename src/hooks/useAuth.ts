@@ -1,17 +1,12 @@
-import {
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-  useSetRecoilState,
-} from "recoil";
+import { atom, selector, useRecoilState, useSetRecoilState } from "recoil";
 import Cookies from "js-cookie";
 import { login as loginUser } from "@/lib/auth";
 import { logout as logoutUser } from "@/lib/auth";
 import { signup as signupUser } from "@/lib/auth";
-import { useEffect, useCallback } from "react";
+import { useCallback, useState } from "react";
 import axiosInstance from "@/lib/axiosInstance";
 import { successMessageState } from "@/components/MyComponents";
+import { redirect } from "next/navigation";
 
 const authState = atom({
   key: "authState",
@@ -31,20 +26,10 @@ const userNameSelector = selector({
   get: ({ get }) => get(authState).userName,
 });
 
-const loadingState = atom<boolean>({
-  key: "loadingState",
-  default: false,
-});
-
-const errorState = atom<string | null>({
-  key: "errorState",
-  default: null,
-});
-
 export const useAuth = () => {
   const [auth, setAuth] = useRecoilState(authState);
-  const setLoading = useSetRecoilState(loadingState);
-  const setError = useSetRecoilState(errorState);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const setSuccessMessage = useSetRecoilState(successMessageState);
 
   const checkAuth = useCallback(async () => {
@@ -65,13 +50,13 @@ export const useAuth = () => {
         const userName = response.data.data.name;
         setAuth({
           isAuthenticated: true,
-          userName: userName, // ユーザー名を設定
+          userName: userName,
         });
+        setError("");
       } catch (error) {
         setAuth({ isAuthenticated: false, userName: "" });
       } finally {
         setLoading(false);
-        setError("");
       }
     }
   }, [setAuth]);
@@ -92,12 +77,12 @@ export const useAuth = () => {
           userName
         );
         setAuth({ isAuthenticated: true, userName: data.name });
+        setSuccessMessage(`bucket Flowへようこそ！`);
       } catch (error) {
         console.log(error);
-        setError("サインアップに失敗しました。");
+        throw new Error("サインアップに失敗しました。");
       } finally {
         setLoading(false);
-        setSuccessMessage(`bucket Flowへようこそ！`);
       }
     },
     [setAuth]
@@ -109,12 +94,12 @@ export const useAuth = () => {
       try {
         const { data } = await loginUser(email, password);
         setAuth({ isAuthenticated: true, userName: data.name });
+        setSuccessMessage("ログインしました。");
       } catch (error) {
         console.error("ログインに失敗しました:", error);
         throw new Error("ログインに失敗しました。");
       } finally {
         setLoading(false);
-        setSuccessMessage("ログインしました。");
       }
     },
     [setAuth]
@@ -125,20 +110,20 @@ export const useAuth = () => {
       setLoading(true);
       await logoutUser();
       setAuth({ isAuthenticated: false, userName: "" });
+      setSuccessMessage("ログアウトしました。");
     } catch (error) {
       console.error("ログアウトに失敗しました:", error);
       throw new Error("ログアウトに失敗しました。");
     } finally {
       setLoading(false);
-      setSuccessMessage("ログアウトしました。");
     }
   }, [setAuth]);
 
   return {
     isAuthenticated: auth.isAuthenticated,
     userName: auth.userName,
-    loading: useRecoilValue(loadingState),
-    error: useRecoilValue(errorState),
+    loading,
+    error,
     checkAuth,
     signup,
     login,
