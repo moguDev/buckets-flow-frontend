@@ -17,7 +17,7 @@ export const Timer = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full">
       <div className="relative text-center text-blue-300 font-semibold text-opacity-80 my-3">
-        {timer === TimerState.SHORT_BREAK && (
+        {timer === TimerState.BREAK && (
           <p className="bg-blue-300 bg-opacity-70 rounded-full px-10 py-0.5 text-theme text-sm">
             休憩
           </p>

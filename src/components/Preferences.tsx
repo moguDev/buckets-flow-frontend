@@ -1,8 +1,10 @@
-import { useState } from "react";
-import { MenuAccordion } from "./MyComponents";
+import { useEffect, useState } from "react";
+import { Loading, MenuAccordion } from "./MyComponents";
 import { useAuth } from "@/hooks/useAuth";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { timerSettingsState, TimerState } from "@/hooks/useTimer";
+import { timerState, TimerState } from "@/hooks/useTimer";
+import { durationPreferenceState } from "@/hooks/useTimer";
+import { usePreferences } from "@/hooks/usePreferences";
 
 export const timerValues = [15, 20, 25, 30, 45, 50, 60, 90];
 export const breakValues = [3, 4, 5, 6, 7, 8, 9, 10];
@@ -11,14 +13,30 @@ export const longBreakValues = [10, 15, 20, 25, 30, 45, 60];
 export const Preferences = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated } = useAuth();
+  const [durationPreference, setDurationPreference] = useRecoilState(
+    durationPreferenceState
+  );
 
   const [timerSliderIndex, setTimerSliderIndex] = useState(2);
   const [breakSliderIndex, setBreakSliderIndex] = useState(2);
   const [longBreakSliderIndex, setLongBreakSliderIndex] = useState(4);
-  const [timerSettings, setTimerSettings] = useRecoilState(timerSettingsState);
+
+  const { updatePreference, loading } = usePreferences();
+
+  useEffect(() => {
+    setTimerSliderIndex(
+      timerValues.indexOf(durationPreference[TimerState.WORKING] / 60)
+    );
+    setBreakSliderIndex(
+      breakValues.indexOf(durationPreference[TimerState.BREAK] / 60)
+    );
+    setLongBreakSliderIndex(
+      longBreakValues.indexOf(durationPreference[TimerState.LONG_BREAK] / 60)
+    );
+  }, [durationPreference]);
 
   const updateTimerSetting = (state: TimerState, newValue: number) => {
-    setTimerSettings((prevSettings) => ({
+    setDurationPreference((prevSettings) => ({
       ...prevSettings,
       [state]: newValue * 60,
     }));
@@ -41,7 +59,12 @@ export const Preferences = () => {
       label="設定"
       isAuthenticated={isAuthenticated}
     >
-      <ul className="p-2">
+      <ul className="relative p-2">
+        {loading && (
+          <div className="absolute top-0 h-full w-full bg-black bg-opacity-0 z-10">
+            <Loading />
+          </div>
+        )}
         <div className="flex items-center justify-between text-blue-300">
           <p className="text-xs">タイマーの時間</p>
         </div>
@@ -57,6 +80,7 @@ export const Preferences = () => {
               const index = Number(event.target.value);
               setTimerSliderIndex(index);
               updateTimerSetting(TimerState.WORKING, timerValues[index]);
+              updatePreference({ timer_duration: timerValues[index] * 60 });
             }}
           />
           <div className="flex w-full justify-between px-2 text-xs text-blue-300">
@@ -79,7 +103,8 @@ export const Preferences = () => {
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               const index = Number(event.target.value);
               setBreakSliderIndex(index);
-              updateTimerSetting(TimerState.SHORT_BREAK, breakValues[index]);
+              updateTimerSetting(TimerState.BREAK, breakValues[index]);
+              updatePreference({ break_duration: breakValues[index] * 60 });
             }}
           />
           <div className="flex w-full justify-between px-2 text-xs text-blue-300">
@@ -103,6 +128,9 @@ export const Preferences = () => {
               const index = Number(event.target.value);
               setLongBreakSliderIndex(Number(index));
               updateTimerSetting(TimerState.LONG_BREAK, longBreakValues[index]);
+              updatePreference({
+                long_break_duration: longBreakValues[index] * 60,
+              });
             }}
           />
           <div className="flex w-full justify-between px-2 text-xs text-blue-300">

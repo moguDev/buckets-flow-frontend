@@ -281,7 +281,7 @@ export const TermsModal = ({
     <>
       <input type="checkbox" id={modalId} className="modal-toggle" />
       <div className="modal w-full">
-        <div className="modal-box w-2/3 bg-theme bg-opacity-90 border-2 border-blue-300 border-opacity-10 backdrop-blur-sm">
+        <div className="modal-box bg-theme bg-opacity-90 border-2 border-blue-300 border-opacity-10 backdrop-blur-sm">
           {children}
           <div className="modal-action">
             <label
