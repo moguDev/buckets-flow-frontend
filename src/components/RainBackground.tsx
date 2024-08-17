@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { timerState, TimerStatus, useTimer } from "@/hooks/useTimer";
-import { useRecoilValue } from "recoil";
+import { TimerStatus, useTimer } from "@/hooks/useTimer";
 
 interface Drop {
   x: number;
@@ -12,7 +11,7 @@ interface Drop {
 
 const RainAnimation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const timer = useRecoilValue(timerState);
+  const { timer } = useTimer();
   const animationFrameIdRef = useRef<number | null>(null);
 
   useEffect(() => {

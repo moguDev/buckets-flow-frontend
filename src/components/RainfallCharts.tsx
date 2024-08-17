@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import ChartBar from "./ChartBar";
-import { atom, useRecoilState, useRecoilValue } from "recoil";
+import { atom, useRecoilState } from "recoil";
 import { Loading } from "./MyComponents";
 import { formatDateString } from "./Activity";
 import { MenuAccordion } from "./MyComponents";
@@ -21,8 +21,10 @@ export const RainfallCharts = () => {
     error,
     period,
     setPeriod,
-    periodCount,
-    setPeriodCount,
+    targetDate,
+    initTargetDate,
+    incrementTargetDate,
+    decrementTargetDate,
     fetchData,
   } = useCharts();
 
@@ -34,7 +36,7 @@ export const RainfallCharts = () => {
 
   useEffect(() => {
     fetchData();
-  }, [period, periodCount]);
+  }, [isAuthenticated, period]);
 
   useEffect(() => {
     !isAuthenticated && setIsOpen(false);
@@ -100,7 +102,7 @@ export const RainfallCharts = () => {
             key={value}
             onClick={() => {
               if (!loading) {
-                setPeriodCount(0);
+                initTargetDate();
                 setPeriod(value);
               }
             }}
@@ -120,7 +122,7 @@ export const RainfallCharts = () => {
             <button
               aria-label="前の期間"
               className="material-icons text-xl hover:text-white"
-              onClick={() => setPeriodCount((prev) => prev + 1)}
+              onClick={() => decrementTargetDate()}
             >
               keyboard_arrow_left
             </button>
@@ -142,9 +144,7 @@ export const RainfallCharts = () => {
             <button
               aria-label="次の期間"
               className="material-icons text-xl hover:text-white"
-              onClick={() => {
-                periodCount > 0 && setPeriodCount((prev) => prev - 1);
-              }}
+              onClick={() => incrementTargetDate()}
             >
               keyboard_arrow_right
             </button>

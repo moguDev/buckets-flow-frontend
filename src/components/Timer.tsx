@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { TimerStatus, useTimer } from "@/hooks/useTimer";
 import BucketMeter from "./BucketMeter";
 
@@ -8,10 +8,15 @@ export const Timer = () => {
     remainingTime,
     bucketPropses,
     timer,
+    fetchAudio,
     startFlow,
     stopFlow,
     resetFlow,
   } = useTimer();
+
+  useEffect(() => {
+    fetchAudio();
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center w-full">
