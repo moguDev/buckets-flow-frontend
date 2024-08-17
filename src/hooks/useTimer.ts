@@ -65,7 +65,6 @@ export const useTimer = () => {
     { filled: 0, active: false },
     { filled: 0, active: false },
   ]);
-
   const { createBucket } = useBuckets();
 
   /** 雨音のセットアップ **/

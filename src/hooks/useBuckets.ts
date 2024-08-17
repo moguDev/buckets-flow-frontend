@@ -48,7 +48,7 @@ export const useBuckets = () => {
     [buckets]
   );
 
-  return { buckets, loading, error, fetchData };
+  return { buckets, loading, error, fetchData, createBucket };
 };
 
 // Utility Functions
