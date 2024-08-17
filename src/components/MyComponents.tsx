@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useRef, useState, ReactNode } from "react";
-import { atom, useRecoilState } from "recoil";
+import { atom, useRecoilState, useRecoilValue } from "recoil";
 import { RecoilRoot } from "recoil";
+import { menuBarIsHiddenState } from "./MenuBar";
 
 export const RecoilRootWrapper = ({
   children,
@@ -68,6 +69,7 @@ export const MenuAccordion = ({
 }: AccordionProps) => {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState("0px");
+  const menuBarIsHidden = useRecoilValue(menuBarIsHiddenState);
 
   useEffect(() => {
     if (contentRef.current) {

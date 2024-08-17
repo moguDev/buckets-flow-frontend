@@ -1,5 +1,5 @@
 "use client";
-import { authState } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { Activity } from "./Activity";
 import LeaderBoard from "./LeaderBoard";
 import { Preferences } from "./Preferences";
@@ -13,7 +13,7 @@ export const menuBarIsHiddenState = atom<boolean>({
 });
 
 export default function MunuBar() {
-  const isAuthenticated = useRecoilValue(authState).isAuthenticated;
+  const { isAuthenticated } = useAuth();
   return (
     <div>
       <div className="relative mb-3">

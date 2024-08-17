@@ -1,14 +1,19 @@
-import { atom, selector, useRecoilState, useSetRecoilState } from "recoil";
+import {
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
 import Cookies from "js-cookie";
 import { login as loginUser } from "@/lib/auth";
 import { logout as logoutUser } from "@/lib/auth";
 import { signup as signupUser } from "@/lib/auth";
-import { useBuckets } from "./useBuckets";
 import { useEffect, useCallback } from "react";
 import axiosInstance from "@/lib/axiosInstance";
 import { successMessageState } from "@/components/MyComponents";
 
-export const authState = atom({
+const authState = atom({
   key: "authState",
   default: {
     isAuthenticated: false,
@@ -16,31 +21,30 @@ export const authState = atom({
   },
 });
 
-export const isAuthenticatedSelector = selector({
+const isAuthenticatedSelector = selector({
   key: "isAuthenticatedSelector",
   get: ({ get }) => get(authState).isAuthenticated,
 });
 
-export const userNameSelector = selector({
+const userNameSelector = selector({
   key: "userNameSelector",
   get: ({ get }) => get(authState).userName,
 });
 
-export const authLoadingState = atom<boolean>({
+const loadingState = atom<boolean>({
   key: "loadingState",
   default: false,
 });
 
-export const authErrorState = atom<string | null>({
+const errorState = atom<string | null>({
   key: "errorState",
   default: null,
 });
 
 export const useAuth = () => {
   const [auth, setAuth] = useRecoilState(authState);
-  const { fetchAllBuckets, fetchBucketsByPeriod } = useBuckets();
-  const setLoading = useSetRecoilState(authLoadingState);
-  const setError = useSetRecoilState(authErrorState);
+  const setLoading = useSetRecoilState(loadingState);
+  const setError = useSetRecoilState(errorState);
   const setSuccessMessage = useSetRecoilState(successMessageState);
 
   const checkAuth = useCallback(async () => {
@@ -63,9 +67,6 @@ export const useAuth = () => {
           isAuthenticated: true,
           userName: userName, // ユーザー名を設定
         });
-
-        fetchAllBuckets();
-        fetchBucketsByPeriod(new Date());
       } catch (error) {
         setAuth({ isAuthenticated: false, userName: "" });
       } finally {
@@ -73,7 +74,7 @@ export const useAuth = () => {
         setError("");
       }
     }
-  }, [setAuth, fetchAllBuckets]);
+  }, [setAuth]);
 
   useEffect(() => {
     checkAuth();
@@ -95,8 +96,6 @@ export const useAuth = () => {
           userName
         );
         setAuth({ isAuthenticated: true, userName: data.name });
-        fetchAllBuckets();
-        fetchBucketsByPeriod(new Date());
       } catch (error) {
         console.log(error);
         setError("サインアップに失敗しました。");
@@ -105,7 +104,7 @@ export const useAuth = () => {
         setSuccessMessage(`bucket Flowへようこそ！`);
       }
     },
-    [setAuth, fetchAllBuckets]
+    [setAuth]
   );
 
   const login = useCallback(
@@ -114,8 +113,6 @@ export const useAuth = () => {
       try {
         const { data } = await loginUser(email, password);
         setAuth({ isAuthenticated: true, userName: data.name });
-        fetchAllBuckets();
-        fetchBucketsByPeriod(new Date());
       } catch (error) {
         console.error("ログインに失敗しました:", error);
         throw new Error("ログインに失敗しました。");
@@ -124,7 +121,7 @@ export const useAuth = () => {
         setSuccessMessage("ログインしました。");
       }
     },
-    [setAuth, fetchAllBuckets]
+    [setAuth]
   );
 
   const logout = useCallback(async () => {
@@ -132,8 +129,6 @@ export const useAuth = () => {
       setLoading(true);
       await logoutUser();
       setAuth({ isAuthenticated: false, userName: "" });
-      fetchAllBuckets();
-      fetchBucketsByPeriod(new Date());
     } catch (error) {
       console.error("ログアウトに失敗しました:", error);
       throw new Error("ログアウトに失敗しました。");
@@ -141,7 +136,14 @@ export const useAuth = () => {
       setLoading(false);
       setSuccessMessage("ログアウトしました。");
     }
-  }, [setAuth, fetchAllBuckets]);
+  }, [setAuth]);
 
-  return { signup, login, logout };
+  return {
+    isAuthenticated: auth.isAuthenticated,
+    userName: auth.userName,
+    loading: useRecoilValue(loadingState),
+    signup,
+    login,
+    logout,
+  };
 };

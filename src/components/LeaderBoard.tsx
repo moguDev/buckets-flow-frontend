@@ -65,7 +65,7 @@ export default function LeaderBoard() {
 
   useEffect(() => {
     fetchTopUsers();
-  }, [fetchTopUsers]);
+  }, [period]);
 
   return (
     <MenuAccordion

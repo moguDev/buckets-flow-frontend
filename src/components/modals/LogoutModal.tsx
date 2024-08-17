@@ -1,8 +1,8 @@
-export default function LogoutModal({
-  logout,
-}: {
-  logout: () => Promise<void>;
-}) {
+"use client";
+import { useAuth } from "@/hooks/useAuth";
+
+export default function LogoutModal() {
+  const { logout } = useAuth();
   const handleLogout = async () => {
     try {
       await logout();

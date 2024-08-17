@@ -1,7 +1,7 @@
-import { chartPeriodState } from "@/hooks/useBuckets";
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { selectedDateState } from "./RainfallCharts";
+import { useCharts } from "@/hooks/useCharts";
 
 type ChartBarProps = {
   maxValue: number;
@@ -11,7 +11,7 @@ type ChartBarProps = {
 
 export default function ChartBar({ maxValue, value, date }: ChartBarProps) {
   const [animatedValue, setAnimatedValue] = useState(0);
-  const [period] = useRecoilState(chartPeriodState);
+  const { period } = useCharts();
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
 
   useEffect(() => {

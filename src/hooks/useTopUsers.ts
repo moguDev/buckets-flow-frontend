@@ -50,10 +50,6 @@ export const useTopUsers = () => {
     }
   }, [period]);
 
-  useEffect(() => {
-    fetchTopUsers();
-  }, [fetchTopUsers]);
-
   return {
     topUsers,
     fetchTopUsers,

@@ -1,8 +1,7 @@
-import { authLoadingState, authState } from "@/hooks/useAuth";
-import { allBucketsState } from "@/hooks/useBuckets";
+import { useAuth } from "@/hooks/useAuth";
+import { useBuckets } from "@/hooks/useBuckets";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
 
 const determineLevel = (value: number) => {
   const thresholds = [
@@ -24,22 +23,21 @@ const determineLevel = (value: number) => {
 
 export const UserInfo = () => {
   const [currentValue, setCurrenValue] = useState(0);
-  const allBuckets = useRecoilValue(allBucketsState);
-  const loading = useRecoilValue(authLoadingState);
-  const auth = useRecoilValue(authState);
+  const { isAuthenticated, userName } = useAuth();
+  const { buckets, loading } = useBuckets();
 
   useEffect(() => {
     setCurrenValue(
-      (allBuckets.reduce((sum, bucket) => sum + bucket.storage, 0) / 1500) * 8
+      (buckets.reduce((sum, bucket) => sum + bucket.storage, 0) / 1500) * 8
     );
-  }, [allBuckets]);
+  }, [buckets]);
 
-  return auth.isAuthenticated ? (
+  return isAuthenticated ? (
     <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full select-none">
       <button className="flex justify-between items-center w-full pt-6 ">
         <div className="flex items-center text-blue-300">
           <span className="material-icons text-sm pr-3">account_circle</span>
-          <p className="">{auth.userName}</p>
+          <p className="">{userName}</p>
         </div>
         <div className="text-blue-300">
           <p className="text-sm font-thin">
@@ -80,7 +78,7 @@ export const UserInfo = () => {
     <div className="backdrop-blur-sm w-full">
       <div className="flex items-center">
         <label
-          htmlFor={auth.isAuthenticated ? "" : "my-modal-4"}
+          htmlFor={isAuthenticated ? "" : "my-modal-4"}
           className="flex justify-between items-center w-full py-6 px-5 mr-1 bg-blue-900 bg-opacity-10 hover:bg-opacity-20 rounded-xl cursor-pointer"
         >
           <div className="flex items-center text-blue-300">

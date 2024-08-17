@@ -1,14 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BucketIcon } from "./BucketIcon";
 import {
-  allBucketsLoadingState,
-  allBucketsState,
   getMaxStreak,
   getOldestBucketDate,
   getTodayBuckets,
+  useBuckets,
 } from "@/hooks/useBuckets";
-import { useRecoilValue } from "recoil";
-import { authState } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { MenuAccordion, Loading } from "./MyComponents";
 
 export function formatDateString(date: Date): string {
@@ -21,9 +19,12 @@ export function formatDateString(date: Date): string {
 
 export const Activity = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const isAuthenticated = useRecoilValue(authState).isAuthenticated;
-  const allBuckets = useRecoilValue(allBucketsState);
-  const loading = useRecoilValue(allBucketsLoadingState);
+  const { isAuthenticated } = useAuth();
+  const { buckets, loading, fetchData } = useBuckets();
+
+  useEffect(() => {
+    fetchData();
+  }, [isAuthenticated]);
 
   return (
     <MenuAccordion
@@ -56,9 +57,9 @@ export const Activity = () => {
                   <BucketIcon />
                 </span>
                 <p className="font-semibold text-xl">
-                  {`${getTodayBuckets(allBuckets).length} `}
+                  {`${getTodayBuckets(buckets).length} `}
                   <span className="text-sm font-thin">
-                    {getTodayBuckets(allBuckets).length === 1
+                    {getTodayBuckets(buckets).length === 1
                       ? "bucket"
                       : "buckets"}
                   </span>
@@ -71,7 +72,7 @@ export const Activity = () => {
                 <p className="font-semibold text-lg">
                   {`${(
                     Math.floor(
-                      (getTodayBuckets(allBuckets).reduce(
+                      (getTodayBuckets(buckets).reduce(
                         (sum, bucket) => sum + bucket.storage,
                         0
                       ) /
@@ -91,14 +92,14 @@ export const Activity = () => {
                 </span>
                 <button className="font-semibold text-xl">
                   {`${Math.floor(
-                    getTodayBuckets(allBuckets).reduce(
+                    getTodayBuckets(buckets).reduce(
                       (sum, bucket) => sum + bucket.duration / 60,
                       0
                     ) / 60
                   )} `}
                   <span className="text-sm font-thin">{"h"}</span>
                   {` ${Math.floor(
-                    getTodayBuckets(allBuckets).reduce(
+                    getTodayBuckets(buckets).reduce(
                       (sum, bucket) => sum + bucket.duration / 60,
                       0
                     ) % 60
@@ -118,7 +119,7 @@ export const Activity = () => {
             <p className="text-sm">すべての期間</p>
           </div>
           <p className="text-xs text-blue-300 font-light">
-            {`${getOldestBucketDate(allBuckets)} - ${formatDateString(
+            {`${getOldestBucketDate(buckets)} - ${formatDateString(
               new Date()
             )}`}
           </p>
@@ -133,9 +134,9 @@ export const Activity = () => {
                   <BucketIcon />
                 </span>
                 <p className="font-semibold text-xl">
-                  {`${allBuckets.length} `}
+                  {`${buckets.length} `}
                   <span className="text-sm font-thin">
-                    {getTodayBuckets(allBuckets).length === 1
+                    {getTodayBuckets(buckets).length === 1
                       ? "bucket"
                       : "buckets"}
                   </span>
@@ -148,7 +149,7 @@ export const Activity = () => {
                 <p className="font-semibold text-lg">
                   {`${(
                     Math.floor(
-                      (allBuckets.reduce(
+                      (buckets.reduce(
                         (sum, bucket) => sum + bucket.storage,
                         0
                       ) /
@@ -168,14 +169,14 @@ export const Activity = () => {
                 </span>
                 <button className="font-semibold text-xl">
                   {`${Math.floor(
-                    allBuckets.reduce(
+                    buckets.reduce(
                       (sum, bucket) => sum + bucket.duration / 60,
                       0
                     ) / 60
                   )} `}
                   <span className="text-sm font-thin">{"h"}</span>
                   {` ${Math.floor(
-                    allBuckets.reduce(
+                    buckets.reduce(
                       (sum, bucket) => sum + bucket.duration / 60,
                       0
                     ) % 60
@@ -190,7 +191,7 @@ export const Activity = () => {
                   whatshot
                 </span>
                 <button className="font-semibold text-xl">
-                  {getMaxStreak(allBuckets)}{" "}
+                  {getMaxStreak(buckets)}{" "}
                   <span className="font-thin text-sm">day streak.</span>
                 </button>
               </div>

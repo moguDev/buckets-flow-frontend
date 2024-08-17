@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MenuAccordion } from "./MyComponents";
-import { authState } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { timerSettingsState, TimerState } from "@/hooks/useTimer";
 
@@ -10,7 +10,7 @@ export const longBreakValues = [10, 15, 20, 25, 30, 45, 60];
 
 export const Preferences = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const isAuthenticated = useRecoilValue(authState).isAuthenticated;
+  const { isAuthenticated } = useAuth();
 
   const [timerSliderIndex, setTimerSliderIndex] = useState(2);
   const [breakSliderIndex, setBreakSliderIndex] = useState(2);

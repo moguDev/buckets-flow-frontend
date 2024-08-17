@@ -1,6 +1,6 @@
 import { atom, useRecoilState, useSetRecoilState } from "recoil";
 import axiosInstance from "@/lib/axiosInstance";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 
 export interface Bucket {
   id: number;
@@ -11,125 +11,44 @@ export interface Bucket {
   starttime: number;
   endtime: number;
 }
-
-export interface BucketsByDate {
-  [date: string]: Bucket[];
-}
-
 // State Atoms
-export const allBucketsState = atom<Bucket[]>({
+const bucketsState = atom<Bucket[]>({
   key: "allBucketsState",
   default: [],
 });
 
-export const allBucketsLoadingState = atom<boolean>({
-  key: "allBucketsLoadingState",
-  default: true,
-});
-
-export const allBucketsErrorState = atom<string | null>({
-  key: "allBucketsErrorState",
-  default: null,
-});
-
-// チャート関連のRecoilState
-export const bucketsByDateState = atom<BucketsByDate | null>({
-  key: "bucketsByDateState",
-  default: {},
-});
-
-export const bucketsByDateLoadingState = atom<boolean>({
-  key: "bucketsByDateLoadingState",
-  default: true,
-});
-
-export const bucketsByDateErrorState = atom<string | null>({
-  key: "bucketsByDateErrorState",
-  default: null,
-});
-
-export const chartPeriodState = atom<string>({
-  key: "chartPeriodState",
-  default: "week",
-});
-
-export const chartPeriodCountState = atom<number>({
-  key: "chartPeriodCountState",
-  default: 0,
-});
-
 export const useBuckets = () => {
-  const [allBuckets, setAllBuckets] = useRecoilState(allBucketsState);
-  const [period, setPeriod] = useRecoilState(chartPeriodState);
-  const [periodCount] = useRecoilState(chartPeriodCountState);
-  const [, setBucketsByDate] = useRecoilState(bucketsByDateState);
-  const setAllBucketsLoading = useSetRecoilState(allBucketsLoadingState);
-  const setAllBucketsError = useSetRecoilState(allBucketsErrorState);
-  const setBucketsByDateLoading = useSetRecoilState(bucketsByDateLoadingState);
-  const setBucketsByDateError = useSetRecoilState(bucketsByDateErrorState);
+  const [buckets, setBuckets] = useRecoilState(bucketsState);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
-  const fetchAllBuckets = useCallback(async () => {
-    setAllBucketsLoading(true);
+  const fetchData = useCallback(async () => {
+    setLoading(true);
     try {
       const response = await axiosInstance.get("buckets");
-      setAllBuckets(response.data);
+      setBuckets(response.data);
     } catch (error) {
-      setAllBucketsError("データの取得に失敗しました");
+      setError("データの取得に失敗しました");
       console.error(error);
     } finally {
-      setAllBucketsLoading(false);
+      setLoading(false);
     }
-  }, [setAllBuckets]);
-
-  const fetchBucketsByPeriod = useCallback(
-    async (date: Date) => {
-      setBucketsByDateLoading(true);
-      try {
-        const res = await axiosInstance.get("buckets/show_buckets", {
-          params: {
-            date: date.toISOString().split("T")[0],
-            period,
-          },
-        });
-        setBucketsByDate(res.data);
-      } catch (error) {
-        setBucketsByDateError("データの取得に失敗しました");
-        console.error(error);
-      } finally {
-        setBucketsByDateLoading(false);
-      }
-    },
-    [setBucketsByDate, period]
-  );
+  }, [buckets]);
 
   const createBucket = useCallback(
     async (newBucket: Omit<Bucket, "id" | "user_id">) => {
       try {
         const res = await axiosInstance.post("buckets", newBucket);
-        setAllBuckets((prevBuckets) => [...prevBuckets, res.data]);
+        fetchData();
       } catch (error) {
-        setAllBucketsError("新しいバケットの作成に失敗しました");
+        setError("新しいバケットの作成に失敗しました");
         console.error(error);
       }
     },
-    [setAllBuckets, setAllBucketsError]
+    [buckets]
   );
 
-  useEffect(() => {
-    const targetDate = new Date();
-    period === "week"
-      ? targetDate.setDate(targetDate.getDate() - 7 * periodCount)
-      : period === "month"
-      ? targetDate.setMonth(targetDate.getMonth() - periodCount)
-      : targetDate.setFullYear(targetDate.getFullYear() - periodCount);
-    fetchBucketsByPeriod(targetDate);
-  }, [fetchBucketsByPeriod, period, periodCount]);
-
-  return {
-    fetchAllBuckets,
-    fetchBucketsByPeriod,
-    createBucket,
-  };
+  return { buckets, loading, error, fetchData };
 };
 
 // Utility Functions

@@ -1,12 +1,12 @@
 "use client";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { menuBarIsHiddenState } from "./MenuBar";
-import { authState } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { othersIsHiddenState } from "./Others";
 import Link from "next/link";
 
 export const Header = () => {
-  const isAuthenticated = useRecoilValue(authState).isAuthenticated;
+  const { isAuthenticated } = useAuth();
   const [othersIsHidden, setOthersIsHidden] =
     useRecoilState<boolean>(othersIsHiddenState);
   const [menuBarIsHidden, setMenuBarIsHidden] =

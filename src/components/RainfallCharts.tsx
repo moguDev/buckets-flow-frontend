@@ -1,17 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 import ChartBar from "./ChartBar";
-import {
-  bucketsByDateLoadingState,
-  bucketsByDateState,
-  chartPeriodCountState,
-  chartPeriodState,
-} from "@/hooks/useBuckets";
 import { atom, useRecoilState, useRecoilValue } from "recoil";
 import { Loading } from "./MyComponents";
-import { authState } from "@/hooks/useAuth";
 import { formatDateString } from "./Activity";
 import { MenuAccordion } from "./MyComponents";
+import { useCharts } from "@/hooks/useCharts";
+import { useAuth } from "@/hooks/useAuth";
 
 export const selectedDateState = atom<Date | null>({
   key: "selectedDateState",
@@ -19,16 +14,27 @@ export const selectedDateState = atom<Date | null>({
 });
 
 export const RainfallCharts = () => {
-  const isAuthenticated = useRecoilValue(authState).isAuthenticated;
-  const [period, setPeriod] = useRecoilState(chartPeriodState);
-  const [periodCount, setPeriodCount] = useRecoilState(chartPeriodCountState);
-  const bucketsByDate = useRecoilValue(bucketsByDateState);
-  const loading = useRecoilValue(bucketsByDateLoadingState);
+  const { isAuthenticated } = useAuth();
+  const {
+    bucketsWithDate,
+    loading,
+    error,
+    period,
+    setPeriod,
+    periodCount,
+    setPeriodCount,
+    fetchData,
+  } = useCharts();
+
   const [isOpen, setIsOpen] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [maxValue, setMaxValue] = useState(0);
   const [selectedDate] = useRecoilState(selectedDateState);
+
+  useEffect(() => {
+    fetchData();
+  }, [period, periodCount]);
 
   useEffect(() => {
     !isAuthenticated && setIsOpen(false);
@@ -40,8 +46,8 @@ export const RainfallCharts = () => {
   }, [selectedDate]);
 
   useEffect(() => {
-    if (bucketsByDate) {
-      const dates = Object.keys(bucketsByDate);
+    if (bucketsWithDate) {
+      const dates = Object.keys(bucketsWithDate);
       setStartDate(formatDateString(new Date(dates[0])));
       setEndDate(formatDateString(new Date(dates[dates.length - 1])));
 
@@ -50,7 +56,7 @@ export const RainfallCharts = () => {
       if (period === "year") {
         const durationByMonth = dates.reduce((acc, date) => {
           const month = date.substring(0, 7);
-          const totalDurationForDate = bucketsByDate[date].reduce(
+          const totalDurationForDate = bucketsWithDate[date].reduce(
             (sum, bucket) =>
               Math.floor(sum + (bucket.duration / 1500) * 8 * 10) / 10,
             0
@@ -62,7 +68,7 @@ export const RainfallCharts = () => {
         maxDuration = Math.max(...Object.values(durationByMonth));
       } else {
         maxDuration = Math.max(
-          ...Object.values(bucketsByDate).map(
+          ...Object.values(bucketsWithDate).map(
             (buckets) =>
               Math.floor(
                 (buckets.reduce((sum, bucket) => sum + bucket.duration, 0) /
@@ -76,7 +82,7 @@ export const RainfallCharts = () => {
 
       setMaxValue(maxDuration);
     }
-  }, [bucketsByDate, period]);
+  }, [bucketsWithDate]);
 
   return (
     <MenuAccordion
@@ -121,9 +127,9 @@ export const RainfallCharts = () => {
             <p className="text-sm font-thin">
               {startDate}〜{endDate} -{" "}
               <button className="font-semibold">
-                {bucketsByDate &&
+                {bucketsWithDate &&
                   Math.floor(
-                    (Object.values(bucketsByDate)
+                    (Object.values(bucketsWithDate)
                       .flat()
                       .reduce((sum, bucket) => sum + bucket.duration, 0) /
                       1500) *
@@ -144,8 +150,8 @@ export const RainfallCharts = () => {
             </button>
           </div>
           <div className="flex w-full p-1 pb-3">
-            {bucketsByDate &&
-              Object.entries(bucketsByDate).map(([date, buckets]) => (
+            {bucketsWithDate &&
+              Object.entries(bucketsWithDate).map(([date, buckets]) => (
                 <ChartBar
                   key={date}
                   maxValue={maxValue}

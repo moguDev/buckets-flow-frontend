@@ -1,18 +1,13 @@
 "use client";
-import { authLoadingState } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 import { useState } from "react";
-import { useRecoilState } from "recoil";
 
-const LoginModal = ({
-  login,
-}: {
-  login: (email: string, password: string) => Promise<void>;
-}) => {
+const LoginModal = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loading] = useRecoilState(authLoadingState);
+  const { login, loading } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
