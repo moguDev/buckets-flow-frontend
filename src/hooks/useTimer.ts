@@ -90,11 +90,12 @@ export const useTimer = () => {
     if (!timer.isPlaying) return;
 
     const updateTimer = () => {
-      const currentTime = Date.now();
-      const newRemainingTime = Math.ceil((endTime - currentTime) / 1000);
+      const newRemainingTime = remainingTime - 1;
       setTimerCountToTitle(newRemainingTime);
       setRemainingTime(newRemainingTime);
-      timer.status === TimerStatus.WORKING &&
+
+      // バケットメーターの更新
+      if (timer.status === TimerStatus.WORKING) {
         setBucketMeterPropses(
           bucketMeterPropses.map((bucket, index) => {
             return index === bucketCount % 4
@@ -109,13 +110,14 @@ export const useTimer = () => {
               : { ...bucket, active: false };
           })
         );
+      }
 
-      newRemainingTime <= 0 && finishFlow();
+      if (newRemainingTime <= 0) finishFlow();
     };
 
     const timerId = setInterval(updateTimer, 1000);
     return () => clearInterval(timerId);
-  }, [timer, endTime, bucketCount, bucketMeterPropses]);
+  }, [timer.isPlaying, remainingTime, bucketCount, bucketMeterPropses]);
 
   const startFlow = () => {
     if (audioContextRef.current && audioBufferRef.current) {
