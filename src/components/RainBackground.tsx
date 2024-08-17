@@ -95,7 +95,7 @@ const RainAnimation: React.FC = () => {
       }
       window.removeEventListener("resize", handleResize);
     };
-  }, [isPlaying]);
+  }, [isPlaying, timer]);
 
   return (
     <div className="z-[-1]">

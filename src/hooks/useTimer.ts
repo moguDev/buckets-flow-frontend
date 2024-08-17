@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 import { useState, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
-import { useBuckets } from "@/hooks/useBuckets";
+import { useBuckets } from "./useBuckets";
 import { BucketMeterProps } from "@/components/BucketMeter";
 
 export enum TimerState {

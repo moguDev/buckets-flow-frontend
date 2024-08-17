@@ -109,9 +109,11 @@ export default function LeaderBoard() {
         ) : (
           <>
             {topUsers.map((user, index) => (
-              <div className="divide-y divide-blue-300 divide-opacity-10">
+              <div
+                key={user.name}
+                className="divide-y divide-blue-300 divide-opacity-10"
+              >
                 <ItemComponent
-                  key={user.name}
                   rank={index + 1}
                   name={user.name}
                   image={user.image}
