@@ -1,6 +1,7 @@
 import { atom, useRecoilState, useSetRecoilState } from "recoil";
 import axiosInstance from "@/lib/axiosInstance";
 import { useEffect, useCallback, useState } from "react";
+import { useCharts } from "./useCharts";
 
 export interface Bucket {
   id: number;
@@ -21,6 +22,7 @@ export const useBuckets = () => {
   const [buckets, setBuckets] = useRecoilState(bucketsState);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const { fetchData } = useCharts();
 
   const fetchBuckets = useCallback(async () => {
     setLoading(true);
@@ -40,6 +42,7 @@ export const useBuckets = () => {
       try {
         const res = await axiosInstance.post("buckets", newBucket);
         fetchBuckets();
+        fetchData();
       } catch (error) {
         setError("新しいバケットの作成に失敗しました");
         console.error(error);

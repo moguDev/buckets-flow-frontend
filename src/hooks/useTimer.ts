@@ -199,10 +199,6 @@ export const useTimer = () => {
           { filled: 0, active: false },
           { filled: 0, active: false },
         ]);
-      } else {
-        setBucketMeterPropses(
-          bucketMeterPropses.map((bucket) => ({ ...bucket, active: false }))
-        );
       }
       await playBucketSound();
       setBucketCount((prev) => prev + 1);
@@ -228,6 +224,7 @@ export const useTimer = () => {
       }, fadeOutInterval * 1000);
     }
   };
+
   const resetFlow = () => {
     stopFlow();
     setRemainingTime(durationPreference[timer]);
@@ -237,7 +234,7 @@ export const useTimer = () => {
   return {
     isPlaying,
     remainingTime,
-    bucketPropses: bucketMeterPropses,
+    bucketMeterPropses,
     startFlow,
     stopFlow,
     resetFlow,

@@ -31,13 +31,13 @@ export default function Home() {
           <div className="pb-5 w-full h-full">
             <div
               className={` ${
-                othersIsHidden && menuBarIsHidden ? "h-1/2" : "h-0"
+                othersIsHidden && menuBarIsHidden ? "h-1/3" : "h-0"
               }`}
             />
             <Timer />
             <div
               className={` ${
-                othersIsHidden && menuBarIsHidden ? "h-1/2" : "h-0"
+                othersIsHidden && menuBarIsHidden ? "h-2/3" : "h-0"
               }`}
             />
           </div>

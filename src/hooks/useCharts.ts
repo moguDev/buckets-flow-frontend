@@ -3,11 +3,15 @@ import { atom, useRecoilState } from "recoil";
 import { Bucket } from "./useBuckets";
 import { useCallback, useState } from "react";
 import axiosInstance from "@/lib/axiosInstance";
-import { init } from "next/dist/compiled/webpack/webpack";
 
 export type BucketsWithDate = {
   [date: string]: Bucket[];
 };
+
+const bucketsWithDateState = atom<BucketsWithDate>({
+  key: "bucketsWithDateState",
+  default: {},
+});
 
 const periodState = atom<string>({
   key: "periodState",
@@ -15,7 +19,8 @@ const periodState = atom<string>({
 });
 
 export const useCharts = () => {
-  const [bucketsWithDate, setBucketsWithDate] = useState<BucketsWithDate>({});
+  const [bucketsWithDate, setBucketsWithDate] =
+    useRecoilState<BucketsWithDate>(bucketsWithDateState);
   const [period, setPeriod] = useRecoilState<string>(periodState);
   const [targetDate, setTargetDate] = useState<Date>(new Date());
   const [loading, setLoading] = useState<boolean>(false);

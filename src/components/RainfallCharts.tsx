@@ -7,6 +7,7 @@ import { formatDateString } from "./Activity";
 import { MenuAccordion } from "./MyComponents";
 import { useCharts } from "@/hooks/useCharts";
 import { useAuth } from "@/hooks/useAuth";
+import { useBuckets } from "@/hooks/useBuckets";
 
 export const selectedDateState = atom<Date | null>({
   key: "selectedDateState",
@@ -15,6 +16,7 @@ export const selectedDateState = atom<Date | null>({
 
 export const RainfallCharts = () => {
   const { isAuthenticated } = useAuth();
+  const { buckets } = useBuckets();
   const {
     bucketsWithDate,
     loading,

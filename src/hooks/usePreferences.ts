@@ -36,6 +36,22 @@ export const usePreferences = () => {
     }
   }, []);
 
+  const createPreference = useCallback(
+    async (newPreference: Omit<Preference, "id" | "user_id">) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await axiosInstance.post("preferences", newPreference);
+      } catch (error) {
+        setError("Preferenceの作成に失敗しました");
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
+
   const updatePreference = useCallback(
     async (updatedPreference: Partial<Preference>) => {
       setLoading(true);
@@ -63,6 +79,7 @@ export const usePreferences = () => {
     loading,
     error,
     fetchPreference,
+    createPreference,
     updatePreference,
   };
 };

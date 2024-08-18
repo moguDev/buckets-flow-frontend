@@ -21,7 +21,7 @@ export const Preferences = () => {
   const [breakSliderIndex, setBreakSliderIndex] = useState(2);
   const [longBreakSliderIndex, setLongBreakSliderIndex] = useState(4);
 
-  const { updatePreference, loading } = usePreferences();
+  const { updatePreference, createPreference, loading } = usePreferences();
 
   useEffect(() => {
     setTimerSliderIndex(

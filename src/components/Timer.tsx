@@ -1,12 +1,12 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { TimerState, useTimer } from "@/hooks/useTimer";
 import BucketMeter from "./BucketMeter";
 
 export const Timer = () => {
   const {
     remainingTime,
-    bucketPropses,
+    bucketMeterPropses,
     isPlaying,
     timer,
     startFlow,
@@ -29,7 +29,7 @@ export const Timer = () => {
         )}
       </div>
       <p
-        className={`text-center text-blue-300 font-medium md:text-timer text-8xl md:pb-8 pb-3 transition-transform duration-700 transition-brightness ${
+        className={`text-center text-blue-300 font-medium md:text-timer text-8xl mb-5 transition-transform duration-700 transition-brightness ${
           isPlaying ? "scale-105 brightness-110" : "scale-90 brightness-90"
         } select-none`}
       >
@@ -38,12 +38,12 @@ export const Timer = () => {
           .padStart(2, "0")}
         :{(remainingTime % 60).toString().padStart(2, "0")}
       </p>
-      <div className="flex items-center justify-center py-4">
-        {bucketPropses.map((bucketProps, index) => (
-          <BucketMeter key={index} {...bucketProps} />
+      <div className="flex items-center justify-center mt-12 mb-2">
+        {bucketMeterPropses.map((bucketMeterProps, index) => (
+          <BucketMeter key={index} {...bucketMeterProps} />
         ))}
       </div>
-      <div className="flex items-center justify-center py-2">
+      <div className="flex items-center justify-center p-1">
         {isPlaying ? (
           <button
             onClick={stopFlow}
