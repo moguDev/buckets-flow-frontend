@@ -17,16 +17,17 @@ const BucketMeter: React.FC<BucketMeterProps> = ({
   const timer = useRecoilValue(timerState);
   return (
     <div className="relative">
-      {timer === TimerState.WORKING && active && (
-        <div
-          className={`absolute -top-16 left-3 right-0 flex justify-center transition-all duration-300`}
-        >
-          <RainAnimation isDrop={active && isPlaying} />
-        </div>
-      )}
+      <div
+        className={`absolute -top-12 left-2.5 right-0 flex justify-center transition-all duration-300 overflow-hidden ${
+          timer === TimerState.WORKING && active ? "h-16" : "h-0"
+        }`}
+      >
+        <RainAnimation isDrop={active && isPlaying} />
+      </div>
+
       <button
         className={`relative transition-transform duration-700 ${
-          active ? "opacity-90 scale-110 px-3" : "opacity-60 scale-75 px-2"
+          active ? "opacity-90 lg:scale-110 px-3" : "opacity-60 scale-75 px-2"
         } hover:opacity-100 tooltip`}
         data-tip={`${Math.round(filled)}%`}
       >

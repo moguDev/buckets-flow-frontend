@@ -29,7 +29,7 @@ export const Timer = () => {
         )}
       </div>
       <p
-        className={`text-center text-blue-300 font-medium md:text-timer text-8xl mb-5 transition-transform duration-700 transition-brightness ${
+        className={`text-center text-blue-300 font-medium md:text-timer text-8xl mb-12 transition-transform duration-700 transition-brightness ${
           isPlaying ? "scale-105 brightness-110" : "scale-90 brightness-90"
         } select-none`}
       >
@@ -38,7 +38,7 @@ export const Timer = () => {
           .padStart(2, "0")}
         :{(remainingTime % 60).toString().padStart(2, "0")}
       </p>
-      <div className="flex items-center justify-center mt-12 mb-2">
+      <div className="flex items-center justify-center mb-2">
         {bucketMeterPropses.map((bucketMeterProps, index) => (
           <BucketMeter key={index} {...bucketMeterProps} />
         ))}

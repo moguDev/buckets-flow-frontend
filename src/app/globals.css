@@ -101,30 +101,30 @@
 }
 
 .drop:nth-child(1) {
-  height: 7.5px; /* 元の高さの50% */
+  height: 15px; /* 長さを増加 */
   top: 2.5px; /* 元の位置の50% */
   animation-delay: -0.8s; /* -1sから0.8sに変更 */
 }
 
 .drop:nth-child(2) {
-  height: 10px; /* 元の高さの50% */
+  height: 20px; /* 長さを増加 */
   animation-delay: -1.2s; /* -1.4sから1.2sに変更 */
 }
 
 .drop:nth-child(3) {
-  height: 7.5px; /* 元の高さの50% */
+  height: 15px; /* 長さを増加 */
   top: 2.5px; /* 元の位置の50% */
   animation-delay: -1.4s; /* -1.6sから1.4sに変更 */
 }
 
 .drop:nth-child(4) {
-  height: 5px; /* 元の高さの50% */
+  height: 10px; /* 長さを増加 */
   top: 5px; /* 元の位置の50% */
   animation-delay: -1s; /* -1.2sから1sに変更 */
 }
 
 .drop:nth-child(5) {
-  height: 2.5px; /* 元の高さの50% */
+  height: 7.5px; /* 長さを増加 */
   top: 7.5px; /* 元の位置の50% */
   animation-delay: -1.4s; /* -1.6sから1.4sに変更 */
 }
