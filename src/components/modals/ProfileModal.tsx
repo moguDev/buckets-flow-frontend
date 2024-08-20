@@ -4,9 +4,27 @@ export const ProfileModal = () => {
       <input type="checkbox" id="profile-modal" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box bg-theme bg-opacity-90 border-2 border-blue-300 border-opacity-10 backdrop-blur-sm">
-          <div className="text-xl">プロフィールを編集</div>
-          <form className="flex flex-col">
-            <label htmlFor="userName">アカウント名</label>
+          <div className="flex items-center text-lg font-semibold pb-2">
+            <span className="material-icons pr-1">edit</span>
+            プロフィールを編集
+          </div>
+          <form>
+            <div className="flex items-center">
+              <div className="flex items-center justify-center bg-gray-800 bg-opacity-30 h-14 w-16 rounded-full mr-1 cursor-pointer">
+                <span className="material-icons text-blue-200 opacity-25">
+                  add_a_photo
+                </span>
+              </div>
+              <div className="flex flex-col w-full p-1">
+                <label htmlFor="userName" className="text-xs p-1 opacity-50">
+                  アカウント名
+                </label>
+                <input
+                  type="text"
+                  className="border-b border-blue-500 border-opacity-20 bg-theme text-blue-200 p-1"
+                />
+              </div>
+            </div>
             <div className="flex items-center justify-end p-1">
               <label
                 htmlFor="profile-modal"
