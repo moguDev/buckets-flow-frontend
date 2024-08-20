@@ -58,6 +58,7 @@ export const Preferences = () => {
       iconName="settings"
       label="設定"
       isAuthenticated={isAuthenticated}
+      loading={loading}
     >
       <ul className="relative p-2">
         {loading && (

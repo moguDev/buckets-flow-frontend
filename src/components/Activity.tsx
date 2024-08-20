@@ -35,6 +35,7 @@ export const Activity = () => {
       iconName="trending_up"
       label="アクティビティ"
       isAuthenticated={isAuthenticated}
+      loading={loading}
     >
       <ul>
         {/* 今日 */}

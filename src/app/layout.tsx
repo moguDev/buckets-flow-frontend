@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className={notoSansJP.className}>
         <RecoilRootWrapper>
           <Header />
-          <div className="pt-24 lg:px-16 px-5">
+          <div className="pt-24 lg:px-16 px-5 w-full">
             <SuccessMessage />
             {children}
           </div>

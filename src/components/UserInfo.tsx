@@ -33,44 +33,55 @@ export const UserInfo = () => {
   }, [buckets]);
 
   return isAuthenticated ? (
-    <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full select-none">
-      <button className="flex justify-between items-center w-full pt-6 ">
-        <div className="flex items-center text-blue-300">
-          <span className="material-icons text-sm pr-3">account_circle</span>
-          <p className="">{userName}</p>
-        </div>
-        <div className="text-blue-300">
-          <p className="text-sm font-thin">
-            {`Lv.${determineLevel(currentValue).lv}`}
-            {determineLevel(currentValue).lv > 0 && (
-              <span className="text-md font-semibold px-1">
-                {` ${determineLevel(currentValue).label}`}
-              </span>
-            )}
+    <div className="relative bg-gray-700 bg-opacity-10 rounded-xl backdrop-blur-sm w-full select-none cursor-pointer">
+      <div className="modal-action">
+        <label
+          htmlFor="profile-modal"
+          className="absolute flex items-center justify-center h-full w-full bg-theme opacity-0 hover:opacity-60 text-blue-300 transition-all duration-300 z-20"
+        >
+          <span className="material-icons text-sm pr-1">edit</span>
+          <p className="text-sm select-none">プロフィールの編集</p>
+        </label>
+      </div>
+      <div className="px-5">
+        <button className="flex justify-between items-center w-full pt-6 ">
+          <div className="flex items-center text-blue-300">
+            <span className="material-icons text-sm pr-3">account_circle</span>
+            <p className="">{userName}</p>
+          </div>
+          <div className="text-blue-300">
+            <p className="text-sm font-thin">
+              {`Lv.${determineLevel(currentValue).lv}`}
+              {determineLevel(currentValue).lv > 0 && (
+                <span className="text-md font-semibold px-1">
+                  {` ${determineLevel(currentValue).label}`}
+                </span>
+              )}
+            </p>
+          </div>
+        </button>
+        <div className="pt-3 pb-6 text-blue-300">
+          <p className="text-right text-xs font-thin text-opacity-80 px-1">
+            次のレベルまであと...
+            <span className="font-semibold text-sm">
+              {` ${Math.ceil(
+                determineLevel(currentValue).limit - currentValue
+              )}L `}
+            </span>
           </p>
-        </div>
-      </button>
-      <div className="pt-3 pb-6 text-blue-300">
-        <p className="text-right text-xs font-thin text-opacity-80 px-1">
-          次のレベルまであと...
-          <span className="font-semibold text-sm">
-            {` ${Math.ceil(
-              determineLevel(currentValue).limit - currentValue
-            )}L `}
-          </span>
-        </p>
-        <div className="w-full bg-gray-500 bg-opacity-30 rounded-full h-2 my-2">
-          <div
-            className="bg-blue-300 bg-opacity-60 h-2 rounded-full transition-all duration-500"
-            style={{
-              width: `${
-                ((currentValue - determineLevel(currentValue).storage) /
-                  (determineLevel(currentValue).limit -
-                    determineLevel(currentValue).storage)) *
-                100
-              }%`,
-            }}
-          />
+          <div className="w-full bg-gray-500 bg-opacity-30 rounded-full h-2 my-2">
+            <div
+              className="bg-blue-300 bg-opacity-60 h-2 rounded-full transition-all duration-500"
+              style={{
+                width: `${
+                  ((currentValue - determineLevel(currentValue).storage) /
+                    (determineLevel(currentValue).limit -
+                      determineLevel(currentValue).storage)) *
+                  100
+                }%`,
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -78,7 +89,7 @@ export const UserInfo = () => {
     <div className="backdrop-blur-sm w-full">
       <div className="flex items-center">
         <label
-          htmlFor={isAuthenticated ? "" : "my-modal-4"}
+          htmlFor={isAuthenticated ? "" : "login-modal"}
           className="flex justify-between items-center w-full py-6 px-5 mr-1 bg-blue-900 bg-opacity-10 hover:bg-opacity-20 rounded-xl cursor-pointer"
         >
           <div className="flex items-center text-blue-300">

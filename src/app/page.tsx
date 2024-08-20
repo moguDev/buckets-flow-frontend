@@ -9,6 +9,7 @@ import { othersIsHiddenState } from "@/components/Others";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect } from "react";
 import { usePreferences } from "@/hooks/usePreferences";
+import { ProfileModal } from "@/components/modals/ProfileModal";
 
 export default function Home() {
   const { isAuthenticated, checkAuth } = useAuth();
@@ -57,6 +58,7 @@ export default function Home() {
       {/* ログイン・ログアウトモーダル */}
       <LoginModal />
       <LogoutModal />
+      <ProfileModal />
     </main>
   );
 }

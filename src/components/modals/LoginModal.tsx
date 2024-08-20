@@ -14,7 +14,7 @@ const LoginModal = () => {
     try {
       await login(email, password);
       const checkbox = document.getElementById(
-        "my-modal-4"
+        "login-modal"
       ) as HTMLInputElement;
       checkbox.checked = false;
     } catch (error) {
@@ -24,7 +24,7 @@ const LoginModal = () => {
 
   return (
     <div>
-      <input type="checkbox" id="my-modal-4" className="modal-toggle" />
+      <input type="checkbox" id="login-modal" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box bg-theme bg-opacity-90 border-2 border-blue-300 border-opacity-10 backdrop-blur-sm">
           <div className="flex items-center">
@@ -80,7 +80,7 @@ const LoginModal = () => {
               {error && <p className="text-red-500">{error}</p>}
               <div className="modal-action">
                 <label
-                  htmlFor="my-modal-4"
+                  htmlFor="login-modal"
                   className="btn border-none text-gray-300 font-thin bg-opacity-0"
                 >
                   キャンセル

@@ -38,11 +38,11 @@ export const SuccessMessage = () => {
   return (
     <div
       role="alert"
-      className="fixed top-16 w-64 bg-blue-300 bg-opacity-80 text-theme z-20 rounded-xl transition-height"
+      className="fixed inset-16 bg-blue-300 bg-opacity-60 text-theme z-20 rounded-xl transition-height w-4/5"
       ref={contentRef}
       style={{ height }}
     >
-      <div className="flex items-center overflow-hidden p-4">
+      <div className="flex items-center overflow-hidden p-4 w-full">
         <span className="material-icons mr-1">check</span>
         <span className="font-semibold text-sm">{message}</span>
       </div>
@@ -57,6 +57,7 @@ interface AccordionProps {
   iconName: string;
   label: string;
   isAuthenticated: boolean;
+  loading: boolean;
 }
 
 export const MenuAccordion = ({
@@ -66,6 +67,7 @@ export const MenuAccordion = ({
   iconName,
   label,
   isAuthenticated,
+  loading,
 }: AccordionProps) => {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState("0px");
@@ -79,7 +81,7 @@ export const MenuAccordion = ({
           : "0px";
       setHeight(newHeight);
     }
-  }, [isOpen, isAuthenticated]);
+  }, [isOpen, isAuthenticated, loading]);
 
   return (
     <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full select-none">

@@ -97,6 +97,7 @@ export const RainfallCharts = () => {
       iconName="equalizer"
       label="降水量チャート"
       isAuthenticated={isAuthenticated}
+      loading={loading}
     >
       <div className="flex items-center bg-blue-900 bg-opacity-10 rounded-lg mt-2 p-1">
         {["week", "month", "year"].map((value) => (

@@ -76,6 +76,7 @@ export default function LeaderBoard() {
       iconName="leaderboard"
       label="リーダーボード"
       isAuthenticated={true}
+      loading={loading}
     >
       <div className="flex items-center bg-blue-900 bg-opacity-10 rounded-lg p-1">
         <button
@@ -106,7 +107,7 @@ export default function LeaderBoard() {
       <div>
         {loading ? (
           <Loading />
-        ) : (
+        ) : topUsers.length > 0 ? (
           <>
             {topUsers.map((user, index) => (
               <div
@@ -122,6 +123,10 @@ export default function LeaderBoard() {
               </div>
             ))}
           </>
+        ) : (
+          <div className="flex items-center justify-center p-6">
+            <p className="text-blue-300 opacity-30">データがありません。</p>
+          </div>
         )}
       </div>
     </MenuAccordion>
