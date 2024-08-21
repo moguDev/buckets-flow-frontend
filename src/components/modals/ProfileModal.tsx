@@ -1,18 +1,19 @@
 import { useAuth } from "@/hooks/useAuth";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 type FormData = {
   userName: string;
+  image: FileList;
 };
 
 export const ProfileModal = () => {
   const { userName, loading, updateName } = useAuth();
-  const defaultValues = { userName: userName };
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
-  } = useForm({ defaultValues });
+  } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -36,6 +37,19 @@ export const ProfileModal = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex items-center">
               <div className="flex items-center justify-center bg-gray-800 bg-opacity-30 h-14 w-16 rounded-full mr-1 cursor-pointer">
+                <Controller
+                  name="image"
+                  control={control}
+                  defaultValue={null}
+                  render={({ field }) => (
+                    <input
+                      type="file"
+                      accept="image/*"
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.files)}
+                    />
+                  )}
+                />
                 <span className="material-icons text-blue-200 opacity-25">
                   add_a_photo
                 </span>

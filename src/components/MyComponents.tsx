@@ -81,7 +81,7 @@ export const MenuAccordion = ({
           : "0px";
       setHeight(newHeight);
     }
-  }, [isOpen, isAuthenticated, loading]);
+  }, [isOpen, isAuthenticated]);
 
   return (
     <div className="bg-gray-700 bg-opacity-10 rounded-xl px-5 backdrop-blur-sm w-full select-none">
