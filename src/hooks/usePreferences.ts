@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import axiosInstance from "@/lib/axiosInstance";
 import { useRecoilState } from "recoil";
 import { durationPreferenceState, TimerState } from "./useTimer";
+import { set } from "react-hook-form";
 
 export interface Preference {
   id: number;
@@ -34,7 +35,7 @@ export const usePreferences = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [setDurationPreference]);
 
   const createPreference = useCallback(
     async (newPreference: Omit<Preference, "id" | "user_id">) => {

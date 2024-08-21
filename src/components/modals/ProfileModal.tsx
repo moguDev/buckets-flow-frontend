@@ -1,4 +1,29 @@
+import { useAuth } from "@/hooks/useAuth";
+import { useForm } from "react-hook-form";
+
+type FormData = {
+  userName: string;
+};
+
 export const ProfileModal = () => {
+  const { userName, loading, updateName } = useAuth();
+  const defaultValues = { userName: userName };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ defaultValues });
+
+  const onSubmit = async (data: FormData) => {
+    try {
+      await updateName(data.userName);
+      const checkbox = document.getElementById(
+        "profile-modal"
+      ) as HTMLInputElement;
+      checkbox.checked = false;
+    } catch (e) {}
+  };
+
   return (
     <div className="text-blue-300">
       <input type="checkbox" id="profile-modal" className="modal-toggle" />
@@ -8,7 +33,7 @@ export const ProfileModal = () => {
             <span className="material-icons pr-1">edit</span>
             プロフィールを編集
           </div>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex items-center">
               <div className="flex items-center justify-center bg-gray-800 bg-opacity-30 h-14 w-16 rounded-full mr-1 cursor-pointer">
                 <span className="material-icons text-blue-200 opacity-25">
@@ -21,7 +46,8 @@ export const ProfileModal = () => {
                 </label>
                 <input
                   type="text"
-                  className="border-b border-blue-500 border-opacity-20 bg-theme text-blue-200 p-1"
+                  className="border-b border-blue-500 border-opacity-20 bg-theme text-blue-200 p-1 outline-none"
+                  {...register("userName")}
                 />
               </div>
             </div>

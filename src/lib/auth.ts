@@ -64,7 +64,6 @@ export const login = async (
 
     return response.data;
   } catch (error) {
-    // エラーメッセージの処理
     console.error("ログインに失敗しました:", error);
     throw new Error("ログインに失敗しました。");
   }
@@ -72,16 +71,25 @@ export const login = async (
 
 export const logout = async (): Promise<void> => {
   try {
-    // サーバーサイドでログアウトリクエストを送信
     await axiosInstance.delete("auth/sign_out");
-
-    // クッキーを削除
     Cookies.remove("access-token");
     Cookies.remove("client");
     Cookies.remove("uid");
   } catch (error) {
-    // エラーメッセージの処理
     console.error("ログアウトに失敗しました:", error);
     throw new Error("ログアウトに失敗しました。");
+  }
+};
+
+export const updateName = async (name: string): Promise<void> => {
+  try {
+    const response = await axiosInstance.put("/auth", { name });
+
+    if (response.status === 200) {
+      console.log("名前が更新されました:", response.data);
+    }
+  } catch (error) {
+    console.error("名前の更新に失敗しました:", error);
+    throw new Error("名前の更新に失敗しました。");
   }
 };

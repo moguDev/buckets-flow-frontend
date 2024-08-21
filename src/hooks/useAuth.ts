@@ -3,10 +3,10 @@ import Cookies from "js-cookie";
 import { login as loginUser } from "@/lib/auth";
 import { logout as logoutUser } from "@/lib/auth";
 import { signup as signupUser } from "@/lib/auth";
+import { updateName as updateUserName } from "@/lib/auth";
 import { useCallback, useState } from "react";
 import axiosInstance from "@/lib/axiosInstance";
 import { successMessageState } from "@/components/MyComponents";
-import { redirect } from "next/navigation";
 
 const authState = atom({
   key: "authState",
@@ -85,7 +85,7 @@ export const useAuth = () => {
         setLoading(false);
       }
     },
-    [setAuth]
+    [setAuth, setSuccessMessage]
   );
 
   const login = useCallback(
@@ -102,7 +102,7 @@ export const useAuth = () => {
         setLoading(false);
       }
     },
-    [setAuth]
+    [setAuth, setSuccessMessage]
   );
 
   const logout = useCallback(async () => {
@@ -117,7 +117,23 @@ export const useAuth = () => {
     } finally {
       setLoading(false);
     }
-  }, [setAuth]);
+  }, [setAuth, setSuccessMessage]);
+
+  const updateName = useCallback(
+    async (newName: string) => {
+      setLoading(true);
+      try {
+        await updateUserName(newName);
+        setAuth((prev) => ({ ...prev, userName: newName }));
+      } catch (error) {
+        console.error("名前の更新に失敗しました:", error);
+        throw new Error("名前の更新に失敗しました。");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [setAuth]
+  );
 
   return {
     isAuthenticated: auth.isAuthenticated,
@@ -128,5 +144,6 @@ export const useAuth = () => {
     signup,
     login,
     logout,
+    updateName,
   };
 };

@@ -2,17 +2,27 @@
 import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+
+type FormData = {
+  email: string;
+  password: string;
+};
 
 const LoginModal = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const defaultValues = { email: "", password: "" };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ defaultValues });
+
   const [error, setError] = useState("");
   const { login, loading } = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: FormData) => {
     try {
-      await login(email, password);
+      await login(data.email, data.password);
       const checkbox = document.getElementById(
         "login-modal"
       ) as HTMLInputElement;
@@ -42,36 +52,44 @@ const LoginModal = () => {
                 </p>
               </div>
             )}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-control pb-3">
-                <label className="label ">
+                <label htmlFor="email" className="label">
                   <span className="label-text text-blue-200 text-opacity-70">
                     メールアドレス
                   </span>
                 </label>
                 <input
                   type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
                   className="input border-b border-blue-500 border-opacity-20 bg-opacity-0 text-blue-200 rounded-xl"
                   autoComplete="email"
                   placeholder="user@example.com"
-                  required
+                  {...register("email", {
+                    required: "メールアドレスを入力してください。",
+                    pattern: {
+                      value: /^[a-zA-Z\d._%+-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/i,
+                      message: "メールアドレスの形式が不正です。",
+                    },
+                  })}
                 />
               </div>
               <div className="form-control pb-3">
-                <label className="label">
+                <label htmlFor="password" className="label">
                   <span className="label-text text-blue-200 text-opacity-70">
                     パスワード
                   </span>
                 </label>
                 <input
                   type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
                   className="input border-b border-blue-500 border-opacity-20 bg-theme text-blue-200 rounded-xl"
                   autoComplete="current-password"
-                  required
+                  {...register("password", {
+                    required: "パスワードを入力してください。",
+                    minLength: {
+                      value: 8,
+                      message: "パスワードは8文字以上にしてください。",
+                    },
+                  })}
                 />
               </div>
               <Link href="/signup" className="text-blue-400 text-xs mx-3">
