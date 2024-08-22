@@ -47,7 +47,7 @@ export const UserInfo = () => {
             </label>
           )}
         </button>
-        <div className="pt-3 pb-6 text-blue-300">
+        <div className="py-3 text-blue-300">
           <div className="flex items-center justify-between p-1">
             <div className="text-blue-300">
               <p className="text-sm font-thin">
