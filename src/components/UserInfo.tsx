@@ -22,6 +22,7 @@ const determineLevel = (value: number) => {
 };
 
 export const UserInfo = () => {
+  const env = process.env.NEXT_PUBLIC_ENV;
   const [currentValue, setCurrenValue] = useState(0);
   const { isAuthenticated, userName } = useAuth();
   const { buckets, loading } = useBuckets();
@@ -40,9 +41,11 @@ export const UserInfo = () => {
             <span className="material-icons text-sm pr-3">account_circle</span>
             <p className="">{userName}</p>
           </div>
-          <label htmlFor="profile-modal">
-            <span className="material-icons text-sm pr-1">edit</span>
-          </label>
+          {env === "dev" && (
+            <label htmlFor="profile-modal">
+              <span className="material-icons text-sm pr-1">edit</span>
+            </label>
+          )}
         </button>
         <div className="pt-3 pb-6 text-blue-300">
           <div className="flex items-center justify-between p-1">

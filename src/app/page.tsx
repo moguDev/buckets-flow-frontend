@@ -8,7 +8,6 @@ import LogoutModal from "@/components/modals/LogoutModal";
 import { othersIsHiddenState } from "@/components/Others";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect } from "react";
-import { usePreferences } from "@/hooks/usePreferences";
 import { ProfileModal } from "@/components/modals/ProfileModal";
 
 export default function Home() {
