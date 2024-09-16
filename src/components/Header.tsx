@@ -1,5 +1,5 @@
 "use client";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { menuBarIsHiddenState } from "./MenuBar";
 import { useAuth } from "@/hooks/useAuth";
 import { othersIsHiddenState } from "./Others";

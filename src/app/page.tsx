@@ -9,6 +9,7 @@ import { othersIsHiddenState } from "@/components/Others";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect } from "react";
 import { ProfileModal } from "@/components/modals/ProfileModal";
+import FirstVisitDialog from "@/components/FirstVisitDialog";
 
 export default function Home() {
   const { isAuthenticated, checkAuth } = useAuth();
@@ -17,7 +18,7 @@ export default function Home() {
 
   useEffect(() => {
     checkAuth();
-  }, [isAuthenticated]);
+  }, [isAuthenticated, checkAuth]);
 
   return (
     <main className="h-full">
@@ -58,6 +59,7 @@ export default function Home() {
       <LoginModal />
       <LogoutModal />
       <ProfileModal />
+      <FirstVisitDialog />
     </main>
   );
 }

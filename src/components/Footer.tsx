@@ -11,7 +11,7 @@ export const Footer = () => {
           </li>
           <li className="mx-3 my-3">
             <Link
-              href={`mailto:contact@buckets-flow.com?subject=${encodeURIComponent(
+              href={`mailto:contact@sho-horiguchi.jp?subject=${encodeURIComponent(
                 "buckets Flowに関する問い合わせ"
               )}`}
             >

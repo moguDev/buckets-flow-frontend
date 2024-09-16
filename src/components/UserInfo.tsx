@@ -37,7 +37,7 @@ export const UserInfo = () => {
     <div className="relative bg-gray-700 bg-opacity-10 rounded-xl backdrop-blur-sm w-full select-none cursor-pointer">
       <div className="p-5">
         <button className="flex justify-between items-center w-full">
-          <p className="text-blue-300 font-semibold text-xl">{userName}</p>
+          <p className="text-blue-300 font-semibold text-lg">{userName}</p>
           {env === "dev" && (
             <label
               htmlFor="profile-modal"
