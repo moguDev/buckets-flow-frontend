@@ -7,7 +7,7 @@ import { RecoilRootWrapper } from "@/components/MyComponents";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SuccessMessage } from "@/components/MyComponents";
-import { Privacy, Terms, TermsModal } from "@/components/modals/TermsModal";
+import { PrivacyPolicy, TermsModal } from "@/components/modals/TermsModal";
 
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"] });
 
@@ -38,11 +38,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {children}
           </div>
           <Footer />
-          <TermsModal modalId="my-modal-2">
-            <Terms />
-          </TermsModal>
           <TermsModal modalId="my-modal-3">
-            <Privacy />
+            <PrivacyPolicy />
           </TermsModal>
         </RecoilRootWrapper>
       </body>

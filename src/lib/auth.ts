@@ -50,7 +50,6 @@ export const login = async (
       password,
     });
 
-    // レスポンスヘッダーからトークンを取得してクッキーに保存
     const { "access-token": accessToken, client, uid } = response.headers;
 
     if (accessToken && client && uid) {
