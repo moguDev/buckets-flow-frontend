@@ -33,10 +33,10 @@ export const Timer = () => {
           isPlaying ? "scale-105 brightness-110" : "scale-90 brightness-90"
         } select-none`}
       >
-        {Math.floor(remainingTime / 60)
+        {Math.floor(Math.max(remainingTime, 0) / 60)
           .toString()
           .padStart(2, "0")}
-        :{(remainingTime % 60).toString().padStart(2, "0")}
+        :{(Math.max(remainingTime, 0) % 60).toString().padStart(2, "0")}
       </p>
       <div className="flex items-center justify-center mb-2">
         {bucketMeterPropses.map((bucketMeterProps, index) => (

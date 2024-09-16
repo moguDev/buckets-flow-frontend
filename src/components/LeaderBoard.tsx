@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Loading, MenuAccordion } from "./MyComponents";
 import { useTopUsers } from "@/hooks/useTopUsers";
-import Image from "next/image";
 
 const ItemComponent = ({
   rank,
@@ -24,18 +23,7 @@ const ItemComponent = ({
         {rank}
       </div>
       <div className="flex items-center justify-between w-full">
-        <div className="flex items-center">
-          {image !== null ? (
-            <Image
-              src={image}
-              alt={name}
-              className="w-10 h-10 rounded-full mr-3"
-            />
-          ) : (
-            <span className="material-icons pr-1">account_circle</span>
-          )}
-          <div className="font-semibold text-lg">{name}</div>
-        </div>
+        <div className="font-semibold text-xl">{name}</div>
         <div className="flex items-center">
           <span className="material-icons text-blue-300 scale-75">
             water_drop
@@ -65,7 +53,7 @@ export default function LeaderBoard() {
 
   useEffect(() => {
     fetchTopUsers();
-  }, [period]);
+  }, [period, fetchTopUsers]);
 
   return (
     <MenuAccordion

@@ -37,13 +37,19 @@ export const UserInfo = () => {
     <div className="relative bg-gray-700 bg-opacity-10 rounded-xl backdrop-blur-sm w-full select-none cursor-pointer">
       <div className="p-5">
         <button className="flex justify-between items-center w-full">
-          <div className="flex items-center text-blue-300">
-            <span className="material-icons text-sm pr-3">account_circle</span>
-            <p className="">{userName}</p>
-          </div>
+          <p className="text-blue-300 font-semibold text-lg">{userName}</p>
           {env === "dev" && (
-            <label htmlFor="profile-modal">
-              <span className="material-icons text-sm pr-1">edit</span>
+            <label
+              htmlFor="profile-modal"
+              className="flex items-center text-gray-500 text-xs border border-gray-700 rounded-full px-3 py-1"
+            >
+              <span
+                className="material-icons text-sm mr-0.5"
+                style={{ fontSize: 14 }}
+              >
+                edit
+              </span>
+              アカウント名を編集
             </label>
           )}
         </button>

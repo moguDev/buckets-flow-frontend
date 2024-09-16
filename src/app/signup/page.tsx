@@ -73,18 +73,22 @@ export default function SignupPage() {
               アカウント名
               <span className="text-orange-600 text-xs">【必須】</span>
             </label>
-            <input
-              id="userName"
-              type="text"
-              className="input border-b border-blue-500 border-opacity-20 bg-opacity-0 text-blue-200 rounded-xl"
-              {...register("userName", {
-                required: "アカウント名を入力してください。",
-                maxLength: {
-                  value: 32,
-                  message: "アカウント名は32文字以内にしてください。",
-                },
-              })}
-            />
+            <div className="flex items-center border border-blue-500 border-opacity-20 rounded-xl px-2 py-1">
+              <span className="material-icons text-gray-700 ml-2">person</span>
+              <input
+                id="userName"
+                type="text"
+                placeholder="アカウント名"
+                className="input border-none focus:outline-none bg-opacity-0 text-blue-200 placeholder-gray-700 w-full"
+                {...register("userName", {
+                  required: "アカウント名を入力してください。",
+                  maxLength: {
+                    value: 32,
+                    message: "アカウント名は32文字以内にしてください。",
+                  },
+                })}
+              />
+            </div>
             <div className="text-red-500 text-xs p-1">
               {errors.userName?.message}
             </div>
@@ -94,18 +98,22 @@ export default function SignupPage() {
               メールアドレス
               <span className="text-orange-600 text-xs">【必須】</span>
             </label>
-            <input
-              id="email"
-              type="email"
-              className="input border-b border-blue-500 border-opacity-20 bg-opacity-0 text-blue-200 rounded-xl"
-              {...register("email", {
-                required: "メールアドレスを入力してください。",
-                pattern: {
-                  value: /^[a-zA-Z\d._%+-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/i,
-                  message: "メールアドレスの形式が不正です。",
-                },
-              })}
-            />
+            <div className="flex items-center border border-blue-500 border-opacity-20 rounded-xl px-2 py-1">
+              <span className="material-icons text-gray-700 ml-2">mail</span>
+              <input
+                id="email"
+                type="email"
+                placeholder="user@example.com"
+                className="input border-none focus:outline-none bg-opacity-0 text-blue-200 placeholder-gray-700 rounded-xl w-full"
+                {...register("email", {
+                  required: "メールアドレスを入力してください。",
+                  pattern: {
+                    value: /^[a-zA-Z\d._%+-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/i,
+                    message: "メールアドレスの形式が不正です。",
+                  },
+                })}
+              />
+            </div>
             <div className="text-red-500 text-xs p-1">
               {errors.email?.message}
             </div>
@@ -115,18 +123,24 @@ export default function SignupPage() {
               パスワード
               <span className="text-orange-600 text-xs">【必須】</span>
             </label>
-            <input
-              id="password"
-              type="password"
-              className="input border-b border-blue-500 border-opacity-20 bg-opacity-0 text-blue-200 rounded-xl"
-              {...register("password", {
-                required: "パスワードを入力してください。",
-                minLength: {
-                  value: 8,
-                  message: "パスワードは8文字以上にしてください。",
-                },
-              })}
-            />
+            <div className="flex items-center border border-blue-500 border-opacity-20 rounded-xl px-2 py-1">
+              <span className="material-icons text-gray-700 ml-2">
+                password
+              </span>
+              <input
+                id="password"
+                type="password"
+                placeholder="半角英数のみ8文字以上"
+                className="input border-none focus:outline-none bg-opacity-0 text-blue-200 placeholder-gray-700 rounded-xl w-full"
+                {...register("password", {
+                  required: "パスワードを入力してください。",
+                  minLength: {
+                    value: 8,
+                    message: "パスワードは8文字以上にしてください。",
+                  },
+                })}
+              />
+            </div>
             <div className="text-red-500 text-xs p-1">
               {errors.password?.message}
             </div>
@@ -136,20 +150,26 @@ export default function SignupPage() {
               パスワード（確認用）
               <span className="text-orange-600 text-xs">【必須】</span>
             </label>
-            <input
-              id="passwordConfirmation"
-              type="password"
-              className="input border-b border-blue-500 border-opacity-20 bg-opacity-0 text-blue-200 rounded-xl"
-              {...register("passwordConfirmation", {
-                required: "パスワード（確認用）を入力してください。",
-                validate: (value) => {
-                  return (
-                    value === getValues("password") ||
-                    "パスワード（確認用）が一致しません。"
-                  );
-                },
-              })}
-            />
+            <div className="flex items-center border border-blue-500 border-opacity-20 rounded-xl px-2 py-1">
+              <span className="material-icons text-gray-700 ml-2">
+                password
+              </span>
+              <input
+                id="passwordConfirmation"
+                type="password"
+                placeholder="半角英数のみ8文字以上"
+                className="input border-none focus:outline-none bg-opacity-0 text-blue-200 placeholder-gray-700 rounded-xl w-full"
+                {...register("passwordConfirmation", {
+                  required: "パスワード（確認用）を入力してください。",
+                  validate: (value) => {
+                    return (
+                      value === getValues("password") ||
+                      "パスワード（確認用）が一致しません。"
+                    );
+                  },
+                })}
+              />
+            </div>
             <div className="text-red-500 text-xs p-1">
               {errors.passwordConfirmation?.message}
             </div>
@@ -164,19 +184,12 @@ export default function SignupPage() {
               />
               <span>
                 <label
-                  htmlFor="my-modal-2"
-                  className="underline text-blue-300 px-1 cursor-pointer"
-                >
-                  利用規約
-                </label>
-                および
-                <label
                   htmlFor="my-modal-3"
                   className="underline text-blue-300 px-1 cursor-pointer"
                 >
                   プライバシーポリシー
                 </label>
-                に同意しました。
+                を確認の上、同意しました。
               </span>
             </label>
           </div>
