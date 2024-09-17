@@ -16,15 +16,11 @@ export const Timer = () => {
 
   return (
     <div>
-      <div className="relative text-center text-blue-300 font-semibold text-opacity-80 my-3">
-        {timer === TimerState.BREAK && (
-          <p className="bg-blue-300 bg-opacity-70 rounded-full px-10 py-0.5 text-theme text-sm">
-            休憩
-          </p>
-        )}
-        {timer === TimerState.LONG_BREAK && (
-          <p className="bg-blue-300 bg-opacity-70 rounded-full px-10 py-0.5 text-theme text-sm">
-            長い休憩
+      <div className="relative w-max mx-auto text-center text-blue-300 font-semibold text-opacity-80 my-3">
+        {timer !== TimerState.WORKING && (
+          <p className="bg-blue-300 bg-opacity-70 rounded-full px-6 py-0.5 text-theme text-sm">
+            {timer === TimerState.BREAK && "休憩"}
+            {timer === TimerState.LONG_BREAK && "長い休憩"}
           </p>
         )}
       </div>

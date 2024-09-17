@@ -16,18 +16,17 @@ export const metadata: Metadata = {
   description:
     "雨音とポモドーロタイマーで集中力と生産性を高めるサービスです。作業時間を降水量として可視化しモチベーションの向上をサポートします。",
   openGraph: {
-    title:
-      "buckets Flow | 雨音とポモドーロタイマーで、集中力と生産性を高めるアプリケーション",
+    title: "雨音とポモドーロタイマーで集中力と生産性を高めるアプリケーション",
     description:
       "雨音とポモドーロタイマーで集中力と生産性を高めるサービスです。作業時間を降水量として可視化しモチベーションの向上をサポートします。",
     url: "https://buckets-flow.com",
-    siteName: "buckets Flow",
+    siteName:
+      "buckets Flow | 雨音とポモドーロタイマーで集中力と生産性を高めるアプリケーション",
     images: "./opengraph-image.png",
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "buckets Flow | 雨音とポモドーロタイマーで、集中力と生産性を高めるアプリケーション",
+    title: "雨音とポモドーロタイマーで集中力と生産性を高めるアプリケーション",
     description:
       "雨音とポモドーロタイマーで集中力と生産性を高めるサービスです。作業時間を降水量として可視化しモチベーションの向上をサポートします。",
     images: "./opengraph-image.png",

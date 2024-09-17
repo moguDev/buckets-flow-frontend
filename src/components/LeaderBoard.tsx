@@ -16,30 +16,28 @@ const ItemComponent = ({
   return (
     <div className="flex items-center px-3 py-5 text-blue-300">
       <div
-        className={`mr-3 text-center font-bold ${
+        className={`mr-2 text-center font-bold ${
           rank < 3 ? "text-blue-200" : "text-sm"
         }`}
       >
         {rank}
       </div>
       <div className="flex items-center justify-between w-full">
-        <div className="font-semibold text-xl">{name}</div>
+        <div className="font-semibold text-lg">{name}</div>
         <div className="flex items-center">
-          <span className="material-icons text-blue-300 scale-75">
-            water_drop
-          </span>
-          <div className="mr-2">
+          <span className="text-blue-300 mr-1">☔️</span>
+          <div>
             {Math.floor((duration / 1500) * 8 * 10) / 10}
-            <span className="text-sm font-thin px-0.5">L </span>
+            <span className="text-xs font-thin px-0.5">mm</span>
           </div>
           <span className="material-icons text-blue-300 scale-75">timer</span>
           <div>
             {Math.floor(duration / 60 / 60)}
-            <span className="text-sm font-thin px-0.5">h</span>
+            <span className="text-xs font-thin px-0.5">h</span>
           </div>
           <div>
             {Math.floor((duration / 60) % 60)}
-            <span className="text-sm font-thin px-0.5">min</span>
+            <span className="text-xs font-thin px-0.5">min</span>
           </div>
         </div>
       </div>
