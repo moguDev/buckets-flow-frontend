@@ -4,13 +4,18 @@ import axiosInstance from "@/lib/axiosInstance";
 import { useCallback, useEffect, useState } from "react";
 
 type responseData = {
-  time: string;
+  user_count: number;
   total_duration: number;
+  rainfall_data: { time: string; duration: number }[];
 };
 
 export const useRecentRainfall = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [datas, setDatas] = useState<responseData[]>([]);
+  const [datas, setDatas] = useState<responseData>({
+    user_count: 0,
+    total_duration: 0,
+    rainfall_data: [],
+  });
 
   const fetch = useCallback(async () => {
     setLoading(true);

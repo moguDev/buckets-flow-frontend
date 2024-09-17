@@ -10,29 +10,33 @@ export const TodayPredipitation = () => {
           <section className="p-2 pb-3 w-full">
             <p className="text-xs py-1">降雨量</p>
             <p className="font-thin">
-              <span className="text-4xl font-black">{"0"}</span> mm
+              <span className="text-3xl font-black">
+                {(datas?.total_duration / 1500) * 8}
+              </span>{" "}
+              mm
             </p>
           </section>
           <section className="p-2 pb-3 w-full">
             <p className="text-xs py-1">ユーザ数</p>
             <p className="font-thin">
-              <span className="text-4xl font-black">{"0"}</span> users
+              <span className="text-3xl font-black">{datas?.user_count}</span>{" "}
+              users
             </p>
           </section>
         </div>
         <section className="flex items-center">
-          {datas.map((data, index) => (
+          {datas?.rainfall_data.map((data, index) => (
             <div key={index} className="w-full m-1">
               <p
                 className={`text-center my-2 text-2xl ${
-                  data.total_duration === 0 && "text-red-600 opacity-80"
+                  data.duration === 0 && "text-red-600 opacity-80"
                 }`}
               >
-                {data.total_duration === 0 ? "☀️" : "☔️"}
+                {data.duration === 0 ? "☀️" : "☔️"}
               </p>
-              <p className="text-center text-lg font-bold">
-                {data.total_duration}
-                <span className="font-thin ml-0.5" style={{ fontSize: "10px" }}>
+              <p className="text-center text-md font-bold">
+                {(data.duration / 1500) * 8}
+                <span className="font-thin ml-0.5" style={{ fontSize: "8px" }}>
                   mm
                 </span>
               </p>
