@@ -35,7 +35,7 @@ const FirstVisitDialog = () => {
             <section className="p-1">
               <div className="text-sm mb-6">
                 <p>
-                  このアプリでは、雨音とポモドーロタイマーを活用し、作業の効率化や生産性の向上をサポートします！
+                  {`buckets Flowは、雨音とポモドーロタイマーを活用し、集中力と生産性の向上をサポートするアプリケーションです。`}
                 </p>
               </div>
               <p className="text-sm mb-6">

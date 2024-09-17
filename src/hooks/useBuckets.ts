@@ -1,7 +1,8 @@
 import { atom, useRecoilState, useSetRecoilState } from "recoil";
 import axiosInstance from "@/lib/axiosInstance";
-import { useEffect, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useCharts } from "./useCharts";
+import { set } from "react-hook-form";
 
 export interface Bucket {
   id: number;
@@ -35,7 +36,7 @@ export const useBuckets = () => {
     } finally {
       setLoading(false);
     }
-  }, [buckets]);
+  }, [buckets, setBuckets]);
 
   const createBucket = useCallback(
     async (newBucket: Omit<Bucket, "id" | "user_id">) => {
@@ -48,7 +49,7 @@ export const useBuckets = () => {
         console.error(error);
       }
     },
-    [buckets]
+    [buckets, fetchBuckets]
   );
 
   return { buckets, loading, error, fetchBuckets, createBucket };
