@@ -12,44 +12,6 @@ export const RecoilRootWrapper = ({
   return <RecoilRoot>{children}</RecoilRoot>;
 };
 
-// export const successMessageState = atom<string>({
-//   key: "successMessageState",
-//   default: "",
-// });
-
-// export const SuccessMessage = () => {
-//   const [message, setMessage] = useRecoilState(successMessageState);
-//   const contentRef = useRef<HTMLDivElement | null>(null);
-//   const [height, setHeight] = useState("0px");
-
-//   useEffect(() => {
-//     const timer = setTimeout(() => setMessage(""), 3000);
-//     return () => clearTimeout(timer);
-//   }, [message, setMessage]);
-
-//   useEffect(() => {
-//     if (contentRef.current) {
-//       const newHeight =
-//         message !== "" ? `${contentRef.current.scrollHeight}px` : "0px";
-//       setHeight(newHeight);
-//     }
-//   }, [message]);
-
-//   return (
-//     <div
-//       role="alert"
-//       className="fixed inset-16 bg-blue-300 bg-opacity-80 text-theme z-20 rounded-xl transition-height"
-//       ref={contentRef}
-//       style={{ height }}
-//     >
-//       <div className="w-max flex items-center overflow-hidden py-1">
-//         <span className="material-icons mr-1">check</span>
-//         <span className="font-semibold md:text-sm text-xs">{message}</span>
-//       </div>
-//     </div>
-//   );
-// };
-
 interface AccordionProps {
   children: ReactNode;
   isOpen: boolean;

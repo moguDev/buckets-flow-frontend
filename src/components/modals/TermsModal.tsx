@@ -2,11 +2,11 @@ import { ReactNode } from "react";
 
 export const PrivacyPolicy = () => {
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">プライバシーポリシー</h1>
+    <div className="container mx-auto p-2 text-sm">
+      <h1 className="text-2xl font-bold mb-8">プライバシーポリシー</h1>
 
       <section className="mb-6">
-        <h2 className="text-xl font-semibold mb-2">お客様から取得する情報</h2>
+        <h2 className="text-xl font-semibold mb-3">お客様から取得する情報</h2>
         <p className="mb-2">当社は、お客様から以下の情報を取得します。</p>
         <ul className="list-disc pl-6">
           <li>氏名(ニックネームやペンネームも含む)</li>
@@ -22,7 +22,7 @@ export const PrivacyPolicy = () => {
       </section>
 
       <section className="mb-6">
-        <h2 className="text-xl font-semibold mb-2">
+        <h2 className="text-xl font-semibold mb-3">
           お客様の情報を利用する目的
         </h2>
         <p className="mb-2">
@@ -40,7 +40,7 @@ export const PrivacyPolicy = () => {
       </section>
 
       <section className="mb-6">
-        <h2 className="text-xl font-semibold mb-2">
+        <h2 className="text-xl font-semibold mb-3">
           安全管理のために講じた措置
         </h2>
         <p className="mb-2">
@@ -49,7 +49,7 @@ export const PrivacyPolicy = () => {
       </section>
 
       <section className="mb-6">
-        <h2 className="text-xl font-semibold mb-2">第三者提供</h2>
+        <h2 className="text-xl font-semibold mb-3">第三者への提供</h2>
         <p className="mb-2">
           当社は、お客様から取得する情報のうち、個人データ（個人情報保護法第１６条第３項）に該当するものついては、あらかじめお客様の同意を得ずに、第三者（日本国外にある者を含みます。）に提供しません。但し、次の場合は除きます。
         </p>
@@ -64,7 +64,7 @@ export const PrivacyPolicy = () => {
       </section>
 
       <section className="mb-6">
-        <h2 className="text-xl font-semibold mb-2">アクセス解析ツール</h2>
+        <h2 className="text-xl font-semibold mb-3">アクセス解析ツール</h2>
         <p className="mb-2">
           当社は、お客様のアクセス解析のために、「Googleアナリティクス」を利用しています。Googleアナリティクスは、トラフィックデータの収集のためにCookieを使用しています。トラフィックデータは匿名で収集されており、個人を特定するものではありません。Cookieを無効にすれば、これらの情報の収集を拒否することができます。詳しくはお使いのブラウザの設定をご確認ください。Googleアナリティクスについて、詳しくは以下からご確認ください。
         </p>

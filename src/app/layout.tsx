@@ -51,7 +51,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
       </head>
-      <body className={notoSansJP.className}>
+      <body className={`${notoSansJP.className}`}>
         <RecoilRootWrapper>
           <Header />
           <div className="pt-24 lg:px-16 px-5 w-full">{children}</div>
