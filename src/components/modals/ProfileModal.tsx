@@ -41,7 +41,7 @@ export const ProfileModal = () => {
                 <input
                   type="text"
                   className=" bg-theme text-blue-200 outline-none placeholder:text-gray-700 w-full"
-                  placeholder="アカウント名"
+                  placeholder="新しいアカウント名"
                   {...register("userName", {
                     required: "アカウント名を入力してください。",
                     maxLength: {
