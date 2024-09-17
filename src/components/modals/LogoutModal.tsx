@@ -14,7 +14,9 @@ export default function LogoutModal() {
   return (
     <dialog id="my_modal_1" className="modal">
       <div className="modal-box bg-theme bg-opacity-90 border-2 border-blue-300 border-opacity-10 backdrop-blur-sm">
-        <p className="py-4 text-blue-100">ログアウトしますか？</p>
+        <p className="py-4 text-lg font-semibold text-blue-300">
+          ログアウトしますか？
+        </p>
         <div className="modal-action">
           <form method="dialog">
             <button className="btn text-gray-200 bg-opacity-0 font-thin border-none">

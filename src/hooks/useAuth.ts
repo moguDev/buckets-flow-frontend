@@ -6,7 +6,7 @@ import { signup as signupUser } from "@/lib/auth";
 import { updateName as updateUserName } from "@/lib/auth";
 import { useCallback, useState } from "react";
 import axiosInstance from "@/lib/axiosInstance";
-import { successMessageState } from "@/components/MyComponents";
+import { toastState } from "@/components/Toast";
 
 const authState = atom({
   key: "authState",
@@ -27,10 +27,10 @@ const userNameSelector = selector({
 });
 
 export const useAuth = () => {
+  const setToast = useSetRecoilState(toastState);
   const [auth, setAuth] = useRecoilState(authState);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const setSuccessMessage = useSetRecoilState(successMessageState);
 
   const checkAuth = useCallback(async () => {
     const token = Cookies.get("access-token");
@@ -77,7 +77,7 @@ export const useAuth = () => {
           userName
         );
         setAuth({ isAuthenticated: true, userName: data.name });
-        setSuccessMessage(`bucket Flowへようこそ！`);
+        setToast({ message: `bucket Flowへようこそ！`, case: "success" });
       } catch (error) {
         console.log(error);
         throw new Error("サインアップに失敗しました。");
@@ -85,7 +85,7 @@ export const useAuth = () => {
         setLoading(false);
       }
     },
-    [setAuth, setSuccessMessage]
+    [setAuth, setToast]
   );
 
   const login = useCallback(
@@ -94,7 +94,7 @@ export const useAuth = () => {
       try {
         const { data } = await loginUser(email, password);
         setAuth({ isAuthenticated: true, userName: data.name });
-        setSuccessMessage("ログインしました。");
+        setToast({ message: "ログインしました", case: "success" });
       } catch (error) {
         console.error("ログインに失敗しました:", error);
         throw new Error("ログインに失敗しました。");
@@ -102,7 +102,7 @@ export const useAuth = () => {
         setLoading(false);
       }
     },
-    [setAuth, setSuccessMessage]
+    [setAuth, setToast]
   );
 
   const logout = useCallback(async () => {
@@ -110,14 +110,14 @@ export const useAuth = () => {
       setLoading(true);
       await logoutUser();
       setAuth({ isAuthenticated: false, userName: "" });
-      setSuccessMessage("ログアウトしました。");
+      setToast({ message: "ログアウトしました", case: "success" });
     } catch (error) {
       console.error("ログアウトに失敗しました:", error);
       throw new Error("ログアウトに失敗しました。");
     } finally {
       setLoading(false);
     }
-  }, [setAuth, setSuccessMessage]);
+  }, [setAuth, setToast]);
 
   const updateName = useCallback(
     async (newName: string) => {

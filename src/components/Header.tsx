@@ -4,6 +4,7 @@ import { menuBarIsHiddenState } from "./MenuBar";
 import { useAuth } from "@/hooks/useAuth";
 import { othersIsHiddenState } from "./Others";
 import Link from "next/link";
+import { Toast } from "./Toast";
 
 export const Header = () => {
   const { isAuthenticated } = useAuth();
@@ -42,6 +43,7 @@ export const Header = () => {
           </div>
         )}
       </div>
+      <Toast />
     </header>
   );
 };
