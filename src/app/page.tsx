@@ -5,7 +5,6 @@ import { Timer } from "@/components/Timer";
 import MenuBar, { menuBarIsHiddenState } from "@/components/MenuBar";
 import LoginModal from "@/components/modals/LoginModal";
 import LogoutModal from "@/components/modals/LogoutModal";
-import { othersIsHiddenState } from "@/components/Others";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect } from "react";
 import { ProfileModal } from "@/components/modals/ProfileModal";
@@ -14,7 +13,6 @@ import { TodayPredipitation } from "@/components/TodayPrecipitations";
 
 export default function Home() {
   const { isAuthenticated, checkAuth } = useAuth();
-  const othersIsHidden = useRecoilValue(othersIsHiddenState);
   const menuBarIsHidden = useRecoilValue(menuBarIsHiddenState);
 
   useEffect(() => {
@@ -31,17 +29,9 @@ export default function Home() {
           }`}
         >
           <div className="pb-5 w-full h-full">
-            <div
-              className={` ${
-                othersIsHidden && menuBarIsHidden ? "h-1/3" : "h-0"
-              }`}
-            />
+            <div className={` ${menuBarIsHidden ? "h-1/3" : "h-0"}`} />
             <Timer />
-            <div
-              className={` ${
-                othersIsHidden && menuBarIsHidden ? "h-2/3" : "h-0"
-              }`}
-            />
+            <div className={` ${menuBarIsHidden ? "h-2/3" : "h-0"}`} />
           </div>
         </div>
         <div

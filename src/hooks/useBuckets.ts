@@ -104,9 +104,6 @@ export const getMaxStreak = (buckets: Bucket[]): number => {
   return maxStreak;
 };
 
-export const wait = (ms: number): Promise<void> =>
-  new Promise((resolve) => setTimeout(resolve, ms));
-
 export const getOldestBucketDate = (buckets: Bucket[]): string | null => {
   if (buckets.length === 0) return null;
 

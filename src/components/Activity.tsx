@@ -82,7 +82,7 @@ export const Activity = () => {
                         10
                     ) / 10
                   ).toLocaleString()} `}{" "}
-                  <span className="font-thin text-sm">L</span>
+                  <span className="font-thin text-sm">mm</span>
                 </p>
               </div>
             </li>
@@ -159,7 +159,7 @@ export const Activity = () => {
                         10
                     ) / 10
                   ).toLocaleString()} `}{" "}
-                  <span className="font-thin text-sm">L</span>
+                  <span className="font-thin text-sm">mm</span>
                 </p>
               </div>
             </li>
@@ -193,7 +193,7 @@ export const Activity = () => {
                 </span>
                 <button className="font-semibold text-xl">
                   {getMaxStreak(buckets)}{" "}
-                  <span className="font-thin text-sm">day streak.</span>
+                  <span className="font-thin text-sm">max streak.</span>
                 </button>
               </div>
             </li>

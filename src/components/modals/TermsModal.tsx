@@ -72,7 +72,7 @@ export const PrivacyPolicy = () => {
           href="https://marketingplatform.google.com/about/analytics/terms/jp/"
           className="text-blue-500 underline w-full"
         >
-          https://marketingplatform.google.com/about/analytics/terms/jp/
+          Googleアナリティクスについて
         </a>
       </section>
 

@@ -34,5 +34,5 @@ export const useRecentRainfall = () => {
     fetch();
   }, [fetch]);
 
-  return { datas, loading };
+  return { datas, loading, fetch };
 };

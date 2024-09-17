@@ -17,6 +17,9 @@ export default function MunuBar() {
   return (
     <div>
       <div className="relative mb-3">
+        <h3 className="px-2 py-2 text-sm font-semibold text-blue-300 opacity-40">
+          ダッシュボード
+        </h3>
         <div className="pb-3">
           <UserInfo />
         </div>

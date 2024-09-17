@@ -49,7 +49,7 @@ export default function SignupPage() {
   };
 
   return env === "dev" ? (
-    <div className="max-w-4xl mx-auto placeholder:bg-opacity-0 shadow-md rounded-lg">
+    <div className="max-w-xl mx-auto placeholder:bg-opacity-0 shadow-md rounded-lg">
       <div className="flex items-center">
         <span className="material-icons text-blue-200 pr-2">person_add</span>
         <h3 className="font-bold text-2xl py-3 text-blue-200">

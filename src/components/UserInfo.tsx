@@ -10,11 +10,22 @@ const determineLevel = (value: number) => {
     { limit: 200, lv: 2, label: "洗濯機", storage: 60 },
     { limit: 500, lv: 3, label: "浴槽", storage: 200 },
     { limit: 1000, lv: 4, label: "小型貯水タンク", storage: 500 },
-    { limit: 2000, lv: 5, label: "", storage: 1000 },
+    { limit: 2000, lv: 5, label: "雨水タンク", storage: 1000 },
     { limit: 5000, lv: 6, label: "タンクローリー", storage: 2000 },
-    { limit: Infinity, lv: 7, label: "学校のプール", storage: 422000 },
+    { limit: 10000, lv: 7, label: "プール", storage: 5000 },
+    { limit: 25000, lv: 8, label: "養殖池", storage: 10000 },
+    { limit: 50000, lv: 9, label: "貯水池", storage: 25000 },
+    { limit: 100000, lv: 10, label: "消防車の水槽", storage: 50000 },
+    { limit: 200000, lv: 11, label: "ため池", storage: 100000 },
+    { limit: 500000, lv: 12, label: "用水路", storage: 200000 },
+    { limit: 1000000, lv: 13, label: "浄水場のタンク", storage: 500000 },
+    { limit: 2500000, lv: 14, label: "湖（小規模）", storage: 1000000 },
+    { limit: 5000000, lv: 15, label: "川の一部", storage: 2500000 },
+    { limit: 10000000, lv: 16, label: "湖（中規模）", storage: 5000000 },
+    { limit: 25000000, lv: 17, label: "水道タワー", storage: 10000000 },
+    { limit: 50000000, lv: 18, label: "ダム湖", storage: 25000000 },
+    { limit: Infinity, lv: 19, label: "海の入り江", storage: 50000000 },
   ];
-
   for (const threshold of thresholds) {
     if (value < threshold.limit) return threshold;
   }

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState, ReactNode } from "react";
-import { atom, useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { RecoilRoot } from "recoil";
 import { menuBarIsHiddenState } from "./MenuBar";
 
