@@ -12,23 +12,25 @@ const notoSansJP = Noto_Sans_JP({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title:
-    "buckets Flow | 雨音とポモドーロタイマーで、集中力と生産性を高めるサービス",
+    "buckets Flow | 雨音とポモドーロタイマーで、集中力と生産性を高めるアプリケーション",
   description:
     "雨音とポモドーロタイマーで集中力と生産性を高めるサービスです。作業時間を降水量として可視化しモチベーションの向上をサポートします。",
   openGraph: {
     title:
-      "buckets Flow | 雨音とポモドーロタイマーで、集中力と生産性を高めるサービス",
+      "buckets Flow | 雨音とポモドーロタイマーで、集中力と生産性を高めるアプリケーション",
     description:
-      "雨音とポモドーロタイマーで、集中力と生産性を高めるサービスです。作業時間を降水量として可視化し、達成感をサポートします。",
+      "雨音とポモドーロタイマーで集中力と生産性を高めるサービスです。作業時間を降水量として可視化しモチベーションの向上をサポートします。",
     url: "https://buckets-flow.com",
     siteName: "buckets Flow",
     images: "./opengraph-image.png",
   },
   twitter: {
     card: "summary_large_image",
-    title: "たまごかけごはん.com",
-    description: "たまごかけごはん専用の料理レシピサービス",
-    images: "https://たまごかけごはん.com/images/opengraph-image.png",
+    title:
+      "buckets Flow | 雨音とポモドーロタイマーで、集中力と生産性を高めるアプリケーション",
+    description:
+      "雨音とポモドーロタイマーで集中力と生産性を高めるサービスです。作業時間を降水量として可視化しモチベーションの向上をサポートします。",
+    images: "./opengraph-image.png",
   },
 };
 
