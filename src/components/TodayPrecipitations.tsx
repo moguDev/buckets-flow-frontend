@@ -21,8 +21,8 @@ export const TodayPredipitation = () => {
           </section>
         </div>
         <section className="flex items-center">
-          {datas.map((data) => (
-            <div className="w-full m-1">
+          {datas.map((data, index) => (
+            <div key={index} className="w-full m-1">
               <p
                 className={`text-center my-2 text-2xl ${
                   data.total_duration === 0 && "text-red-600 opacity-80"
