@@ -48,7 +48,7 @@ export default function SignupPage() {
     }
   };
 
-  return env === "dev" ? (
+  return (
     <div className="max-w-xl mx-auto placeholder:bg-opacity-0 shadow-md rounded-lg">
       <div className="flex items-center">
         <span className="material-icons text-blue-200 pr-2">person_add</span>
@@ -210,7 +210,5 @@ export default function SignupPage() {
         </form>
       </div>
     </div>
-  ) : (
-    <div>メンテナンス中</div>
   );
 }
