@@ -59,19 +59,25 @@ const LoginModal = () => {
                     メールアドレス
                   </span>
                 </label>
-                <input
-                  type="email"
-                  className="input border-b border-blue-500 border-opacity-20 bg-opacity-0 text-blue-200 rounded-xl"
-                  autoComplete="email"
-                  placeholder="user@example.com"
-                  {...register("email", {
-                    required: "メールアドレスを入力してください。",
-                    pattern: {
-                      value: /^[a-zA-Z\d._%+-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/i,
-                      message: "メールアドレスの形式が不正です。",
-                    },
-                  })}
-                />
+                <div className="flex items-center border border-blue-500 border-opacity-20 rounded-xl px-2 py-1">
+                  <span className="material-icons text-gray-700 mx-1">
+                    mail
+                  </span>
+                  <input
+                    type="email"
+                    className="input bg-opacity-0 text-blue-200 placeholder-gray-700 border-none focus:outline-none rounded-xl w-full"
+                    autoComplete="email"
+                    placeholder="user@example.com"
+                    {...register("email", {
+                      required: "メールアドレスを入力してください。",
+                      pattern: {
+                        value:
+                          /^[a-zA-Z\d._%+-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/i,
+                        message: "メールアドレスの形式が不正です。",
+                      },
+                    })}
+                  />
+                </div>
               </div>
               <div className="form-control pb-3">
                 <label htmlFor="password" className="label">
@@ -79,18 +85,24 @@ const LoginModal = () => {
                     パスワード
                   </span>
                 </label>
-                <input
-                  type="password"
-                  className="input border-b border-blue-500 border-opacity-20 bg-theme text-blue-200 rounded-xl"
-                  autoComplete="current-password"
-                  {...register("password", {
-                    required: "パスワードを入力してください。",
-                    minLength: {
-                      value: 8,
-                      message: "パスワードは8文字以上にしてください。",
-                    },
-                  })}
-                />
+                <div className="flex items-center border border-blue-500 border-opacity-20 rounded-xl px-2 py-1">
+                  <span className="material-icons text-gray-700 mx-1">
+                    password
+                  </span>
+                  <input
+                    type="password"
+                    className="input bg-theme text-blue-200 placeholder-gray-700 border-none rounded-xl focus:outline-none w-full"
+                    autoComplete="current-password"
+                    placeholder="半角英数のみ8文字以上"
+                    {...register("password", {
+                      required: "パスワードを入力してください。",
+                      minLength: {
+                        value: 8,
+                        message: "パスワードは8文字以上にしてください。",
+                      },
+                    })}
+                  />
+                </div>
               </div>
               <Link href="/signup" className="text-blue-400 text-xs mx-3">
                 新規アカウントの作成

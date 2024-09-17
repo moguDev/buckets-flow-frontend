@@ -38,20 +38,18 @@ export const UserInfo = () => {
       <div className="p-5">
         <button className="flex justify-between items-center w-full">
           <p className="text-blue-300 font-semibold text-lg">{userName}</p>
-          {env === "dev" && (
-            <label
-              htmlFor="profile-modal"
-              className="flex items-center text-gray-500 text-xs border border-gray-700 rounded-full px-3 py-1"
+          <label
+            htmlFor="profile-modal"
+            className="flex items-center text-gray-500 text-xs border border-gray-700 rounded-full px-3 py-1"
+          >
+            <span
+              className="material-icons text-sm mr-0.5"
+              style={{ fontSize: 14 }}
             >
-              <span
-                className="material-icons text-sm mr-0.5"
-                style={{ fontSize: 14 }}
-              >
-                edit
-              </span>
-              アカウント名を編集
-            </label>
-          )}
+              edit
+            </span>
+            アカウント名を編集
+          </label>
         </button>
         <div className="pt-3 pb-1 text-blue-300">
           <div className="flex items-center justify-between p-1">
