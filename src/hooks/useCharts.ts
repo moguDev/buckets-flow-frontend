@@ -36,8 +36,10 @@ export const useCharts = () => {
         break;
       case "month":
         newTargetDate.setMonth(newTargetDate.getMonth() - 1);
+        break;
       case "year":
         newTargetDate.setFullYear(newTargetDate.getFullYear() - 1);
+        break;
       default:
         break;
     }
@@ -53,8 +55,10 @@ export const useCharts = () => {
         break;
       case "month":
         newTargetDate.setMonth(newTargetDate.getMonth() + 1);
+        break;
       case "year":
         newTargetDate.setFullYear(newTargetDate.getFullYear() + 1);
+        break;
       default:
         break;
     }

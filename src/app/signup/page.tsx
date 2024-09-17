@@ -74,7 +74,7 @@ export default function SignupPage() {
               <span className="text-orange-600 text-xs">【必須】</span>
             </label>
             <div className="flex items-center border border-blue-500 border-opacity-20 rounded-xl px-2 py-1">
-              <span className="material-icons text-gray-700 ml-2">person</span>
+              <span className="material-icons text-gray-700 mx-1">person</span>
               <input
                 id="userName"
                 type="text"
@@ -99,7 +99,7 @@ export default function SignupPage() {
               <span className="text-orange-600 text-xs">【必須】</span>
             </label>
             <div className="flex items-center border border-blue-500 border-opacity-20 rounded-xl px-2 py-1">
-              <span className="material-icons text-gray-700 ml-2">mail</span>
+              <span className="material-icons text-gray-700 mx-1">mail</span>
               <input
                 id="email"
                 type="email"
@@ -124,7 +124,7 @@ export default function SignupPage() {
               <span className="text-orange-600 text-xs">【必須】</span>
             </label>
             <div className="flex items-center border border-blue-500 border-opacity-20 rounded-xl px-2 py-1">
-              <span className="material-icons text-gray-700 ml-2">
+              <span className="material-icons text-gray-700 mx-1">
                 password
               </span>
               <input
@@ -151,7 +151,7 @@ export default function SignupPage() {
               <span className="text-orange-600 text-xs">【必須】</span>
             </label>
             <div className="flex items-center border border-blue-500 border-opacity-20 rounded-xl px-2 py-1">
-              <span className="material-icons text-gray-700 ml-2">
+              <span className="material-icons text-gray-700 mx-1">
                 password
               </span>
               <input
