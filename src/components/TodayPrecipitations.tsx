@@ -1,7 +1,9 @@
-import { useRecentRainfall } from "@/hooks/userFetchRecentRainfall";
+import { useAuth } from "@/hooks/useAuth";
+import { useFetchRecentRainfall } from "@/hooks/useFetchRecentRainfall";
 
 export const TodayPredipitation = () => {
-  const { datas } = useRecentRainfall();
+  const { datas } = useFetchRecentRainfall();
+  const { isAuthenticated } = useAuth();
 
   return (
     <div className="relative text-blue-300 mb-4 select-none">
@@ -9,26 +11,33 @@ export const TodayPredipitation = () => {
         今日の降水情報
       </h3>
       <div className="divide-y divide-gray-300 divide-opacity-10">
-        <section className="flex items-end p-3 pb-4 w-full">
-          <div className="flex flex-col items-center w-full">
-            <p className="text-xs mb-1">今日の総降水量</p>
-            <p className="text-sm font-thin">
-              <span className="mx-1 text-4xl font-bold">
-                {datas?.total_duration !== 0
-                  ? (datas?.total_duration / 1500) * 8
-                  : "-"}
-              </span>
-              mm
-            </p>
+        <section>
+          <div className="flex items-end p-3 pb-4 w-full">
+            <div className="flex flex-col items-center w-full">
+              <p className="text-xs mb-1">今日の総降水量</p>
+              <p className="text-sm font-thin">
+                <span className="mx-1 text-4xl font-bold">
+                  {datas?.total_duration !== 0
+                    ? Math.floor((datas?.total_duration / 1500) * 8 * 10) / 10
+                    : "-"}
+                </span>
+                mm
+              </p>
+            </div>
+            <div className="flex flex-col items-center w-full">
+              <p className="text-xs mb-1">雨を降らせた人</p>
+              <p className="text-sm font-thin">
+                <span className="mx-1 text-4xl font-bold">
+                  {datas?.user_count !== 0 ? datas?.user_count : "-"}
+                </span>
+              </p>
+            </div>
           </div>
-          <div className="flex flex-col items-center w-full">
-            <p className="text-xs mb-1">雨を降らせた人</p>
-            <p className="text-sm font-thin">
-              <span className="mx-1 text-4xl font-bold">
-                {datas?.user_count !== 0 ? datas?.user_count : "-"}
-              </span>
+          {!isAuthenticated && (
+            <p className="text-center text-sm text-gray-600 pb-4 opacity-80">
+              ※ログイン中のユーザの実績が反映されます
             </p>
-          </div>
+          )}
         </section>
         <section className="pt-2">
           <div className="flex items-center">
@@ -48,7 +57,7 @@ export const TodayPredipitation = () => {
                 </p>
                 {data.duration !== 0 ? (
                   <p className="text-center text-md font-bold">
-                    {(data.duration / 1500) * 8}
+                    {Math.floor((data.duration / 1500) * 8 * 10) / 10}
                     <span
                       className="font-thin ml-0.5"
                       style={{ fontSize: "8px" }}

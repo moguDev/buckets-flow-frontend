@@ -3,6 +3,7 @@ import axiosInstance from "@/lib/axiosInstance";
 import { useCallback, useState } from "react";
 import { useCharts } from "./useCharts";
 import { set } from "react-hook-form";
+import { useFetchRecentRainfall } from "./useFetchRecentRainfall";
 
 export interface Bucket {
   id: number;
@@ -24,6 +25,7 @@ export const useBuckets = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const { fetchData } = useCharts();
+  const { fetch: fetchRecetRainfall } = useFetchRecentRainfall();
 
   const fetchBuckets = useCallback(async () => {
     setLoading(true);
@@ -44,6 +46,7 @@ export const useBuckets = () => {
         const res = await axiosInstance.post("buckets", newBucket);
         fetchBuckets();
         fetchData();
+        fetchRecetRainfall();
       } catch (error) {
         setError("新しいバケットの作成に失敗しました");
         console.error(error);
