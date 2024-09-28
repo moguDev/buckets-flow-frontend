@@ -4,7 +4,7 @@ import { menuBarIsHiddenState } from "./MenuBar";
 import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 import { Toast } from "./Toast";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Icon from "/public/images/icon.png";
 import Image from "next/image";
 
@@ -15,9 +15,8 @@ export const Header = () => {
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
-
     if (currentScrollY > scrollY && currentScrollY > 100) {
       setIsVisible(false);
     } else {
@@ -25,7 +24,7 @@ export const Header = () => {
     }
 
     setScrollY(currentScrollY);
-  };
+  }, [scrollY]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -33,7 +32,7 @@ export const Header = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [scrollY]);
+  }, [scrollY, handleScroll]);
 
   return (
     <header

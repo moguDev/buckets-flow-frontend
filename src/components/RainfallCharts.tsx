@@ -7,7 +7,6 @@ import { formatDateString } from "./Activity";
 import { MenuAccordion } from "./MyComponents";
 import { useCharts } from "@/hooks/useCharts";
 import { useAuth } from "@/hooks/useAuth";
-import { useBuckets } from "@/hooks/useBuckets";
 
 export const selectedDateState = atom<Date | null>({
   key: "selectedDateState",
@@ -16,14 +15,11 @@ export const selectedDateState = atom<Date | null>({
 
 export const RainfallCharts = () => {
   const { isAuthenticated } = useAuth();
-  const { buckets } = useBuckets();
   const {
     bucketsWithDate,
     loading,
-    error,
     period,
     setPeriod,
-    targetDate,
     initTargetDate,
     incrementTargetDate,
     decrementTargetDate,
@@ -38,7 +34,7 @@ export const RainfallCharts = () => {
 
   useEffect(() => {
     fetchData();
-  }, [isAuthenticated, period]);
+  }, [isAuthenticated, period, fetchData]);
 
   useEffect(() => {
     !isAuthenticated && setIsOpen(false);
@@ -51,42 +47,27 @@ export const RainfallCharts = () => {
 
   useEffect(() => {
     if (bucketsWithDate) {
+      console.log(bucketsWithDate);
       const dates = Object.keys(bucketsWithDate);
       setStartDate(formatDateString(new Date(dates[0])));
       setEndDate(formatDateString(new Date(dates[dates.length - 1])));
-
       let maxDuration = 0;
+      maxDuration = Math.max(
+        ...Object.values(bucketsWithDate).map(
+          (buckets) =>
+            Math.floor(
+              (buckets.reduce((sum, bucket) => sum + bucket.duration, 0) /
+                1500) *
+                8 *
+                10
+            ) / 10
+        )
+      );
 
-      if (period === "year") {
-        const durationByMonth = dates.reduce((acc, date) => {
-          const month = date.substring(0, 7);
-          const totalDurationForDate = bucketsWithDate[date].reduce(
-            (sum, bucket) =>
-              Math.floor(sum + (bucket.duration / 1500) * 8 * 10) / 10,
-            0
-          );
-          acc[month] = (acc[month] || 0) + totalDurationForDate;
-          return acc;
-        }, {} as Record<string, number>);
-
-        maxDuration = Math.max(...Object.values(durationByMonth));
-      } else {
-        maxDuration = Math.max(
-          ...Object.values(bucketsWithDate).map(
-            (buckets) =>
-              Math.floor(
-                (buckets.reduce((sum, bucket) => sum + bucket.duration, 0) /
-                  1500) *
-                  8 *
-                  10
-              ) / 10
-          )
-        );
-      }
-
+      console.log(maxDuration);
       setMaxValue(maxDuration);
     }
-  }, [bucketsWithDate]);
+  }, [bucketsWithDate, period]);
 
   return (
     <MenuAccordion
@@ -141,7 +122,7 @@ export const RainfallCharts = () => {
                       8 *
                       10
                   ) / 10}{" "}
-                <span className="font-thin">L</span>
+                <span className="font-thin">mm</span>
               </button>
             </p>
             <button

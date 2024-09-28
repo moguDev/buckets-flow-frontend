@@ -104,32 +104,35 @@ export const useTimer = () => {
 
   /** タイマーのカウント **/
   useEffect(() => {
-    if (!isPlaying) return;
-    const updateTimer = () => {
-      const currentTime = Date.now();
-      const newRemainingTime = Math.ceil((endTime - currentTime) / 1000);
-      setTimerCountToTitle(newRemainingTime);
-      setRemainingTime(newRemainingTime);
-      timer === TimerState.WORKING &&
-        setBucketMeterPropses(
-          bucketMeterPropses.map((bucket, index) => {
-            return index === bucketCount % 4
-              ? {
-                  ...bucket,
-                  filled:
-                    (1 -
-                      newRemainingTime /
-                        durationPreference[TimerState.WORKING]) *
-                    100,
-                  active: true,
-                }
-              : { ...bucket, active: false };
-          })
-        );
-      newRemainingTime <= 0 && finishFlow();
-    };
-    const timerId = setInterval(updateTimer, 1000);
-    return () => clearInterval(timerId);
+    if (!isPlaying) {
+      return;
+    } else {
+      const updateTimer = () => {
+        const currentTime = Date.now();
+        const newRemainingTime = Math.ceil((endTime - currentTime) / 1000);
+        setTimerCountToTitle(newRemainingTime);
+        setRemainingTime(newRemainingTime);
+        timer === TimerState.WORKING &&
+          setBucketMeterPropses(
+            bucketMeterPropses.map((bucket, index) => {
+              return index === bucketCount % 4
+                ? {
+                    ...bucket,
+                    filled:
+                      (1 -
+                        newRemainingTime /
+                          durationPreference[TimerState.WORKING]) *
+                      100,
+                    active: true,
+                  }
+                : { ...bucket, active: false };
+            })
+          );
+        newRemainingTime <= 0 && finishFlow();
+      };
+      const timerId = setInterval(updateTimer, 1000);
+      return () => clearInterval(timerId);
+    }
   }, [isPlaying, remainingTime, endTime, bucketCount, bucketMeterPropses]);
 
   const startFlow = () => {

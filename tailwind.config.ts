@@ -20,6 +20,9 @@ const config: Config = {
       backgroundColor: {
         theme: "#040612",
       },
+      textColor: {
+        white: "#fcfcfc",
+      },
     },
   },
   plugins: [require("daisyui")],
