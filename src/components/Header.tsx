@@ -1,5 +1,5 @@
 "use client";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { menuBarIsHiddenState } from "./MenuBar";
 import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
@@ -7,11 +7,13 @@ import { Toast } from "./Toast";
 import { useCallback, useEffect, useState } from "react";
 import Icon from "/public/images/icon.png";
 import Image from "next/image";
+import { volumeState } from "@/hooks/useTimer";
 
 export const Header = () => {
   const { isAuthenticated } = useAuth();
   const [menuBarIsHidden, setMenuBarIsHidden] =
     useRecoilState(menuBarIsHiddenState);
+  const volume = useRecoilValue(volumeState);
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
 
@@ -59,7 +61,11 @@ export const Header = () => {
               modal !== null && modal.showModal();
             }}
           >
-            volume_up
+            {volume === 0
+              ? "volume_off"
+              : volume > 50
+              ? "volume_up"
+              : "volume_down"}
           </button>
           {isAuthenticated && (
             <button
