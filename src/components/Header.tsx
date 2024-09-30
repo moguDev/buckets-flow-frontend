@@ -49,16 +49,29 @@ export const Header = () => {
             <span className="text-xl font-thin ">buckets </span>Flow
           </p>
         </Link>
-        {isAuthenticated && (
+        <div className="flex items-center">
           <button
-            onClick={() => setMenuBarIsHidden((prev) => !prev)}
-            className={`flex items-center text-blue-300 bg-opacity-0 border-none btn rounded-full ${
-              !menuBarIsHidden && "bg-blue-500 bg-opacity-10"
-            }`}
+            className="material-icons text-blue-300 rounded-full btn bg-opacity-0 border-none mx-0.5"
+            onClick={() => {
+              const modal = document.getElementById(
+                "volume_modal"
+              ) as HTMLDialogElement;
+              modal !== null && modal.showModal();
+            }}
           >
-            <span className={`material-icons text-xs`}>menu</span>
+            volume_up
           </button>
-        )}
+          {isAuthenticated && (
+            <button
+              onClick={() => setMenuBarIsHidden((prev) => !prev)}
+              className={`flex items-center text-blue-300 bg-opacity-0 border-none btn rounded-full ${
+                !menuBarIsHidden && "bg-blue-500 bg-opacity-10"
+              }`}
+            >
+              <span className={`material-icons text-xs`}>menu</span>
+            </button>
+          )}
+        </div>
       </div>
       <Toast />
     </header>

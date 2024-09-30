@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { ProfileModal } from "@/components/modals/ProfileModal";
 import FirstVisitDialog from "@/components/FirstVisitDialog";
 import { TodayPredipitation } from "@/components/TodayPrecipitations";
+import { VolumeModal } from "@/components/modals/VolumeModal";
 
 export default function Home() {
   const { isAuthenticated, checkAuth } = useAuth();
@@ -52,6 +53,7 @@ export default function Home() {
       <LogoutModal />
       <ProfileModal />
       <FirstVisitDialog />
+      <VolumeModal />
     </main>
   );
 }
