@@ -10,11 +10,11 @@ export const RainAnimation = ({ isDrop }: { isDrop: boolean }) => {
           isDrop ? "opacity-100" : "opacity-0"
         }`}
       >
-        <div className="drop"></div>
-        <div className="drop"></div>
-        <div className="drop"></div>
-        <div className="drop"></div>
-        <div className="drop"></div>
+        <div className="drop" />
+        <div className="drop" />
+        <div className="drop" />
+        <div className="drop" />
+        <div className="drop" />
       </div>
     </div>
   );
