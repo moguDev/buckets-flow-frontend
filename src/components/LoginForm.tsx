@@ -3,6 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Loading } from "./MyComponents";
 
 type FormData = {
   email: string;
@@ -33,7 +34,12 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="backdrop-blur-sm bg-gray-700 bg-opacity-10 px-5 pb-6 rounded-xl">
+    <div className="relative backdrop-blur-sm bg-gray-700 bg-opacity-10 px-5 pb-6 rounded-xl">
+      {loading && (
+        <div className="absolute top-0 left-0 flex flex-col items-center justify-center w-full h-full bg-theme bg-opacity-60">
+          <Loading />
+        </div>
+      )}
       <div className="flex items-center pt-6 pb-3 text-blue-300">
         <span className="material-icons text-sm pr-3">login</span>
         <p>ログイン</p>
