@@ -142,7 +142,7 @@ export const Preferences = () => {
             ))}
           </div>
         </li>
-        <div className="flex items-center justify-between text-blue-300">
+        {/* <div className="flex items-center justify-between text-blue-300">
           <p className="text-xs">サイクル（バケツの数）</p>
         </div>
         <li className="mt-3 mb-6">
@@ -165,7 +165,7 @@ export const Preferences = () => {
               <SliderMark key={value} value={value} />
             ))}
           </div>
-        </li>
+        </li> */}
       </ul>
     </MenuAccordion>
   );
