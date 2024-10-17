@@ -52,7 +52,7 @@ const LoginModal = () => {
                 </p>
               </div>
             )}
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} autoComplete="on">
               <div className="form-control pb-3">
                 <label htmlFor="email" className="label">
                   <span className="label-text text-blue-200 text-opacity-70">
@@ -67,6 +67,7 @@ const LoginModal = () => {
                     type="email"
                     className="input bg-opacity-0 text-blue-200 placeholder-gray-700 border-none focus:outline-none rounded-xl w-full"
                     placeholder="user@example.com"
+                    autoComplete="email"
                     {...register("email", {
                       required: "メールアドレスを入力してください。",
                       pattern: {
@@ -92,6 +93,7 @@ const LoginModal = () => {
                     type="password"
                     className="input bg-theme text-blue-200 placeholder-gray-700 border-none rounded-xl focus:outline-none w-full"
                     placeholder="半角英数のみ8文字以上"
+                    autoComplete="current-password"
                     {...register("password", {
                       required: "パスワードを入力してください。",
                       minLength: {
