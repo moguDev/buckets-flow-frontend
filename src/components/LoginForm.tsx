@@ -19,17 +19,6 @@ export const LoginForm = () => {
 
   const [error, setError] = useState("");
   const { login, loading } = useAuth();
-  const emailRef = useRef<HTMLInputElement | null>(null);
-
-  // モーダルが開かれたときにフォーカスを設定
-  useEffect(() => {
-    const checkbox = document.getElementById("login-modal") as HTMLInputElement;
-    const handleFocus = () => {
-      if (emailRef.current) emailRef.current.focus();
-    };
-    checkbox?.addEventListener("change", handleFocus);
-    return () => checkbox?.removeEventListener("change", handleFocus);
-  }, []);
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -45,14 +34,14 @@ export const LoginForm = () => {
 
   return (
     <div className="backdrop-blur-sm bg-gray-700 bg-opacity-10 px-5 pb-6 rounded-xl">
-      <div className="flex items-center py-6 text-blue-300">
+      <div className="flex items-center pt-6 pb-3 text-blue-300">
         <span className="material-icons text-sm pr-3">login</span>
         <p>ログイン</p>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} autoComplete="on">
-        <div className="form-control pb-3">
-          <div className="flex items-center border-b border-blue-500 border-opacity-20 p-0.5">
-            <span className="material-icons text-gray-700 mr-1">mail</span>
+        <div className="form-control pb-1">
+          <div className="flex items-center border-b border-blue-500 border-opacity-20 p-1">
+            <span className="material-icons text-gray-700 p-1">mail</span>
             <input
               type="email"
               className="input bg-opacity-0 text-blue-200 placeholder-gray-700 border-none focus:outline-none rounded w-full"
@@ -65,16 +54,14 @@ export const LoginForm = () => {
                   message: "メールアドレスの形式が不正です。",
                 },
               })}
-              ref={(e: HTMLInputElement) => {
-                register("email").ref(e);
-                emailRef.current = e;
-              }}
             />
           </div>
         </div>
         <div className="form-control pb-3">
-          <div className="flex items-center border-b border-blue-500 border-opacity-20 p-0.5">
-            <span className="material-icons text-gray-700 mr-1">password</span>
+          <div className="flex items-center border-b border-blue-500 border-opacity-20 p-1">
+            <span className="material-icons text-gray-700 p-1 text-center">
+              password
+            </span>
             <input
               type="password"
               className="input bg-opacity-0 text-blue-200 placeholder-gray-700 border-none rounded focus:outline-none w-full"
