@@ -13,7 +13,7 @@ export enum TimerState {
 export const durationPreferenceState = atom<Record<TimerState, number>>({
   key: "durationPreferenceState",
   default: {
-    [TimerState.WORKING]: 25 * 60, // 25分
+    [TimerState.WORKING]: 25, // 25分
     [TimerState.BREAK]: 5 * 60, // 5分
     [TimerState.LONG_BREAK]: 30 * 60, // 30分
   },
@@ -189,6 +189,25 @@ export const useTimer = () => {
     }
     setIsPlaying(false);
   };
+
+  /** 通知の許可をリクエスト */
+  useEffect(() => {
+    if (Notification.permission === "default") {
+      Notification.requestPermission().then((permission) => {
+        if (permission !== "granted") {
+          console.warn("通知が許可されていません");
+        }
+      });
+    }
+  }, []);
+
+  /** タイマー終了時の通知を表示する関数 */
+  const showNotification = (message: string) => {
+    if (Notification.permission === "granted") {
+      new Notification("buckets Flow", { body: message });
+    }
+  };
+
   const finishFlow = async () => {
     setIsPlaying(false);
     if (timer === TimerState.WORKING) {
@@ -202,9 +221,11 @@ export const useTimer = () => {
       if (bucketCount % 4 === 3) {
         setTimer(TimerState.LONG_BREAK);
         setRemainingTime(durationPreference[TimerState.LONG_BREAK]);
+        showNotification("お疲れさま！長い休憩の時間です🎉");
       } else {
         setTimer(TimerState.BREAK);
         setRemainingTime(durationPreference[TimerState.BREAK]);
+        showNotification("休憩の時間です☕️");
       }
     } else {
       if (timer === TimerState.LONG_BREAK) {
@@ -219,6 +240,7 @@ export const useTimer = () => {
       setBucketCount((prev) => prev + 1);
       setTimer(TimerState.WORKING);
       setRemainingTime(durationPreference[TimerState.WORKING]);
+      showNotification("次のセッションを始めましょう！💪");
     }
     setStartTime(-1);
     if (gainNodeRef.current) {
