@@ -13,7 +13,7 @@ export enum TimerState {
 export const durationPreferenceState = atom<Record<TimerState, number>>({
   key: "durationPreferenceState",
   default: {
-    [TimerState.WORKING]: 25, // 25分
+    [TimerState.WORKING]: 25 * 60, // 25分
     [TimerState.BREAK]: 5 * 60, // 5分
     [TimerState.LONG_BREAK]: 30 * 60, // 30分
   },

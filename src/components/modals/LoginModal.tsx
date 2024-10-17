@@ -87,6 +87,10 @@ const LoginModal = () => {
                         message: "メールアドレスの形式が不正です。",
                       },
                     })}
+                    ref={(e: HTMLInputElement) => {
+                      register("email").ref(e);
+                      emailRef.current = e;
+                    }}
                   />
                 </div>
               </div>
