@@ -44,7 +44,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="backdrop-blur-sm bg-gray-700 bg-opacity-10 px-5 pb-3 rounded-xl">
+    <div className="backdrop-blur-sm bg-gray-700 bg-opacity-10 px-5 pb-6 rounded-xl">
       <div className="flex items-center py-6 text-blue-300">
         <span className="material-icons text-sm pr-3">login</span>
         <p>ログイン</p>
@@ -92,7 +92,7 @@ export const LoginForm = () => {
         </div>
         <button
           type="submit"
-          className="btn font-bold bg-blue-900 text-blue-300 border-none bg-opacity-10 w-full"
+          className="btn font-bold bg-blue-900 text-blue-300 border-none bg-opacity-20 w-full"
         >
           ログイン
         </button>
@@ -101,9 +101,12 @@ export const LoginForm = () => {
       <div className="divider text-xs">または</div>
       <Link
         href="/signup"
-        className="btn bg-blue-900 text-blue-300 border-none bg-opacity-20 w-full"
+        className="btn bg-blue-900 text-blue-300 border-none bg-opacity-30 w-full"
       >
-        新規アカウントの作成
+        <span className="material-icons" style={{ fontSize: "20px" }}>
+          person_add
+        </span>
+        <span>新規アカウントの作成</span>
       </Link>
     </div>
   );
