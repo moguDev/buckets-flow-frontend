@@ -240,7 +240,7 @@ export const useTimer = () => {
       setBucketCount((prev) => prev + 1);
       setTimer(TimerState.WORKING);
       setRemainingTime(durationPreference[TimerState.WORKING]);
-      showNotification("次のセッションを始めましょう！💪");
+      showNotification("次のセッションを始めましょう！🪣");
     }
     setStartTime(-1);
     if (gainNodeRef.current) {
