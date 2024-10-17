@@ -1,7 +1,7 @@
 "use client";
 import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 type FormData = {
@@ -19,6 +19,17 @@ const LoginModal = () => {
 
   const [error, setError] = useState("");
   const { login, loading } = useAuth();
+  const emailRef = useRef<HTMLInputElement | null>(null);
+
+  // モーダルが開かれたときにフォーカスを設定
+  useEffect(() => {
+    const checkbox = document.getElementById("login-modal") as HTMLInputElement;
+    const handleFocus = () => {
+      if (emailRef.current) emailRef.current.focus();
+    };
+    checkbox?.addEventListener("change", handleFocus);
+    return () => checkbox?.removeEventListener("change", handleFocus);
+  }, []);
 
   const onSubmit = async (data: FormData) => {
     try {
