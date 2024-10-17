@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { Loading, MenuAccordion } from "./MyComponents";
 import { useAuth } from "@/hooks/useAuth";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { timerState, TimerState } from "@/hooks/useTimer";
+import { useRecoilState } from "recoil";
+import { TimerState } from "@/hooks/useTimer";
 import { durationPreferenceState } from "@/hooks/useTimer";
 import { usePreferences } from "@/hooks/usePreferences";
 
 export const timerValues = [15, 20, 25, 30, 45, 50, 60, 90];
 export const breakValues = [3, 4, 5, 6, 7, 8, 9, 10];
 export const longBreakValues = [10, 15, 20, 25, 30, 45, 60];
+export const flowCycleValues = [2, 4, 6, 8, 10];
 
 export const Preferences = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +21,7 @@ export const Preferences = () => {
   const [timerSliderIndex, setTimerSliderIndex] = useState(2);
   const [breakSliderIndex, setBreakSliderIndex] = useState(2);
   const [longBreakSliderIndex, setLongBreakSliderIndex] = useState(4);
+  const [flowCycleSliderIndex, setFlowCycleSliderIndex] = useState(1);
 
   const { updatePreference, createPreference, loading } = usePreferences();
 
@@ -117,7 +119,7 @@ export const Preferences = () => {
         <div className="flex items-center justify-between text-blue-300">
           <p className="text-xs">長い休憩の時間</p>
         </div>
-        <li className="mt-3 mb-6">
+        <li className="mt-3 mb-8">
           <input
             type="range"
             min={0}
@@ -136,6 +138,30 @@ export const Preferences = () => {
           />
           <div className="flex w-full justify-between px-2 text-xs text-blue-300">
             {longBreakValues.map((value) => (
+              <SliderMark key={value} value={value} />
+            ))}
+          </div>
+        </li>
+        <div className="flex items-center justify-between text-blue-300">
+          <p className="text-xs">サイクル（バケツの数）</p>
+        </div>
+        <li className="mt-3 mb-6">
+          <input
+            type="range"
+            min={0}
+            max={flowCycleValues.length - 1}
+            value={flowCycleSliderIndex}
+            className="range range-info range-xs opacity-60"
+            step="1"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              const index = Number(event.target.value);
+              setBreakSliderIndex(index);
+              // updateTimerSetting(TimerState.BREAK, breakValues[index]);
+              // updatePreference({ break_duration: breakValues[index] * 60 });
+            }}
+          />
+          <div className="flex w-full justify-between px-2 text-xs text-blue-300">
+            {flowCycleValues.map((value) => (
               <SliderMark key={value} value={value} />
             ))}
           </div>

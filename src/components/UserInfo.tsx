@@ -2,6 +2,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useBuckets } from "@/hooks/useBuckets";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { LoginForm } from "./LoginForm";
 
 const determineLevel = (value: number) => {
   const thresholds = [
@@ -100,27 +101,6 @@ export const UserInfo = () => {
       </div>
     </div>
   ) : (
-    <div className="backdrop-blur-sm w-full">
-      <div className="flex items-center">
-        <label
-          htmlFor={isAuthenticated ? "" : "login-modal"}
-          className="flex justify-between items-center w-full py-6 px-5 mr-1 bg-blue-900 bg-opacity-10 hover:bg-opacity-20 rounded-xl cursor-pointer"
-        >
-          <div className="flex items-center text-blue-300">
-            <span className="material-icons text-sm pr-3">login</span>
-            <p className="text-sm select-none">ログイン</p>
-          </div>
-        </label>
-        <Link
-          href="/signup"
-          className="flex justify-between items-center w-full py-6 px-5 ml-1 bg-blue-900 bg-opacity-20 hover:bg-opacity-30 rounded-xl "
-        >
-          <div className="flex items-center text-blue-300">
-            <span className="material-icons text-sm pr-2">person_add</span>
-            <p className="text-sm select-none">アカウント作成</p>
-          </div>
-        </Link>
-      </div>
-    </div>
+    <LoginForm />
   );
 };

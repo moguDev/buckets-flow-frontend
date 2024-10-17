@@ -1,7 +1,7 @@
 "use client";
 import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 type FormData = {
@@ -19,6 +19,17 @@ const LoginModal = () => {
 
   const [error, setError] = useState("");
   const { login, loading } = useAuth();
+  const emailRef = useRef<HTMLInputElement | null>(null);
+
+  // モーダルが開かれたときにフォーカスを設定
+  useEffect(() => {
+    const checkbox = document.getElementById("login-modal") as HTMLInputElement;
+    const handleFocus = () => {
+      if (emailRef.current) emailRef.current.focus();
+    };
+    checkbox?.addEventListener("change", handleFocus);
+    return () => checkbox?.removeEventListener("change", handleFocus);
+  }, []);
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -52,7 +63,7 @@ const LoginModal = () => {
                 </p>
               </div>
             )}
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} autoComplete="on">
               <div className="form-control pb-3">
                 <label htmlFor="email" className="label">
                   <span className="label-text text-blue-200 text-opacity-70">
@@ -66,8 +77,8 @@ const LoginModal = () => {
                   <input
                     type="email"
                     className="input bg-opacity-0 text-blue-200 placeholder-gray-700 border-none focus:outline-none rounded-xl w-full"
-                    autoComplete="email"
                     placeholder="user@example.com"
+                    autoComplete="email"
                     {...register("email", {
                       required: "メールアドレスを入力してください。",
                       pattern: {
@@ -76,6 +87,10 @@ const LoginModal = () => {
                         message: "メールアドレスの形式が不正です。",
                       },
                     })}
+                    ref={(e: HTMLInputElement) => {
+                      register("email").ref(e);
+                      emailRef.current = e;
+                    }}
                   />
                 </div>
               </div>
@@ -92,8 +107,8 @@ const LoginModal = () => {
                   <input
                     type="password"
                     className="input bg-theme text-blue-200 placeholder-gray-700 border-none rounded-xl focus:outline-none w-full"
-                    autoComplete="current-password"
                     placeholder="半角英数のみ8文字以上"
+                    autoComplete="current-password"
                     {...register("password", {
                       required: "パスワードを入力してください。",
                       minLength: {
