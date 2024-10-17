@@ -66,7 +66,6 @@ const LoginModal = () => {
                   <input
                     type="email"
                     className="input bg-opacity-0 text-blue-200 placeholder-gray-700 border-none focus:outline-none rounded-xl w-full"
-                    autoComplete="email"
                     placeholder="user@example.com"
                     {...register("email", {
                       required: "メールアドレスを入力してください。",
@@ -92,7 +91,6 @@ const LoginModal = () => {
                   <input
                     type="password"
                     className="input bg-theme text-blue-200 placeholder-gray-700 border-none rounded-xl focus:outline-none w-full"
-                    autoComplete="current-password"
                     placeholder="半角英数のみ8文字以上"
                     {...register("password", {
                       required: "パスワードを入力してください。",
